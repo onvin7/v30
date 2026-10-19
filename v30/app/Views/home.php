@@ -1,47 +1,49 @@
-<!-- Hero – fotka v pozadí -->
-<section class="relative bg-slate-900">
-    <img
-        src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=dramatic%20winter%20landscape%2C%20Nordic%20cross-country%20skiers%20on%20a%20snowy%20forest%20trail%20at%20dawn%2C%20Orlick%C3%A9%20hory%20mountains%2C%20dark%20pine%20forest%2C%20cold%20blue%20morning%20light%2C%20cinematic%20wide%20shot%2C%20professional%20sports%20photography&image_size=landscape_16_9"
-        alt="Závodníci na běžkách v zasněženém lese v Orlických horách"
-        class="absolute inset-0 w-full h-full object-cover">
-    <div class="absolute inset-0 bg-slate-950/65"></div>
+<?php
+// Hero – fotografie z reálného ročníku přes tmavou plochu.
+// Bez fotky (prázdný klíč `home-hero`) se vykreslí grafický motiv vrstevnic.
+?>
+<section class="relative isolate overflow-hidden bg-night text-white">
+    <?php if (has_img('home-hero')): ?>
+        <img src="<?= e(img_url('home-hero')) ?>" alt="" aria-hidden="true" decoding="async"
+             class="hero-img absolute inset-0 -z-20 h-full w-full object-cover">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/40" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-night to-transparent" aria-hidden="true"></div>
+    <?php else: ?>
+        <?php require __DIR__ . '/partials/contours.php'; ?>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-deep/60 via-transparent to-night" aria-hidden="true"></div>
+    <?php endif; ?>
 
-    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
-        <p class="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-sky-200 mb-5">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
+        <p class="hero-in text-xs font-semibold uppercase tracking-[0.3em] text-ice">
             Závod vodáků na běžkách
         </p>
 
-        <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-none mb-6">
-            <?= htmlspecialchars($hero['nazev']) ?>
+        <h1 class="hero-in hero-in-2 mt-5 font-display text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-8xl">
+            <?= e($hero['nazev']) ?>
         </h1>
 
-        <p class="text-lg sm:text-xl text-slate-200 max-w-2xl mb-9">
-            <?= htmlspecialchars($hero['podtitul']) ?>
+        <p class="hero-in hero-in-3 mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
+            <?= e($hero['podtitul']) ?>
         </p>
 
-        <!-- Termín a místo -->
-        <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-white mb-10">
-            <span class="inline-flex items-center gap-2.5">
-                <svg class="w-5 h-5 text-sky-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-                </svg>
-                <span class="font-semibold"><?= htmlspecialchars($hero['datum']) ?></span>
-            </span>
-            <span class="inline-flex items-center gap-2.5">
-                <svg class="w-5 h-5 text-sky-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
-                </svg>
-                <span class="font-semibold"><?= htmlspecialchars($hero['misto']) ?></span>
-            </span>
-        </div>
+        <dl class="hero-in hero-in-3 mt-9 flex flex-wrap gap-x-12 gap-y-5 border-t border-white/10 pt-6 text-sm">
+            <div>
+                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Termín</dt>
+                <dd class="mt-1 font-semibold tabular-nums"><?= e($hero['datum']) ?></dd>
+            </div>
+            <div>
+                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Místo</dt>
+                <dd class="mt-1 font-semibold"><?= e($hero['misto']) ?></dd>
+            </div>
+        </dl>
 
-        <!-- CTA tlačítka -->
-        <div class="flex flex-wrap gap-3">
-            <a href="/prihlaska" class="inline-flex items-center rounded-md bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3.5 transition-colors">
+        <div class="hero-in hero-in-4 mt-9 flex flex-wrap gap-3">
+            <a href="/prihlaska"
+               class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
                 Registrovat do závodu
             </a>
-            <a href="/startovni-listina" class="inline-flex items-center rounded-md bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3.5 transition-colors">
+            <a href="/startovni-listina"
+               class="inline-flex items-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
                 Startovní listina
             </a>
         </div>
@@ -49,43 +51,169 @@
 </section>
 
 <!-- Trať a místo -->
-<section class="bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+<section class="border-t border-slate-200 bg-snow">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mb-4">Trať a místo</p>
-                <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 mb-5">
-                    <?= htmlspecialchars($trat['nazev']) ?>
+            <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Trať a místo</p>
+                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                    <?= e($trat['nazev']) ?>
                 </h2>
-                <p class="text-slate-600 mb-9">
-                    <?= htmlspecialchars($trat['popis']) ?>
+                <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
+                    <?= e($trat['popis']) ?>
                 </p>
 
-                <dl class="grid grid-cols-2 gap-x-6 gap-y-6 mb-9">
+                <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-slate-200 pt-6">
                     <?php foreach ($trat['fakta'] as $fakt): ?>
                         <div>
-                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500 mb-1"><?= htmlspecialchars($fakt['label']) ?></dt>
-                            <dd class="font-display text-xl font-bold text-slate-900"><?= htmlspecialchars($fakt['hodnota']) ?></dd>
+                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($fakt['label']) ?></dt>
+                            <dd class="mt-1 font-display text-lg font-bold tabular-nums text-slate-900"><?= e($fakt['hodnota']) ?></dd>
                         </div>
                     <?php endforeach; ?>
                 </dl>
 
-                <a href="/propozice" class="inline-flex items-center gap-2 rounded-md border border-slate-200 hover:bg-slate-100 text-slate-900 font-semibold px-5 py-3 transition-colors">
+                <a href="/propozice"
+                   class="mt-8 inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
                     Propozice a trať
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-                    </svg>
+                    <span aria-hidden="true">→</span>
                 </a>
             </div>
 
-            <div>
-                <img
-                    src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=wooden%20mountain%20chalet%20in%20snowy%20winter%20forest%2C%20Orlick%C3%A9%20hory%20mountains%2C%20Czech%20countryside%2C%20snow-covered%20trail%20leading%20to%20the%20hut%2C%20cold%20clear%20winter%20day%2C%20professional%20photography&image_size=landscape_4_3"
-                    alt="Chata Bedřichovka v Orlických horách"
-                    class="w-full h-72 lg:h-[26rem] object-cover rounded-lg border border-slate-200">
+            <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+                <?php if (has_img('home-trail')): ?>
+                    <img src="<?= e(img_url('home-trail')) ?>"
+                         alt="Závodníci na trati Vodácké 30 v Orlických horách"
+                         loading="lazy" decoding="async"
+                         class="aspect-[4/3] w-full rounded-md object-cover lg:aspect-[3/2]">
+                <?php else: ?>
+                    <div class="relative isolate flex aspect-[4/3] w-full items-end overflow-hidden rounded-md bg-deep p-6 lg:aspect-[3/2]">
+                        <?php require __DIR__ . '/partials/contours.php'; ?>
+                        <p class="text-sm text-white/60">Fotografie z trati bude doplněna pořadatelem.</p>
+                    </div>
+                <?php endif; ?>
             </div>
 
+        </div>
+    </div>
+</section>
+
+<!-- Ročník 2026 v číslech -->
+<section class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník 2026 v číslech</p>
+            <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
+                <?php foreach ($rocnik as $metrika): ?>
+                    <div class="border-t border-slate-200 pt-5">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($metrika['label']) ?></dt>
+                        <dd class="mt-2 font-display text-3xl font-black tabular-nums leading-none text-slate-900 sm:text-4xl">
+                            <?= e($metrika['hodnota']) ?><?php if ($metrika['jednotka'] !== ''): ?> <span class="text-base font-bold text-slate-400"><?= e($metrika['jednotka']) ?></span><?php endif; ?>
+                        </dd>
+                    </div>
+                <?php endforeach; ?>
+            </dl>
+        </div>
+    </div>
+</section>
+
+<!-- Den závodu -->
+<section class="border-t border-slate-200 bg-snow">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+
+            <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Den závodu</p>
+                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                    Od registrace k vyhlášení
+                </h2>
+                <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
+                    Klíčové body programu 26. ročníku. Kompletní propozice včetně kategorií, tratí a startovného
+                    najdete na samostatné stránce.
+                </p>
+                <a href="/propozice"
+                   class="mt-8 inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
+                    Propozice a trať
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <ol class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
+                <?php foreach ($program as $index => $bod): ?>
+                    <li class="flex gap-6 py-5 <?= $index === 0 ? 'pb-5' : 'border-t border-slate-200' ?>">
+                        <span class="w-16 shrink-0 font-display text-lg font-bold tabular-nums text-brand-700"><?= e($bod['cas']) ?></span>
+                        <span class="pt-0.5 text-base text-slate-700"><?= e($bod['polozka']) ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+
+        </div>
+    </div>
+</section>
+
+<!-- Poslední výsledky -->
+<section class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+
+            <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Výsledky 2026</p>
+                    <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                        Nejrychlejší muži PRO
+                    </h2>
+                </div>
+                <a href="/vysledky"
+                   class="inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
+                    Všechny výsledky
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <ol class="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+                <?php foreach ($podium as $radek): ?>
+                    <li class="flex items-center gap-6 py-5">
+                        <span class="w-8 font-display text-xl font-black tabular-nums <?= $radek['poradi'] === 1 ? 'text-brand-600' : 'text-slate-300' ?>">
+                            <?= e($radek['poradi']) ?>
+                        </span>
+                        <span class="flex-1">
+                            <span class="block font-semibold text-slate-900"><?= e($radek['jmeno']) ?></span>
+                            <span class="block text-sm text-slate-500"><?= e($radek['oddil']) ?></span>
+                        </span>
+                        <span class="font-display text-lg font-bold tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+
+            <p class="mt-4 text-sm text-slate-500">Kategorie <?= e($podiumKategorie) ?> &middot; 26. ročník, 17. ledna 2026</p>
+        </div>
+    </div>
+</section>
+
+<!-- Závěrečné CTA -->
+<section class="relative isolate overflow-hidden bg-night text-white">
+    <?php require __DIR__ . '/partials/contours.php'; ?>
+
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Přihlášky</p>
+            <h2 class="mt-4 max-w-2xl font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-4xl">
+                Přihlaste se na další ročník
+            </h2>
+            <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
+                Registrace dalšího ročníku zatím není pořadatelem potvrzená. Přihlášku můžete odeslat už teď –
+                s dotazy na termín a podmínky se obraťte přímo na pořadatele.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="/prihlaska"
+                   class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                    Podat přihlášku
+                </a>
+                <a href="/kontakt"
+                   class="inline-flex items-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+                    Kontakt na pořadatele
+                </a>
+            </div>
         </div>
     </div>
 </section>

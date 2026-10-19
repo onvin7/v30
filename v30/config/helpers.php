@@ -90,3 +90,38 @@ function redirect(string $path): never
     header('Location: ' . $path, true, 302);
     exit;
 }
+
+/**
+ * Mapa obrázků webu (config/images.php) – načte se jednou za požadavek.
+ *
+ * @return array<string, string>
+ */
+function images(): array
+{
+    static $map = null;
+
+    if ($map === null) {
+        $loaded = require APP_ROOT . '/config/images.php';
+        $map    = is_array($loaded) ? $loaded : [];
+    }
+
+    return $map;
+}
+
+/**
+ * URL obrázku podle klíče; prázdný řetězec znamená „obrázek není k dispozici“.
+ */
+function img_url(string $key): string
+{
+    $url = images()[$key] ?? '';
+
+    return is_string($url) ? trim($url) : '';
+}
+
+/**
+ * Zda je pro daný klíč k dispozici obrázek.
+ */
+function has_img(string $key): bool
+{
+    return img_url($key) !== '';
+}

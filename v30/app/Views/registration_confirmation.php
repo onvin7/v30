@@ -1,92 +1,106 @@
-<!-- Potvrzení přihlášky -->
-<section class="bg-white border-b border-slate-200">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mb-4">Rekapitulace přihlášky</p>
-        <h1 class="font-display text-4xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900 mb-5">Přihláška odeslána</h1>
-        <p class="text-lg text-slate-600">
-            Děkujeme. Níže je rekapitulace přihlášky a platební instrukce. Zkontrolujte prosím, že údaje odpovídají skutečnosti.
-        </p>
-    </div>
-</section>
+<?php
+$pageHeader = [
+    'eyebrow'    => 'Rekapitulace přihlášky',
+    'title'      => 'Přihláška odeslána',
+    'lead'       => 'Děkujeme. Níže je rekapitulace přihlášky a platební instrukce. Zkontrolujte prosím, že údaje odpovídají skutečnosti.',
+    'breadcrumb' => [
+        ['label' => 'Úvod', 'href' => '/'],
+        ['label' => 'Přihlášky', 'href' => '/prihlaska'],
+        ['label' => 'Potvrzení'],
+    ],
+];
+require __DIR__ . '/partials/page_header.php';
+?>
 
 <section class="bg-white">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-6">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 
-        <!-- Rekapitulace -->
-        <div class="bg-white border border-slate-200 rounded-lg p-6 sm:p-8">
-            <div class="flex items-baseline justify-between gap-4 border-b border-slate-200 pb-4">
-                <h2 class="font-display text-xl font-extrabold text-slate-900">Rekapitulace</h2>
-                <span class="text-sm font-semibold tabular-nums text-slate-600"><?= e($prihlaseni['id']) ?></span>
-            </div>
-            <dl class="divide-y divide-slate-200">
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Závodník</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['jmeno'] . ' ' . $prihlaseni['prijmeni']) ?></dd>
+            <!-- Rekapitulace -->
+            <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Rekapitulace</p>
+                    <p class="font-display text-sm font-bold tabular-nums tracking-tight text-slate-500"><?= e($prihlaseni['id']) ?></p>
                 </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Oddíl / tým</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['oddil']) ?></dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Kategorie</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['kategorie']) ?> (<?= e($prihlaseni['trat']) ?>)</dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Ročník narození</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['rocnik_narozeni']) ?></dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">E-mail</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['email']) ?></dd>
-                </div>
-                <?php if ($prihlaseni['poznamka'] !== ''): ?>
-                    <div class="py-3 flex items-baseline justify-between gap-4">
-                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka</dt>
-                        <dd class="text-sm text-slate-600 text-right max-w-md"><?= e($prihlaseni['poznamka']) ?></dd>
+
+                <dl class="mt-8 divide-y divide-slate-200 border-y border-slate-200">
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Závodník</dt>
+                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['jmeno'] . ' ' . $prihlaseni['prijmeni']) ?></dd>
                     </div>
-                <?php endif; ?>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Odesláno</dt>
-                    <dd class="text-sm text-slate-600"><?= e($prihlaseni['vytvoreno']) ?></dd>
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Oddíl / tým</dt>
+                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['oddil']) ?></dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Kategorie</dt>
+                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['kategorie']) ?> (<?= e($prihlaseni['trat']) ?>)</dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Ročník narození</dt>
+                        <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($prihlaseni['rocnik_narozeni']) ?></dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">E-mail</dt>
+                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['email']) ?></dd>
+                    </div>
+                    <?php if ($prihlaseni['poznamka'] !== ''): ?>
+                        <div class="flex items-baseline justify-between gap-4 py-4">
+                            <dt class="shrink-0 text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka</dt>
+                            <dd class="max-w-md text-right text-sm text-slate-600"><?= e($prihlaseni['poznamka']) ?></dd>
+                        </div>
+                    <?php endif; ?>
+                    <div class="flex items-baseline justify-between gap-4 py-4">
+                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Odesláno</dt>
+                        <dd class="text-sm tabular-nums text-slate-600"><?= e($prihlaseni['vytvoreno']) ?></dd>
+                    </div>
+                </dl>
+
+                <p class="mt-6 text-sm text-slate-500">
+                    Potvrzení o přijetí přihlášky e-mailem bude součástí produkční verze webu.
+                </p>
+            </div>
+
+            <!-- Platební instrukce -->
+            <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
+                <div class="border-l-2 border-brand-600 bg-snow px-5 py-6 sm:px-6 sm:py-7">
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Platební instrukce</p>
+                    <p class="mt-3 text-sm leading-6 text-slate-600">
+                        Startovné uhraďte bankovním převodem. Platba se považuje za přijatou až po jejím ověření pořadatelem.
+                    </p>
+
+                    <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
+                        <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Číslo účtu</dt>
+                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Částka</dt>
+                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['castka']) ?></dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Variabilní symbol</dt>
+                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['vs']) ?></dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka pro příjemce</dt>
+                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['poznamka']) ?></dd>
+                        </div>
+                    </dl>
                 </div>
-            </dl>
+
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="/"
+                       class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                        Zpět na úvod
+                    </a>
+                    <a href="/propozice"
+                       class="inline-flex items-center rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-snow">
+                        Propozice a trať
+                    </a>
+                </div>
+            </div>
+
         </div>
-
-        <!-- Platební instrukce -->
-        <div class="bg-white border border-slate-200 border-l-4 border-l-orange-600 rounded-lg p-6 sm:p-8">
-            <h2 class="font-display text-xl font-extrabold text-slate-900 mb-1">Platební instrukce</h2>
-            <p class="text-sm leading-6 text-slate-600 mb-4">
-                Startovné uhraďte bankovním převodem. Platba se považuje za přijatou až po jejím ověření pořadatelem.
-            </p>
-            <dl class="divide-y divide-slate-200">
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Číslo účtu</dt>
-                    <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Částka</dt>
-                    <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['castka']) ?></dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Variabilní symbol</dt>
-                    <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['vs']) ?></dd>
-                </div>
-                <div class="py-3 flex items-baseline justify-between gap-4">
-                    <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka pro příjemce</dt>
-                    <dd class="text-sm font-semibold text-slate-900"><?= e($platba['poznamka']) ?></dd>
-                </div>
-            </dl>
-        </div>
-
-        <!-- Další kroky -->
-        <div class="flex flex-wrap gap-3">
-            <a href="/" class="inline-flex items-center rounded-md bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold px-5 py-3 transition-colors">Zpět na úvod</a>
-            <a href="/propozice" class="inline-flex items-center rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-900 text-sm font-semibold px-5 py-3 transition-colors">Propozice a trať</a>
-        </div>
-
-        <p class="text-sm text-slate-600">
-            Potvrzení o přijetí přihlášky e-mailem bude součástí produkční verze webu.
-        </p>
-
     </div>
 </section>

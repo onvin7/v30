@@ -1,63 +1,95 @@
-<!-- Galerie -->
-<section class="bg-white border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mb-4">Fotografie ze závodu</p>
-        <h1 class="font-display text-4xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900 mb-5">Galerie</h1>
-        <p class="text-lg text-slate-600 max-w-3xl">
-            Fotografie jsou členěné podle ročníků. Kompletní alba odkazujeme do externí galerie pořadatele.
-        </p>
-    </div>
-</section>
+<?php
+$pageHeader = [
+    'eyebrow'    => 'Fotografie ze závodu',
+    'title'      => 'Galerie',
+    'lead'       => 'Tři poslední ročníky závodu ve fotografiích pořadatele. Kompletní alba jsou v externí galerii.',
+    'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Galerie']],
+    'image'      => 'header-gallery',
+];
+require __DIR__ . '/partials/page_header.php';
+?>
 
+<!-- Alba podle ročníků -->
 <section class="bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Alba</p>
+            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                Ročníky v obrazech
+            </h2>
+        </div>
 
-        <!-- Alba podle ročníků -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             <?php foreach ($alba as $album): ?>
-                <div class="bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col">
-                    <img
-                        src="<?= e($album['nahled']) ?>"
-                        alt="<?= e($album['nazev']) ?>"
-                        loading="lazy"
-                        class="w-full h-48 object-cover border-b border-slate-200">
-                    <div class="p-6 sm:p-8 flex flex-col flex-1">
-                        <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Ročník <?= e($album['rok']) ?></p>
-                        <h2 class="font-display text-xl font-extrabold text-slate-900 mt-1 mb-2"><?= e($album['nazev']) ?></h2>
-                        <p class="text-sm leading-6 text-slate-600 mb-4 flex-1"><?= e($album['popis']) ?></p>
-                        <div class="border-t border-slate-200 pt-4">
-                            <p class="text-xs text-slate-500 mb-3">Fotograf: <?= e($album['fotograf']) ?></p>
-                            <a href="<?= e($album['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-900 text-sm font-semibold px-4 py-2.5 transition-colors">
-                                Otevřít album ↗
-                            </a>
+                <article class="reveal group" x-intersect.once="$el.classList.add('is-visible')">
+                    <a href="<?= e($album['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="block">
+
+                        <div class="overflow-hidden rounded-md bg-deep">
+                            <?php if ($album['nahled'] !== ''): ?>
+                                <img src="<?= e($album['nahled']) ?>"
+                                     alt="Fotografie z ročníku <?= e($album['rok']) ?>"
+                                     loading="lazy" decoding="async"
+                                     class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]">
+                            <?php else: ?>
+                                <div class="relative isolate flex aspect-[3/2] w-full items-end p-5">
+                                    <?php require __DIR__ . '/partials/contours.php'; ?>
+                                    <p class="text-sm text-white/50">Album bude doplněno.</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    </div>
-                </div>
+
+                        <h3 class="mt-4 font-display text-lg font-extrabold tracking-tight transition-colors group-hover:text-brand-600 sm:text-xl">
+                            <?= e($album['nazev']) ?>
+                        </h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            <?= e($album['datum']) ?>
+                            <span class="text-slate-300" aria-hidden="true">/</span>
+                            <span class="tabular-nums"><?= e($album['pocet']) ?></span> fotek
+                            <span class="text-slate-300" aria-hidden="true">/</span>
+                            <?= e($album['fotograf']) ?>
+                        </p>
+                    </a>
+                </article>
             <?php endforeach; ?>
         </div>
-
-        <!-- Fotografie z ročníku 2026 -->
-        <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 mb-4">Ročník 2026</p>
-            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6">Z průběhu závodu</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <?php foreach ($fotky as $foto): ?>
-                    <img
-                        src="<?= e($foto['src']) ?>"
-                        alt="<?= e($foto['alt']) ?>"
-                        loading="lazy"
-                        class="w-full aspect-square object-cover rounded-lg border border-slate-200">
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <div class="bg-white border border-slate-200 border-l-4 border-l-orange-600 rounded-lg p-6 sm:p-8">
-            <p class="text-sm font-semibold text-slate-600">Archiv fotografií</p>
-            <p class="text-sm leading-6 text-slate-600 mt-2 max-w-3xl">
-                Starší alba doplníme po ověření práv k fotografiím a pravidel pro snímky dětí. Fotografie se do nového
-                webu nahrávají až po schválení pořadatelem.
-            </p>
-        </div>
-
     </div>
 </section>
+
+<!-- Fotografie z ročníku 2026 -->
+<?php if ($fotky !== []): ?>
+<section class="border-t border-slate-200 bg-snow">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+
+            <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník 2026</p>
+                    <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                        Z průběhu závodu
+                    </h2>
+                </div>
+                <a href="https://eu.zonerama.com/milvin/Album/14562205" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
+                    Celé album
+                    <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+
+            <div class="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] sm:grid-cols-3 lg:auto-rows-[13rem] lg:grid-cols-4">
+                <?php foreach ($fotky as $index => $foto): ?>
+                    <figure class="<?= $index === 0 ? 'col-span-2 row-span-2' : '' ?> overflow-hidden rounded-md bg-deep">
+                        <img src="<?= e(img_url($foto['klic'])) ?>"
+                             alt="<?= e($foto['alt']) ?>"
+                             loading="lazy" decoding="async"
+                             class="h-full w-full object-cover">
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+
+            <p class="mt-6 text-sm text-slate-500">
+                Starší ročníky (2023 a starší) doplníme po ověření práv k fotografiím.
+            </p>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

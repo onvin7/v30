@@ -1,8 +1,28 @@
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <section class="max-w-lg mx-auto bg-white border border-slate-200 rounded-lg p-8 text-center">
-        <p class="text-5xl font-bold text-orange-600 mb-2">405</p>
-        <h1 class="text-xl font-semibold text-slate-900 mb-2">Metoda není povolena</h1>
-        <p class="text-slate-600 mb-6">Tuto adresu nelze otevřít tímto způsobem. Zkuste se vrátit na úvod.</p>
-        <a href="/" class="inline-flex items-center rounded-md bg-orange-600 hover:bg-orange-700 text-white font-semibold px-5 py-2.5 transition-colors">Zpět na úvod</a>
-    </section>
-</div>
+<section class="relative isolate flex min-h-[70vh] items-center overflow-hidden bg-night text-white">
+    <?php require __DIR__ . '/partials/contours.php'; ?>
+
+    <div class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Chyba 405</p>
+
+        <p class="mt-4 font-display text-6xl font-black leading-none tracking-tight sm:text-8xl">405</p>
+
+        <h1 class="mt-6 font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-3xl">
+            Metoda není povolena
+        </h1>
+
+        <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
+            Tuto adresu nelze otevřít tímto způsobem. Zkuste se vrátit na úvod.
+        </p>
+
+        <div class="mt-9 flex flex-wrap gap-3">
+            <a href="/"
+               class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                Zpět na úvod
+            </a>
+            <a href="/kontakt"
+               class="inline-flex items-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+                Kontakt na pořadatele
+            </a>
+        </div>
+    </div>
+</section>
