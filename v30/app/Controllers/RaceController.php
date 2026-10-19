@@ -42,6 +42,31 @@ class RaceController
             ['kod' => 'pro-for-fun',       'nazev' => 'Muži a ženy PRO RADOST',             'trat' => '30 km', 'styl' => 'volně',    'cena' => '300 / 400 Kč'],
         ];
 
+        // Trasy závodu a mapové podklady. Dětské tratě zatím používají stejný podklad jako hlavní trať.
+        $trasy = [
+            [
+                'nazev' => 'Hlavní trať',
+                'trat'  => '30 km',
+                'styl'  => 'volně nebo klasicky',
+                'popis' => 'Okruh pro juniory a dospělé kategorie. Start a cíl u chaty Bedřichovka v Orlickém Záhoří, kontrolní bod na Pěticestí u Horské služby.',
+                'mapa'  => 'https://mapy.com/s/calefedoho',
+            ],
+            [
+                'nazev' => 'Dětská trať',
+                'trat'  => '7 km',
+                'styl'  => 'volně',
+                'popis' => 'Trať pro děti 7–10 a 11–14 let a kategorii dětí PRO.',
+                'mapa'  => 'https://mapy.com/s/calefedoho',
+            ],
+            [
+                'nazev' => 'Dětská trať',
+                'trat'  => '3 km',
+                'styl'  => 'klasicky',
+                'popis' => 'Nejlehčí trať pro nejmenší závodníky do 6 let.',
+                'mapa'  => 'https://mapy.com/s/calefedoho',
+            ],
+        ];
+
         $startovne = [
             'Dětské kategorie: 200 Kč.',
             'Dospělé kategorie při včasné bezhotovostní platbě (do 15. ledna 2026): 300 Kč.',

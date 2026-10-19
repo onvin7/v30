@@ -123,6 +123,38 @@
             </div>
         </div>
 
+        <!-- Trasy a mapy -->
+        <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+            <div class="p-6 sm:p-8 pb-4">
+                <h2 class="font-display text-xl font-extrabold text-slate-900">Trasy a mapy</h2>
+                <p class="text-sm text-slate-600 mt-2">Mapové podklady jednotlivých tratí ročníku 2026.</p>
+            </div>
+            <div class="divide-y divide-slate-200">
+                <?php foreach ($trasy as $trasa): ?>
+                    <div class="p-6 sm:p-8">
+                        <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-3">
+                            <h3 class="font-display text-lg font-bold text-slate-900"><?= e($trasa['nazev']) ?></h3>
+                            <span class="text-sm font-semibold tabular-nums text-slate-600"><?= e($trasa['trat']) ?> &middot; <?= e($trasa['styl']) ?></span>
+                        </div>
+                        <p class="text-sm leading-6 text-slate-600 mb-4"><?= e($trasa['popis']) ?></p>
+                        <?php if ($trasa['mapa'] !== ''): ?>
+                            <div class="rounded-lg overflow-hidden border border-slate-200">
+                                <iframe
+                                    src="<?= e($trasa['mapa']) ?>"
+                                    title="Mapa trasy <?= e($trasa['nazev']) ?>"
+                                    loading="lazy"
+                                    class="w-full h-80 sm:h-96 border-0"
+                                    allowfullscreen></iframe>
+                            </div>
+                            <a href="<?= e($trasa['mapa']) ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-900 text-sm font-semibold px-4 py-2.5 transition-colors mt-4">Otevřít mapu ↗</a>
+                        <?php else: ?>
+                            <p class="text-sm italic text-slate-500">Mapa této trati bude doplněna.</p>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
         <!-- Oficiální dokument -->
         <div class="bg-white border border-slate-200 rounded-lg p-6 sm:p-8">
             <p class="text-sm font-semibold text-slate-600">Archiv</p>

@@ -13,7 +13,7 @@ Rozhodnutí potvrzená uživatelem:
 
 ## Analýza současného stavu
 
-Zdroj pravdy pro obsah jsou dokumenty v kořeni workspace — zejména [PLAN_PROJEKTU_V30.md](file:///c:/Users/onvin/Documents/WEB/v30/PLAN_PROJEKTU_V30.md) (návrh navigace a obsahu), [AGENTS.md](file:///c:/Users/onvin/Documents/WEB/v30/AGENTS.md) (potvrzený rozsah MVP) a [designov_mantinely.md](file:///c:/Users/onvin/Documents/WEB/v30/designov_mantinely.md). Vzorové stránky a datový model existují v Laravel referenci [application](file:///c:/Users/onvin/Documents/WEB/v30/application).
+Zdroj pravdy pro obsah byl původní web `vodacka30.cz` a dřívější plánovací dokumenty v kořeni workspace (návrh navigace a obsahu, rozsah MVP, designové mantinely); ty už v repozitáři nejsou. Vzorové stránky a datový model dříve poskytovala Laravel reference, která byla z repozitáře odstraněna.
 
 Co existuje a funguje:
 - `index.php` → [web/index.php](file:///c:/Users/onvin/Documents/WEB/v30/v30/web/index.php) (front controller s mapou rout `path => [Controller, metoda]`, `preg_match` nad normalizovaným URI) a [autoloader.php](file:///c:/Users/onvin/Documents/WEB/v30/v30/config/autoloader.php) (PSR-4 `App\` → `/app`).
@@ -94,7 +94,7 @@ Všechny dodržují vzor z [HomeController.php](file:///c:/Users/onvin/Documents
 
 ### 5. Registrace – funkční formulář (`RegistrationController`)
 
-**GET `/prihlaska`** – zobrazí formulář s mock kategoriemi (běžkařské kategorie z [Vodacka30Seeder.php](file:///c:/Users/onvin/Documents/WEB/v30/application/database/seeders/Vodacka30Seeder.php): děti 3/7 km, junioři, Muži/Ženy PRO, Muži/Ženy KLASICI, PRO RADOST, Veteráni – vše 30 km):
+**GET `/prihlaska`** – zobrazí formulář s mock kategoriemi (děti 3/7 km, junioři, Muži/Ženy PRO, Muži/Ženy KLASICI, PRO RADOST, Veteráni – vše 30 km):
 - Pole: `kategorie` (select), `oddil`, `jmeno`, `prijmeni`, `rocnik_narozeni`, `email`, `poznamka` (nepovinné), `souhlas` (GDPR checkbox), skrytý honeypot `website`, `csrf_field()`.
 - Chybové zprávy z `flash_get('errors')`, hodnoty z `old_get()`.
 - Viditelné označení, že jde o ukázkový režim (data se neukládají do DB).
@@ -109,7 +109,7 @@ Všechny dodržují vzor z [HomeController.php](file:///c:/Users/onvin/Documents
 
 ### 6. Nové šablony (`app/Views/`)
 
-Všechny bez nového designu, ve stylu `home.php` (karty `bg-white border border-slate-200 rounded-lg`, sekce `py-16`, oranžová jen na akce). Obsah vychází z Laravel reference v [application/resources/views/public](file:///c:/Users/onvin/Documents/WEB/v30/application/resources/views/public):
+Všechny bez nového designu, ve stylu `home.php` (karty `bg-white border border-slate-200 rounded-lg`, sekce `py-16`, oranžová jen na akce). Obsah vychází z podkladů původního webu `vodacka30.cz`:
 
 - `about.php` – O závodu: charakter závodu (běžky v Orlických horách, pořadatel TJ KVT Pardubice), fakta ročníku 2026 (místo Bedřichovka/Orlické Záhoří, dětské tratě 3 a 7 km, kontrolní bod Pěticestí), odkazy na propozice a výsledky.
 - `propositions.php` – Propozice a trať: oznámení, že 2027 zatím není potvrzeno; strukturované oddíly (pořadatelé, program, kategorie – tabulka, tratě, startovné, platba, časový limit, bezpečnost, ubytování, kontakty) + odkaz na oficiální PDF na `vodacka30.cz`.
@@ -130,14 +130,14 @@ Všechny bez nového designu, ve stylu `home.php` (karty `bg-white border border
 
 ## Předpoklady a rozhodnutí
 
-- Cílová aplikace je [v30](file:///c:/Users/onvin/Documents/WEB/v30/v30); Laravel [application](file:///c:/Users/onvin/Documents/WEB/v30/application) slouží jen jako obsahová reference a neupravuje se.
+- Cílová (a jediná) aplikace je [v30](file:///c:/Users/onvin/Documents/WEB/v30/v30); žádná další reference v repozitáři není.
 - Žádná DB, Composer ani Node – mock data v kontrolerech (volba uživatele).
 - Přihláška je funkční, ale ukládá se pouze do session; v UI to bude výslovně uvedeno.
-- Platba = bankovní převod bez QR (potvrzené rozhodnutí MVP v [AGENTS.md](file:///c:/Users/onvin/Documents/WEB/v30/AGENTS.md)).
-- Ročník 2027 je nepotvrzený; obsah stránek se proto vztahuje k ročníku 2026 jako k archivnímu (shodně s referencí).
+- Platba = bankovní převod bez QR (potvrzené rozhodnutí MVP).
+- Ročník 2027 je nepotvrzený; obsah stránek se proto vztahuje k ročníku 2026 jako k archivnímu.
 - Kontakt a Galerie jsou informační stránky bez formuláře a bez nahrávání souborů.
 - Design se neřeší; používají se existující Tailwind utility a vzory.
-- Staré URL na `vodacka30.cz` se neřeší ani nepřesměrovávají; externí odkazy zůstávají tam, kde je uvádí reference.
+- Staré URL na `vodacka30.cz` se neřeší ani nepřesměrovávají; externí odkazy zůstávají tam, kde je uváděl původní web.
 
 ## Pořadí implementace
 
