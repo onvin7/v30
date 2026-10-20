@@ -1,6 +1,6 @@
 <?php
 $pageHeader = [
-    'eyebrow'    => 'Další ročník · 2027',
+    'eyebrow'    => 'Další ročník · ' . zavod()['rocnik']['rok'],
     'title'      => 'Přihlášky',
     'lead'       => 'Vyplňte přihlášku do běžkařské Vodácké 30. Lodní kategorie ze staršího formuláře se do tohoto závodu nepřebírají.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Přihlášky']],
@@ -138,11 +138,14 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                 <div class="lg:sticky lg:top-24 space-y-10">
 
                     <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Zkušební režim</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Přihlašujete víc závodníků?</p>
                         <p class="mt-3 text-sm leading-6 text-slate-600">
-                            Registrace ročníku 2027 zatím není potvrzená pořadatelem. Odeslaná přihláška se v této fázi ukládá pouze
-                            do relace prohlížeče a neslouží jako závazná registrace.
+                            Založte si účet oddílu, uložte si soupisku a přihlaste celý oddíl jedním krokem
+                            s jedním variabilním symbolem. Účet zpřístupníme po schválení pořadatelem.
                         </p>
+                        <a href="/oddil/registrace" class="mt-4 inline-flex items-center text-sm font-semibold text-brand-700 transition-colors hover:text-brand-500">
+                            Založit účet oddílu →
+                        </a>
                     </div>
 
                     <div>
@@ -150,15 +153,15 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
                             <div class="flex items-baseline justify-between gap-4 py-3.5">
                                 <dt class="text-sm text-slate-600">Dětské kategorie</dt>
-                                <dd class="text-sm font-semibold tabular-nums text-slate-900">200 Kč</dd>
+                                <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['detske']) ?> Kč</dd>
                             </div>
                             <div class="flex items-baseline justify-between gap-4 py-3.5">
-                                <dt class="text-sm text-slate-600">Dospělí (včasná platba)</dt>
-                                <dd class="text-sm font-semibold tabular-nums text-slate-900">300 Kč</dd>
+                                <dt class="min-w-0 text-sm text-slate-600">Dospělí (včasná platba do <?= e($startovne['uzavierka']) ?>)</dt>
+                                <dd class="shrink-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['vcasna']) ?> Kč</dd>
                             </div>
                             <div class="flex items-baseline justify-between gap-4 py-3.5">
                                 <dt class="text-sm text-slate-600">Platba na místě</dt>
-                                <dd class="text-sm font-semibold tabular-nums text-slate-900">400 Kč</dd>
+                                <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['na_miste']) ?> Kč</dd>
                             </div>
                         </dl>
                         <p class="mt-4 text-sm text-slate-500">

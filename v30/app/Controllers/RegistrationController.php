@@ -2,37 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\RegistrationRepository;
+
 class RegistrationController
 {
-    /**
-     * Povolené kategorie přihlášky (allowlist).
-     * Mock data – později nahradí Model / databáze.
-     *
-     * @return array<string, array{nazev: string, trat: string, cena: int}>
-     */
-    private function kategorie(): array
-    {
-        return [
-            'children-under-6'  => ['nazev' => 'Chlapci a dívky do 6 let',          'trat' => '3 km',  'cena' => 200],
-            'children-7-10'     => ['nazev' => 'Chlapci a dívky od 7 do 10 let',    'trat' => '7 km',  'cena' => 200],
-            'children-11-14'    => ['nazev' => 'Chlapci a dívky od 11 do 14 let',   'trat' => '7 km',  'cena' => 200],
-            'children-pro-7-14' => ['nazev' => 'Chlapci a dívky PRO od 7 do 14 let','trat' => '7 km',  'cena' => 200],
-            'juniors'           => ['nazev' => 'Junioři',                           'trat' => '30 km', 'cena' => 300],
-            'men-pro'           => ['nazev' => 'Muži PRO',                          'trat' => '30 km', 'cena' => 300],
-            'women-pro'         => ['nazev' => 'Ženy PRO',                          'trat' => '30 km', 'cena' => 300],
-            'men-classic'       => ['nazev' => 'Muži KLASICI',                      'trat' => '30 km', 'cena' => 300],
-            'women-classic'     => ['nazev' => 'Ženy KLASIČKY',                     'trat' => '30 km', 'cena' => 300],
-            'pro-for-fun'       => ['nazev' => 'Muži a ženy PRO RADOST',            'trat' => '30 km', 'cena' => 300],
-            'veterans'          => ['nazev' => 'Veteráni / veteránky',              'trat' => '30 km', 'cena' => 300],
-        ];
-    }
-
     /**
      * Zobrazí přihlašovací formulář.
      */
     public function create()
     {
-        $kategorie = $this->kategorie();
+        // Kategorie pocházejí z jediného zdroje (config/zavod.php) – stejná sada
+        // jako v propozicích. Ceny se do souhrnu odvozují z nich, neopisují se.
+        $kategorie = zavod()['kategorie'];
+        $startovne = [
+            'detske'   => $kategorie['children-under-6']['cena'],
+            'vcasna'   => $kategorie['men-pro']['cena'],
+            'na_miste' => $kategorie['men-pro']['cena_na_miste'],
+            'uzavierka' => zavod()['rocnik']['uzavierka'],
+        ];
         $errors    = flash_get('errors', []);
 
         $title = 'Přihlášky | Vodácká 30';
@@ -46,7 +33,7 @@ class RegistrationController
      */
     public function store()
     {
-        $kategorie = $this->kategorie();
+        $kategorie = zavod()['kategorie'];
 
         // CSRF a honeypot – tiché odmítnutí bez uložení.
         if (! csrf_verify($_POST['_csrf'] ?? null) || trim((string) ($_POST['website'] ?? '')) !== '') {
@@ -108,15 +95,34 @@ class RegistrationController
             redirect('/prihlaska');
         }
 
-        // Simulované uložení – bez databáze, záznam zůstává pouze v session.
-        $id = sprintf('V30-%s-%04d', date('Y'), random_int(1, 9999));
-        $variabilniSymbol = (string) random_int(1000000000, 9999999999);
+        // Uložení do storage/prihlasky.json – jednotlivec má vlastní přihlášku
+        // i vlastní variabilní symbol. Účtuje se včasná cena; platba na místě
+        // startu je dražší (viz potvrzení).
         $kategorieInfo = $kategorie[$vstup['kategorie']];
 
+        $prihlaska = (new RegistrationRepository())->create([
+            'rok'         => (int) zavod()['rocnik']['rok'],
+            'typ'         => 'jednotlivec',
+            'oddil_id'    => null,
+            'oddil_nazev' => $vstup['oddil'],
+            'email'       => $vstup['email'],
+            'castka'      => (int) $kategorieInfo['cena'],
+            'poznamka'    => $vstup['poznamka'],
+            'zavodnici'   => [[
+                'jmeno'           => trim($vstup['jmeno'] . ' ' . $vstup['prijmeni']),
+                'rocnik_narozeni' => (int) $vstup['rocnik_narozeni'],
+                'kategorie'       => $vstup['kategorie'],
+                'kategorie_nazev' => (string) $kategorieInfo['nazev'],
+                'trat'            => (string) $kategorieInfo['trat'],
+                'cena'            => (int) $kategorieInfo['cena'],
+            ]],
+        ]);
+
         $prihlaseni = [
-            'id'                => $id,
-            'variabilni_symbol' => $variabilniSymbol,
-            'castka'            => $kategorieInfo['cena'],
+            'id'                => (string) $prihlaska['id'],
+            'variabilni_symbol' => (string) $prihlaska['variabilni_symbol'],
+            'castka'            => (int) $prihlaska['castka'],
+            'kategorie_kod'     => $vstup['kategorie'],
             'kategorie'         => $kategorieInfo['nazev'],
             'trat'              => $kategorieInfo['trat'],
             'oddil'             => $vstup['oddil'],
@@ -127,11 +133,6 @@ class RegistrationController
             'poznamka'          => $vstup['poznamka'],
             'vytvoreno'         => date('j. n. Y H:i'),
         ];
-
-        if (! isset($_SESSION['registrations']) || ! is_array($_SESSION['registrations'])) {
-            $_SESSION['registrations'] = [];
-        }
-        $_SESSION['registrations'][$id] = $prihlaseni;
 
         flash_set('old', []);
         flash_set('registration', $prihlaseni);
@@ -152,12 +153,21 @@ class RegistrationController
             redirect('/prihlaska');
         }
 
-        // Bankovní instrukce (mock) – bez QR, platbu ověřuje pořadatel ručně.
+        // Bankovní instrukce – bez QR, platbu ověřuje pořadatel ručně.
+        // Číslo účtu je v config/zavod.php; dokud ho pořadatel nedodá, je prázdné
+        // a potvrzení na to upozorní (aby nikdo neposílal peníze naslepo).
+        $kategorieInfo = zavod()['kategorie'][$prihlaseni['kategorie_kod']] ?? null;
+
         $platba = [
-            'ucet'   => '123456789/0300',
-            'castka' => $prihlaseni['castka'] . ' Kč',
-            'vs'     => $prihlaseni['variabilni_symbol'],
-            'poznamka' => $prihlaseni['id'],
+            'ucet'      => zavod()['ucet'],
+            'castka'    => $prihlaseni['castka'] . ' Kč',
+            'vs'        => $prihlaseni['variabilni_symbol'],
+            'poznamka'  => $prihlaseni['id'],
+            'uzavierka' => zavod()['rocnik']['uzavierka'],
+            // Doplatit na místě je potřeba jen u kategorií s dražší platbou na startu.
+            'na_miste'  => $kategorieInfo !== null && $kategorieInfo['cena_na_miste'] > $prihlaseni['castka']
+                ? $kategorieInfo['cena_na_miste'] . ' Kč'
+                : '',
         ];
 
         $title = 'Potvrzení přihlášky | Vodácká 30';

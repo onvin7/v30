@@ -69,11 +69,21 @@ require __DIR__ . '/partials/page_header.php';
                         Startovné uhraďte bankovním převodem. Platba se považuje za přijatou až po jejím ověření pořadatelem.
                     </p>
 
+                    <?php if ($platba['ucet'] === ''): ?>
+                        <p class="mt-4 text-sm leading-6 text-slate-600">
+                            Číslo účtu pořadatel zatím nezveřejnil. Doporučujeme jej ověřit v
+                            <a href="/propozice" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">propozicích</a>
+                            nebo přímo u pořadatele, a teprve poté platbu odeslat.
+                        </p>
+                    <?php endif; ?>
+
                     <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
-                        <div class="flex items-baseline justify-between gap-4 py-3.5">
-                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Číslo účtu</dt>
-                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
-                        </div>
+                        <?php if ($platba['ucet'] !== ''): ?>
+                            <div class="flex items-baseline justify-between gap-4 py-3.5">
+                                <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Číslo účtu</dt>
+                                <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
+                            </div>
+                        <?php endif; ?>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Částka</dt>
                             <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['castka']) ?></dd>
@@ -83,10 +93,21 @@ require __DIR__ . '/partials/page_header.php';
                             <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['vs']) ?></dd>
                         </div>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <dt class="min-w-0 text-xs font-medium uppercase tracking-wide text-slate-500">Včasná platba do</dt>
+                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['uzavierka']) ?></dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka pro příjemce</dt>
                             <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['poznamka']) ?></dd>
                         </div>
                     </dl>
+
+                    <?php if ($platba['na_miste'] !== ''): ?>
+                        <p class="mt-4 text-sm leading-6 text-slate-500">
+                            Při platbě na místě startu se startovné zvyšuje na <?= e($platba['na_miste']) ?>
+                            &ndash; včasná platba se proto vyplatí.
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">
