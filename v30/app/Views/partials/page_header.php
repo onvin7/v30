@@ -18,10 +18,12 @@ $headerTitle = (string) ($pageHeader['title'] ?? '');
 $lead        = (string) ($pageHeader['lead'] ?? '');
 $breadcrumb  = $pageHeader['breadcrumb'] ?? null;
 $imageUrl    = isset($pageHeader['image']) ? img_url((string) $pageHeader['image']) : '';
+$imageSrcset = isset($pageHeader['image']) ? img_srcset((string) $pageHeader['image'], [800, 1200, 1600]) : '';
 ?>
 <section class="relative isolate overflow-hidden bg-night text-white">
     <?php if ($imageUrl !== ''): ?>
         <img src="<?= e($imageUrl) ?>" alt="" aria-hidden="true" decoding="async"
+             <?php if ($imageSrcset !== ''): ?>srcset="<?= e($imageSrcset) ?>" sizes="100vw"<?php endif; ?>
              class="absolute inset-0 -z-20 h-full w-full object-cover">
         <div class="absolute inset-0 -z-10 bg-gradient-to-tr from-night via-night/85 to-deep/60" aria-hidden="true"></div>
     <?php else: ?>
@@ -53,7 +55,7 @@ $imageUrl    = isset($pageHeader['image']) ? img_url((string) $pageHeader['image
         <?php endif; ?>
 
         <?php if ($eyebrow !== ''): ?>
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice"><?= e($eyebrow) ?></p>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-ice sm:tracking-[0.3em]"><?= e($eyebrow) ?></p>
         <?php endif; ?>
 
         <h1 class="mt-4 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-5xl">

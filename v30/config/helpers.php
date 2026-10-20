@@ -125,3 +125,43 @@ function has_img(string $key): bool
 {
     return img_url($key) !== '';
 }
+
+/**
+ * Sada variant obrázku pro atribut `srcset`.
+ *
+ * Zonerama servíruje libovolný rozměr ve tvaru `{ID}_{šířka}x{výška}_2.jpg`,
+ * takže varianty odvodíme z výchozí URL v config/images.php a zachováme poměr
+ * stran předlohy. Prázdný řetězec znamená „použij jen samotné `src`“.
+ *
+ * @param list<int|string> $sirky požadované šířky v pixelech
+ */
+function img_srcset(string $key, array $sirky): string
+{
+    $url = img_url($key);
+
+    if ($url === '' || ! preg_match('#^(.*/)(\d+)_(\d+)x(\d+)_2(\.[A-Za-z]+)$#', $url, $casti)) {
+        return '';
+    }
+
+    [, $zaklad, $id, $sirka, $vyska, $pripona] = $casti;
+    $pomer = (int) $vyska / max(1, (int) $sirka);
+
+    $varianty = [];
+    foreach ($sirky as $w) {
+        $w = (int) $w;
+
+        if ($w > 0) {
+            $varianty[$w] = sprintf(
+                '%s%s_%dx%d_2%s %dw',
+                $zaklad,
+                $id,
+                $w,
+                (int) round($w * $pomer),
+                $pripona,
+                $w
+            );
+        }
+    }
+
+    return implode(', ', $varianty);
+}

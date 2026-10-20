@@ -17,7 +17,7 @@ foreach ($startovniListina as $skupina) {
 <!-- Rychlé kotvy na kategorie -->
 <section class="border-b border-slate-200 bg-snow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav aria-label="Kategorie" class="-mb-px flex gap-7 overflow-x-auto">
+        <nav aria-label="Kategorie" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:px-0">
             <?php foreach ($startovniListina as $index => $skupina): ?>
                 <a href="#kategorie-<?= $index + 1 ?>"
                    class="whitespace-nowrap border-b-2 border-transparent py-4 text-sm font-medium text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-900">
@@ -37,16 +37,30 @@ foreach ($startovniListina as $skupina) {
             <span class="font-semibold tabular-nums text-slate-900"><?= count($startovniListina) ?></span> kategoriích.
         </p>
 
-        <div class="mt-12 space-y-14">
+        <div class="mt-12 space-y-10 sm:space-y-14">
             <?php foreach ($startovniListina as $index => $skupina): ?>
-                <div id="kategorie-<?= $index + 1 ?>" class="reveal scroll-mt-24" x-intersect.once="$el.classList.add('is-visible')">
+                <div id="kategorie-<?= $index + 1 ?>" class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
                     <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                         <h2 class="font-display text-xl font-extrabold tracking-tight sm:text-2xl"><?= e($skupina['kategorie']) ?></h2>
                         <p class="text-sm tabular-nums text-slate-500"><?= count($skupina['zavodnici']) ?> závodníků</p>
                     </div>
 
-                    <div class="mt-6 overflow-x-auto">
+                    <!-- Mobil: záznamový seznam – tabulka potřebuje 34rem, do telefonu se nevejde -->
+                    <ul class="mt-6 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
+                        <?php foreach ($skupina['zavodnici'] as $zavodnik): ?>
+                            <li class="flex items-baseline gap-3 py-3.5">
+                                <span class="w-8 shrink-0 text-right font-display text-base font-black tabular-nums text-brand-600"><?= $zavodnik['cislo'] !== '' ? e($zavodnik['cislo']) : '—' ?></span>
+                                <span class="min-w-0">
+                                    <span class="block font-semibold text-slate-900"><?= e($zavodnik['jmeno']) ?></span>
+                                    <span class="mt-0.5 block text-sm text-slate-500"><?= $zavodnik['oddil'] !== '' ? e($zavodnik['oddil']) : '—' ?></span>
+                                </span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <!-- Tablet a výš: tabulka se od md: vždy vejde (34rem ≤ 720 px) -->
+                    <div class="mt-6 hidden overflow-x-auto md:block">
                         <table class="w-full min-w-[34rem] text-sm">
                             <caption class="sr-only">Startovní listina – <?= e($skupina['kategorie']) ?></caption>
                             <thead>

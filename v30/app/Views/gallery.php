@@ -21,6 +21,7 @@ require __DIR__ . '/partials/page_header.php';
 
         <div class="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             <?php foreach ($alba as $album): ?>
+                <?php $nahledSrcset = isset($album['klic']) ? img_srcset((string) $album['klic'], [400, 600, 900]) : ''; ?>
                 <article class="reveal group" x-intersect.once="$el.classList.add('is-visible')">
                     <a href="<?= e($album['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="block">
 
@@ -28,6 +29,7 @@ require __DIR__ . '/partials/page_header.php';
                             <?php if ($album['nahled'] !== ''): ?>
                                 <img src="<?= e($album['nahled']) ?>"
                                      alt="Fotografie z ročníku <?= e($album['rok']) ?>"
+                                     <?php if ($nahledSrcset !== ''): ?>srcset="<?= e($nahledSrcset) ?>" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"<?php endif; ?>
                                      loading="lazy" decoding="async"
                                      class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]">
                             <?php else: ?>
@@ -75,11 +77,13 @@ require __DIR__ . '/partials/page_header.php';
                 </a>
             </div>
 
-            <div class="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] sm:grid-cols-3 lg:auto-rows-[13rem] lg:grid-cols-4">
+            <div class="mt-10 grid auto-rows-[9rem] grid-flow-dense grid-cols-2 gap-3 sm:auto-rows-[11rem] sm:grid-cols-3 lg:auto-rows-[13rem] lg:grid-cols-4">
                 <?php foreach ($fotky as $index => $foto): ?>
+                    <?php $fotoSrcset = img_srcset($foto['klic'], [400, 600, 900]); ?>
                     <figure class="<?= $index === 0 ? 'col-span-2 row-span-2' : '' ?> overflow-hidden rounded-md bg-deep">
                         <img src="<?= e(img_url($foto['klic'])) ?>"
                              alt="<?= e($foto['alt']) ?>"
+                             <?php if ($fotoSrcset !== ''): ?>srcset="<?= e($fotoSrcset) ?>" sizes="(min-width: 1024px) 320px, (min-width: 640px) 33vw, 50vw"<?php endif; ?>
                              loading="lazy" decoding="async"
                              class="h-full w-full object-cover">
                     </figure>

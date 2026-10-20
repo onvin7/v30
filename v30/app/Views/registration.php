@@ -52,7 +52,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <div>
                             <label for="oddil" class="<?= $labelClass ?>">Oddíl / tým</label>
                             <input type="text" id="oddil" name="oddil" value="<?= e(old_get('oddil')) ?>" required maxlength="100"
-                                   class="<?= $inputClass ?>" placeholder="Např. TJ KVT Pardubice">
+                                   autocomplete="organization" class="<?= $inputClass ?>" placeholder="Např. TJ KVT Pardubice">
                             <?php if (isset($errors['oddil'])): ?>
                                 <p class="<?= $errorClass ?>"><?= e($errors['oddil']) ?></p>
                             <?php endif; ?>
@@ -63,7 +63,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             <div>
                                 <label for="jmeno" class="<?= $labelClass ?>">Jméno</label>
                                 <input type="text" id="jmeno" name="jmeno" value="<?= e(old_get('jmeno')) ?>" required maxlength="60"
-                                       class="<?= $inputClass ?>">
+                                       autocomplete="given-name" enterkeyhint="next" class="<?= $inputClass ?>">
                                 <?php if (isset($errors['jmeno'])): ?>
                                     <p class="<?= $errorClass ?>"><?= e($errors['jmeno']) ?></p>
                                 <?php endif; ?>
@@ -71,7 +71,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             <div>
                                 <label for="prijmeni" class="<?= $labelClass ?>">Příjmení</label>
                                 <input type="text" id="prijmeni" name="prijmeni" value="<?= e(old_get('prijmeni')) ?>" required maxlength="60"
-                                       class="<?= $inputClass ?>">
+                                       autocomplete="family-name" enterkeyhint="next" class="<?= $inputClass ?>">
                                 <?php if (isset($errors['prijmeni'])): ?>
                                     <p class="<?= $errorClass ?>"><?= e($errors['prijmeni']) ?></p>
                                 <?php endif; ?>
@@ -82,7 +82,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
                                 <label for="rocnik_narozeni" class="<?= $labelClass ?>">Ročník narození</label>
-                                <input type="text" id="rocnik_narozeni" name="rocnik_narozeni" value="<?= e(old_get('rocnik_narozeni')) ?>" required inputmode="numeric" maxlength="4"
+                                <input type="text" id="rocnik_narozeni" name="rocnik_narozeni" value="<?= e(old_get('rocnik_narozeni')) ?>" required inputmode="numeric" autocomplete="bday-year" enterkeyhint="next" maxlength="4"
                                        class="<?= $inputClass ?>" placeholder="Např. 1985">
                                 <?php if (isset($errors['rocnik_narozeni'])): ?>
                                     <p class="<?= $errorClass ?>"><?= e($errors['rocnik_narozeni']) ?></p>
@@ -91,6 +91,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             <div>
                                 <label for="email" class="<?= $labelClass ?>">E-mail</label>
                                 <input type="email" id="email" name="email" value="<?= e(old_get('email')) ?>" required
+                                       autocomplete="email" inputmode="email" enterkeyhint="next"
                                        class="<?= $inputClass ?>" placeholder="jmeno@email.cz">
                                 <?php if (isset($errors['email'])): ?>
                                     <p class="<?= $errorClass ?>"><?= e($errors['email']) ?></p>

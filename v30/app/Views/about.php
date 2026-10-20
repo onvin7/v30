@@ -15,7 +15,7 @@ require __DIR__ . '/partials/page_header.php';
         <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
 
             <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Vodácké mistrovství ČR v běhu na lyžích</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 sm:tracking-[0.3em]">Vodácké mistrovství ČR v běhu na lyžích</p>
                 <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
                     Závod na horách, pořádaný vodáky.
                 </h2>
@@ -30,13 +30,13 @@ require __DIR__ . '/partials/page_header.php';
                     </p>
                 </div>
 
-                <div class="mt-9 flex flex-wrap gap-3">
+                <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <a href="/propozice"
-                       class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                       class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
                         Propozice a trať
                     </a>
                     <a href="/vysledky"
-                       class="inline-flex items-center rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-snow">
+                       class="inline-flex items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-snow">
                         Výsledky 2026
                     </a>
                 </div>

@@ -19,14 +19,50 @@ $navItems = [
     ['href' => '/galerie',           'label' => 'Galerie'],
     ['href' => '/kontakt',           'label' => 'Kontakt'],
 ];
+
+// SEO metadata pro <head>. Stránky mohou doplnit $description a $robots.
+$seoIndex       = $robots ?? true;
+$seoTitle       = \App\Helpers\Seo::title($title ?? null);
+$seoDescription = \App\Helpers\Seo::description($description ?? null);
+$seoCanonical   = \App\Helpers\Seo::canonical($currentPath);
+$seoOpenGraph   = \App\Helpers\Seo::openGraph([
+    'title'       => $seoTitle,
+    'description' => $seoDescription,
+    'url'         => $seoCanonical,
+]);
+$seoTwitter     = \App\Helpers\Seo::twitterCard([
+    'title'       => $seoTitle,
+    'description' => $seoDescription,
+]);
+$seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
 ?>
 <!DOCTYPE html>
-<html lang="cs" class="scroll-pt-20 md:scroll-pt-0">
+<html lang="cs" class="scroll-pt-20 xl:scroll-pt-0">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#06152A">
-    <title><?= e($title ?? 'Vodácká 30') ?></title>
+    <title><?= e($seoTitle) ?></title>
+
+    <!-- SEO / meta -->
+    <meta name="description" content="<?= e($seoDescription) ?>">
+    <meta name="robots" content="<?= e(\App\Helpers\Seo::robots($seoIndex)) ?>">
+    <link rel="canonical" href="<?= e($seoCanonical) ?>">
+
+    <!-- Open Graph -->
+    <?php foreach ($seoOpenGraph as $vlastnost => $hodnota): ?>
+        <meta property="<?= e($vlastnost) ?>" content="<?= e($hodnota) ?>">
+    <?php endforeach; ?>
+
+    <!-- Twitter Card -->
+    <?php foreach ($seoTwitter as $nazev => $hodnota): ?>
+        <meta name="<?= e($nazev) ?>" content="<?= e($hodnota) ?>">
+    <?php endforeach; ?>
+
+    <!-- Strukturovaná data -->
+    <?php foreach ($seoStructured as $schema): ?>
+        <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+    <?php endforeach; ?>
 
     <!-- Tailwind CSS (CDN – bez buildování přes Node.js) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -66,6 +102,9 @@ $navItems = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Fotky (Zonerama) -->
+    <link rel="preconnect" href="https://eu.zonerama.com" crossorigin>
 
     <!-- Alpine.js – plugin Intersect musí být načtený před jádrem Alpine -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.14.1/dist/cdn.min.js"></script>
@@ -121,12 +160,27 @@ $navItems = [
             to   { opacity: 1; transform: none; }
         }
 
-        /* Hlavička: na desktopu je statická nahoře a odscrolluje se */
-        @media (min-width: 768px) {
+        /* Hlavička: na širokých obrazovkách je statická nahoře a odscrolluje se.
+           Breakpoint musí odpovídat `xl:` v hlavičce a kontrole v JS níže. */
+        @media (min-width: 1280px) {
             .site-header {
                 position: relative !important;
                 transform: none !important;
             }
+        }
+
+        /* Vodorovné lišty (filtr kategorií) – scroll funguje, ale bez viditelného pruhu */
+        .no-scrollbar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Dlouhé nezlomitelné řetězce (e-maily, názvy oddílů) nesmí roztáhnout stránku */
+        dd, dt, p, li, h1, h2, h3 {
+            overflow-wrap: break-word;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -137,7 +191,8 @@ $navItems = [
         }
     </style>
 </head>
-<body class="bg-snow text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+<!-- `min-height: 100dvh` řeší adresní lištu na mobilu; `min-h-screen` je záloha pro starší prohlížeče. -->
+<body class="bg-snow text-slate-900 font-sans antialiased min-h-screen flex flex-col" style="min-height: 100dvh;">
 
     <a href="#obsah"
        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-700">
@@ -149,7 +204,7 @@ $navItems = [
         x-data="{ open: false, hidden: false, lastY: 0 }"
         @scroll.window="
             const y = window.scrollY;
-            hidden = (window.innerWidth < 768) && y > lastY && y > 140;
+            hidden = (window.innerWidth < 1280) && y > lastY && y > 140;
             if (hidden) { open = false; }
             lastY = y;
         "
@@ -209,7 +264,7 @@ $navItems = [
                 <?php foreach ($navItems as $item): ?>
                     <?php $isActive = $currentPath === $item['href']; ?>
                     <a href="<?= e($item['href']) ?>"
-                       class="flex items-center justify-between rounded-md px-3 py-2.5 transition-colors <?= $isActive ? 'bg-white/10 text-white' : 'text-white/75 hover:bg-white/5 hover:text-white' ?>"
+                       class="flex min-h-[44px] items-center justify-between rounded-md px-3 py-2.5 transition-colors <?= $isActive ? 'bg-white/10 text-white' : 'text-white/75 hover:bg-white/5 hover:text-white' ?>"
                        <?= $isActive ? 'aria-current="page"' : '' ?>>
                         <?= e($item['label']) ?>
                         <?php if ($isActive): ?>
@@ -218,7 +273,7 @@ $navItems = [
                     </a>
                 <?php endforeach; ?>
                 <a href="/prihlaska"
-                   class="mt-2 inline-flex justify-center rounded-md bg-brand-500 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="mt-2 inline-flex min-h-[44px] items-center justify-center rounded-md bg-brand-500 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-brand-400">
                     Přihlásit se
                 </a>
             </nav>
@@ -226,7 +281,7 @@ $navItems = [
     </header>
 
     <!-- Obsah jednotlivých stránek -->
-    <main id="obsah" class="flex-1" x-data="{}">
+    <main id="obsah" tabindex="-1" class="flex-1 focus:outline-none" x-data="{}">
         <?php if ($flashSuccess): ?>
             <div class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
                 <div class="flex items-start gap-3 rounded-md border-l-2 border-emerald-600 bg-emerald-50 px-4 py-3 text-sm text-emerald-900" role="status">

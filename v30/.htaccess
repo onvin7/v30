@@ -1,9 +1,53 @@
-# Front controller – všechny požadavky, které nemíří na existující soubor/složku,
-# přesměruj na index.php (odtud se předá řízení web/index.php).
+# Konfigurace Apache pro projekt Vodácká 30.
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # 1) Vynucení HTTPS (vyjma lokálního vývoje: localhost, 127.0.0.1 a *.test).
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+    RewriteCond %{HTTP_HOST} !\.test$ [NC]
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # 2) Blokace interních složek – nesmí být dostupné z webu.
+    RewriteRule ^(app|config|storage)(/|$) - [F,L]
+
+    # 2b) Archivy a vývojoví pomocníci ve webrootu nesmí být veřejně dostupné.
+    RewriteRule \.(zip|tar|gz|tgz|7z|rar)$ - [F,L]
+    RewriteRule ^nahled-fotek\.html$ - [F,L]
+
+    # 3) Blokace skrytých souborů a složek (např. .env, .git).
+    RewriteRule (^|/)\. - [F,L]
+
+    # 4) Front controller – vše, co nemíří na existující soubor/složku,
+    #    přesměruj na index.php (odtud se předá řízení web/index.php).
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Bezpečnostní hlavičky
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Gzip komprese
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Cache statických souborů
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
 </IfModule>

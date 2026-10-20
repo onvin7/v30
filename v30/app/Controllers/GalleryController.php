@@ -17,6 +17,7 @@ class GalleryController
                 'fotograf' => 'milvin',
                 'pocet'    => 52,
                 'odkaz'    => 'https://eu.zonerama.com/milvin/Album/14562205',
+                'klic'     => 'album-2026',
                 'nahled'   => img_url('album-2026'),
             ],
             [
@@ -26,6 +27,7 @@ class GalleryController
                 'fotograf' => 'milvin',
                 'pocet'    => 155,
                 'odkaz'    => 'https://eu.zonerama.com/milvin/Album/12759760',
+                'klic'     => 'album-2025',
                 'nahled'   => img_url('album-2025'),
             ],
             [
@@ -35,6 +37,7 @@ class GalleryController
                 'fotograf' => 'milvin',
                 'pocet'    => 201,
                 'odkaz'    => 'https://eu.zonerama.com/milvin/Album/10982395',
+                'klic'     => 'album-2024',
                 'nahled'   => img_url('album-2024'),
             ],
         ];
@@ -58,8 +61,9 @@ class GalleryController
             static fn (array $foto): bool => has_img($foto['klic'])
         ));
 
-        $title = 'Galerie | Vodácká 30';
-        $view  = APP_ROOT . '/app/Views/gallery.php';
+        $title       = 'Galerie | Vodácká 30';
+        $description = 'Fotogalerie z ročníků Vodácké 30 – alba z let 2024, 2025 a 2026 od fotografa milvin.';
+        $view        = APP_ROOT . '/app/Views/gallery.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }

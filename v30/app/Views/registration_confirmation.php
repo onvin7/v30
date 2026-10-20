@@ -26,28 +26,28 @@ require __DIR__ . '/partials/page_header.php';
                 <dl class="mt-8 divide-y divide-slate-200 border-y border-slate-200">
                     <div class="flex items-baseline justify-between gap-4 py-4">
                         <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Závodník</dt>
-                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['jmeno'] . ' ' . $prihlaseni['prijmeni']) ?></dd>
+                        <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($prihlaseni['jmeno'] . ' ' . $prihlaseni['prijmeni']) ?></dd>
                     </div>
                     <div class="flex items-baseline justify-between gap-4 py-4">
                         <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Oddíl / tým</dt>
-                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['oddil']) ?></dd>
+                        <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($prihlaseni['oddil']) ?></dd>
                     </div>
                     <div class="flex items-baseline justify-between gap-4 py-4">
                         <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Kategorie</dt>
-                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['kategorie']) ?> (<?= e($prihlaseni['trat']) ?>)</dd>
+                        <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($prihlaseni['kategorie']) ?> (<?= e($prihlaseni['trat']) ?>)</dd>
                     </div>
                     <div class="flex items-baseline justify-between gap-4 py-4">
                         <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Ročník narození</dt>
-                        <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($prihlaseni['rocnik_narozeni']) ?></dd>
+                        <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($prihlaseni['rocnik_narozeni']) ?></dd>
                     </div>
                     <div class="flex items-baseline justify-between gap-4 py-4">
                         <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">E-mail</dt>
-                        <dd class="text-sm font-semibold text-slate-900"><?= e($prihlaseni['email']) ?></dd>
+                        <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($prihlaseni['email']) ?></dd>
                     </div>
                     <?php if ($prihlaseni['poznamka'] !== ''): ?>
                         <div class="flex items-baseline justify-between gap-4 py-4">
                             <dt class="shrink-0 text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka</dt>
-                            <dd class="max-w-md text-right text-sm text-slate-600"><?= e($prihlaseni['poznamka']) ?></dd>
+                            <dd class="min-w-0 max-w-md text-right text-sm text-slate-600"><?= e($prihlaseni['poznamka']) ?></dd>
                         </div>
                     <?php endif; ?>
                     <div class="flex items-baseline justify-between gap-4 py-4">
@@ -72,19 +72,19 @@ require __DIR__ . '/partials/page_header.php';
                     <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Číslo účtu</dt>
-                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
+                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['ucet']) ?></dd>
                         </div>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Částka</dt>
-                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['castka']) ?></dd>
+                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['castka']) ?></dd>
                         </div>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Variabilní symbol</dt>
-                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['vs']) ?></dd>
+                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['vs']) ?></dd>
                         </div>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Poznámka pro příjemce</dt>
-                            <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['poznamka']) ?></dd>
+                            <dd class="min-w-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($platba['poznamka']) ?></dd>
                         </div>
                     </dl>
                 </div>

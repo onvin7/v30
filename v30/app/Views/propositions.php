@@ -31,7 +31,7 @@ require __DIR__ . '/partials/page_header.php';
                     <?php foreach ($poradatele as $osoba): ?>
                         <div class="flex items-baseline justify-between gap-4 py-3.5">
                             <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($osoba['role']) ?></dt>
-                            <dd class="text-sm font-semibold text-slate-900"><?= e($osoba['jmeno']) ?></dd>
+                            <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($osoba['jmeno']) ?></dd>
                         </div>
                     <?php endforeach; ?>
                 </dl>
@@ -69,7 +69,21 @@ require __DIR__ . '/partials/page_header.php';
                 Rozpis odpovídá poslednímu zveřejněnému ročníku 2026.
             </p>
 
-            <div class="mt-10 overflow-x-auto">
+            <!-- Mobil: záznamový seznam – tabulka potřebuje 40rem, do telefonu se nevejde -->
+            <ul class="mt-10 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
+                <?php foreach ($kategorie as $kat): ?>
+                    <li class="py-3.5">
+                        <div class="flex items-baseline justify-between gap-4">
+                            <span class="min-w-0 font-semibold text-slate-900"><?= e($kat['nazev']) ?></span>
+                            <span class="shrink-0 font-display font-bold tabular-nums text-slate-900"><?= e($kat['cena']) ?></span>
+                        </div>
+                        <p class="mt-1 text-sm text-slate-500"><?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?></p>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+            <!-- Tablet a výš: tabulka se od md: vždy vejde (40rem ≤ 720 px) -->
+            <div class="mt-10 hidden overflow-x-auto md:block">
                 <table class="w-full min-w-[40rem] text-sm">
                     <caption class="sr-only">Kategorie, tratě, styl a startovné ročníku 2026</caption>
                     <thead>
@@ -124,7 +138,7 @@ require __DIR__ . '/partials/page_header.php';
                     přihláška označena jako zaplacená.
                 </p>
                 <a href="/prihlaska"
-                   class="mt-8 inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="mt-8 inline-flex w-full items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400 sm:w-auto">
                     Přejít na přihlášku
                 </a>
             </div>
@@ -180,7 +194,7 @@ require __DIR__ . '/partials/page_header.php';
             </p>
         </div>
 
-        <div class="mt-12 space-y-14">
+        <div class="mt-12 space-y-10 sm:space-y-14">
             <?php foreach ($trasy as $trasa): ?>
                 <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
@@ -192,7 +206,8 @@ require __DIR__ . '/partials/page_header.php';
                     <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600"><?= e($trasa['popis']) ?></p>
 
                     <?php if ($trasa['mapa'] !== ''): ?>
-                        <div class="mt-6 overflow-hidden rounded-md border border-slate-200">
+                        <!-- Na dotyku je mapa v iframe past na scroll, proto se vykresluje až od `lg`. -->
+                        <div class="mt-6 hidden overflow-hidden rounded-md border border-slate-200 lg:block">
                             <iframe
                                 src="<?= e($trasa['mapa']) ?>"
                                 title="Mapa trasy <?= e($trasa['nazev']) ?>"
@@ -201,7 +216,7 @@ require __DIR__ . '/partials/page_header.php';
                                 allowfullscreen></iframe>
                         </div>
                         <a href="<?= e($trasa['mapa']) ?>" target="_blank" rel="noopener noreferrer"
-                           class="mt-4 inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
+                           class="mt-6 inline-flex min-h-[44px] items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500 lg:mt-4">
                             Otevřít mapu
                             <span aria-hidden="true">↗</span>
                         </a>
@@ -230,7 +245,7 @@ require __DIR__ . '/partials/page_header.php';
             </p>
             <div class="mt-8">
                 <a href="https://vodacka30.cz/index.php?menu=2" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+                   class="inline-flex w-full items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10 sm:w-auto">
                     Otevřít propozice 2026 ↗
                 </a>
             </div>

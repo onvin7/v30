@@ -12,7 +12,7 @@ require __DIR__ . '/partials/page_header.php';
 <!-- Filtr kategorií -->
 <section class="border-b border-slate-200 bg-snow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav aria-label="Filtr kategorií" class="-mb-px flex gap-7 overflow-x-auto">
+        <nav aria-label="Filtr kategorií" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:px-0">
             <a href="/vysledky"
                class="whitespace-nowrap border-b-2 py-4 text-sm font-medium transition-colors <?= $vybranaKategorie === '' ? 'border-brand-600 text-slate-900' : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-900' ?>"
                <?= $vybranaKategorie === '' ? 'aria-current="true"' : '' ?>>Vše</a>
@@ -36,7 +36,7 @@ require __DIR__ . '/partials/page_header.php';
             </p>
         <?php endif; ?>
 
-        <div class="space-y-16">
+        <div class="space-y-12 sm:space-y-16">
             <?php foreach ($kategorie as $skupina): ?>
                 <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
@@ -45,7 +45,40 @@ require __DIR__ . '/partials/page_header.php';
                         <p class="text-sm text-slate-500">26. ročník &middot; 17. ledna 2026</p>
                     </div>
 
-                    <div class="mt-6 overflow-x-auto">
+                    <?php
+                    // Barvu pořadí potřebují oba výpisy níže – mobilní seznam i tabulka.
+                    $radky = array_map(static function (array $radek): array {
+                        $jePrvni  = $radek['poradi'] === 1;
+                        $jePodium = is_int($radek['poradi']) && $radek['poradi'] <= 3;
+
+                        $radek['barvaPoradi'] = $jePrvni ? 'text-brand-600' : ($jePodium ? 'text-slate-900' : 'text-slate-400');
+
+                        return $radek;
+                    }, $skupina['vysledky']);
+                    ?>
+
+                    <!-- Mobil: záznamový seznam – tabulka potřebuje 42rem, do telefonu se nevejde -->
+                    <ul class="mt-6 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
+                        <?php foreach ($radky as $radek): ?>
+                            <li class="py-4">
+                                <div class="flex items-baseline justify-between gap-4">
+                                    <div class="flex min-w-0 items-baseline gap-3">
+                                        <span class="w-6 shrink-0 text-right font-display text-base font-black tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
+                                        <p class="min-w-0 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></p>
+                                    </div>
+                                    <span class="shrink-0 font-display text-base font-bold tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
+                                </div>
+                                <p class="mt-1 pl-9 text-sm text-slate-500">
+                                    <?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?>
+                                    <?php if ($radek['cislo'] !== ''): ?> &middot; start <?= e($radek['cislo']) ?><?php endif; ?>
+                                    <?php if ($radek['ztrata'] !== '—'): ?> &middot; ztráta <?= e($radek['ztrata']) ?><?php endif; ?>
+                                </p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <!-- Tablet a výš: tabulka se od md: vždy vejde (42rem ≤ 720 px) -->
+                    <div class="mt-6 hidden overflow-x-auto md:block">
                         <table class="w-full min-w-[42rem] text-sm">
                             <caption class="sr-only">Výsledky – <?= e($skupina['nazev']) ?>, ročník 2026</caption>
                             <thead>
@@ -59,15 +92,10 @@ require __DIR__ . '/partials/page_header.php';
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-200 border-b border-slate-200">
-                                <?php foreach ($skupina['vysledky'] as $radek): ?>
-                                    <?php
-                                        $jePrvni = $radek['poradi'] === 1;
-                                        $jePodium = is_int($radek['poradi']) && $radek['poradi'] <= 3;
-                                        $barvaPoradi = $jePrvni ? 'text-brand-600' : ($jePodium ? 'text-slate-900' : 'text-slate-400');
-                                    ?>
+                                <?php foreach ($radky as $radek): ?>
                                     <tr class="transition-colors hover:bg-snow">
                                         <td class="py-3.5 pr-4 text-right">
-                                            <span class="font-display text-base font-black tabular-nums <?= $barvaPoradi ?>"><?= e($radek['poradi']) ?></span>
+                                            <span class="font-display text-base font-black tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
                                         </td>
                                         <td class="py-3.5 pr-4 text-right tabular-nums text-slate-500"><?= $radek['cislo'] !== '' ? e($radek['cislo']) : '—' ?></td>
                                         <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
