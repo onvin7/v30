@@ -25,8 +25,8 @@ require __DIR__ . '/partials/page_header.php';
                         trať na 30 km, dětské závody měly tratě 3 a 7 km.
                     </p>
                     <p>
-                        Start a cíl ročníku 2026 byly u chaty Bedřichovka v Orlickém Záhoří. Tyto údaje popisují minulý
-                        ročník a nepotvrzují podobu závodu 2027.
+                        Start a cíl ročníku 2026 byly u chaty Bedřichovka v Orlickém Záhoří. Další ročník je potvrzený
+                        na <?= e(zavod()['rocnik']['datum']) ?>; jeho propozice se ale mohou od loňska lišit.
                     </p>
                 </div>
 

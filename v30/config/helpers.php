@@ -109,6 +109,23 @@ function images(): array
 }
 
 /**
+ * Údaje o závodě (config/zavod.php) – načte se jednou za požadavek.
+ *
+ * @return array<string, mixed>
+ */
+function zavod(): array
+{
+    static $data = null;
+
+    if ($data === null) {
+        $loaded = require APP_ROOT . '/config/zavod.php';
+        $data   = is_array($loaded) ? $loaded : [];
+    }
+
+    return $data;
+}
+
+/**
  * URL obrázku podle klíče; prázdný řetězec znamená „obrázek není k dispozici“.
  */
 function img_url(string $key): string

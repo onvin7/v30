@@ -170,8 +170,9 @@ class ResultsController
             ['rok' => 2015, 'rocnik' => 16, 'datum' => '24. 1. 2015', 'overeno' => false],
         ];
 
-        $title = 'Výsledky a archiv | Vodácká 30';
-        $view  = APP_ROOT . '/app/Views/results.php';
+        $title       = 'Výsledky a archiv | Vodácká 30';
+        $description = 'Výsledky 26. ročníku Vodácké 30 (17. ledna 2026) podle kategorií a archiv výsledků předchozích ročníků závodu.';
+        $view        = APP_ROOT . '/app/Views/results.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }

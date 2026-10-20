@@ -132,8 +132,9 @@ class StartListController
             ],
         ];
 
-        $title = 'Startovní listina | Vodácká 30';
-        $view  = APP_ROOT . '/app/Views/start_list.php';
+        $title       = 'Startovní listina | Vodácká 30';
+        $description = 'Startovní listina 26. ročníku Vodácké 30 se startovními čísly, jmény závodníků a oddíly podle kategorií.';
+        $view        = APP_ROOT . '/app/Views/start_list.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }

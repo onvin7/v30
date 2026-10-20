@@ -7,12 +7,9 @@ class RaceController
     public function propositions()
     {
         // Mock data – později nahradí Model / databáze.
-        // Údaje níže popisují poslední zveřejněný ročník 2026 (17. ledna 2026).
-        $poradatele = [
-            ['role' => 'Pořadatel',       'jmeno' => 'TJ KVT Pardubice'],
-            ['role' => 'Ředitel závodu',  'jmeno' => 'Aleš Křivka'],
-            ['role' => 'Hlavní rozhodčí', 'jmeno' => 'Jirka Roleček'],
-        ];
+        // Údaje níže popisují poslední zveřejněný ročník 2026 (17. ledna 2026);
+        // termín dalšího ročníku je potvrzený na 16. ledna 2027 (viz config/zavod.php).
+        $poradatele = zavod()['poradatele'];
 
         $program = [
             ['cas' => '9:00',  'polozka' => 'Registrace dětských kategorií'],
@@ -29,18 +26,19 @@ class RaceController
             ['cas' => '20:00', 'polozka' => 'Pohoda'],
         ];
 
-        $kategorie = [
-            ['kod' => 'children-under-6',  'nazev' => 'Chlapci a dívky do 6 let',          'trat' => '3 km',  'styl' => 'klasicky', 'cena' => '200 Kč'],
-            ['kod' => 'children-7-10',     'nazev' => 'Chlapci a dívky od 7 do 10 let',     'trat' => '7 km',  'styl' => 'volně',    'cena' => '200 Kč'],
-            ['kod' => 'children-11-14',    'nazev' => 'Chlapci a dívky od 11 do 14 let',    'trat' => '7 km',  'styl' => 'volně',    'cena' => '200 Kč'],
-            ['kod' => 'children-pro-7-14', 'nazev' => 'Chlapci a dívky PRO od 7 do 14 let', 'trat' => '7 km',  'styl' => 'volně',    'cena' => '200 Kč'],
-            ['kod' => 'juniors',           'nazev' => 'Junioři',                            'trat' => '30 km', 'styl' => 'volně',    'cena' => '300 / 400 Kč'],
-            ['kod' => 'men-pro',           'nazev' => 'Muži PRO',                           'trat' => '30 km', 'styl' => 'volně',    'cena' => '300 / 400 Kč'],
-            ['kod' => 'women-pro',         'nazev' => 'Ženy PRO',                           'trat' => '30 km', 'styl' => 'volně',    'cena' => '300 / 400 Kč'],
-            ['kod' => 'men-classic',       'nazev' => 'Muži KLASICI',                       'trat' => '30 km', 'styl' => 'klasicky', 'cena' => '300 / 400 Kč'],
-            ['kod' => 'women-classic',     'nazev' => 'Ženy KLASIČKY',                      'trat' => '30 km', 'styl' => 'klasicky', 'cena' => '300 / 400 Kč'],
-            ['kod' => 'pro-for-fun',       'nazev' => 'Muži a ženy PRO RADOST',             'trat' => '30 km', 'styl' => 'volně',    'cena' => '300 / 400 Kč'],
-        ];
+        // Kategorie se berou z config/zavod.php – propozice i přihláška tak nabízejí
+        // přesně stejnou sadu a stejné ceny.
+        $kategorie = [];
+        foreach (zavod()['kategorie'] as $kod => $kat) {
+            $kategorie[] = [
+                'kod'           => $kod,
+                'nazev'         => $kat['nazev'],
+                'trat'          => $kat['trat'],
+                'styl'          => $kat['styl'],
+                'cena'          => $kat['cena'] . ' Kč',
+                'cena_na_miste' => $kat['cena_na_miste'] . ' Kč',
+            ];
+        }
 
         // Trasy závodu a mapové podklady. Dětské tratě zatím používají stejný podklad jako hlavní trať.
         $trasy = [
@@ -67,15 +65,21 @@ class RaceController
             ],
         ];
 
+        // Startovné se skládá z cen v configu, aby se čísla neopisovala na třech místech.
+        $detske = zavod()['kategorie']['children-under-6']['cena'];
+        $vcasna = zavod()['kategorie']['men-pro']['cena'];
+        $naMiste = zavod()['kategorie']['men-pro']['cena_na_miste'];
+
         $startovne = [
-            'Dětské kategorie: 200 Kč.',
-            'Dospělé kategorie při včasné bezhotovostní platbě (do 15. ledna 2026): 300 Kč.',
-            'Platba na místě: 400 Kč.',
+            sprintf('Dětské kategorie na 3 a 7 km: %d Kč.', $detske),
+            sprintf('Dospělé kategorie při včasné bezhotovostní platbě (přihláška a platba do %s): %d Kč.', zavod()['rocnik']['uzavierka'], $vcasna),
+            sprintf('Platba na místě startu: %d Kč.', $naMiste),
             'Závod končí v 17:00 – časový limit trati.',
         ];
 
-        $title = 'Propozice a trať | Vodácká 30';
-        $view  = APP_ROOT . '/app/Views/propositions.php';
+        $title       = 'Propozice a trať | Vodácká 30';
+        $description = 'Propozice Vodácké 30: program závodního dne, vypsané kategorie, tratě 30, 7 a 3 km, startovné a mapové podklady.';
+        $view        = APP_ROOT . '/app/Views/propositions.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }

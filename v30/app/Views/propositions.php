@@ -21,8 +21,8 @@ require __DIR__ . '/partials/page_header.php';
                         Údaje z posledního zveřejněného ročníku.
                     </h2>
                     <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Datum, kategorie, tratě, ceny a termíny přihlášek níže popisují ročník 2026. Na další ročník se
-                        automaticky nevztahují a budou aktualizovány po potvrzení pořadatelem.
+                        Datum, kategorie, tratě, ceny a termíny přihlášek níže popisují ročník 2026. Termín dalšího ročníku
+                        je potvrzený na <?= e(zavod()['rocnik']['datum']) ?>; propozice k němu pořadatel zveřejní později.
                     </p>
                 </div>
 
@@ -69,7 +69,7 @@ require __DIR__ . '/partials/page_header.php';
                 Rozpis odpovídá poslednímu zveřejněnému ročníku 2026.
             </p>
 
-            <!-- Mobil: záznamový seznam – tabulka potřebuje 40rem, do telefonu se nevejde -->
+            <!-- Mobil: záznamový seznam – tabulka potřebuje 44rem, do telefonu se nevejde -->
             <ul class="mt-10 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
                 <?php foreach ($kategorie as $kat): ?>
                     <li class="py-3.5">
@@ -77,21 +77,27 @@ require __DIR__ . '/partials/page_header.php';
                             <span class="min-w-0 font-semibold text-slate-900"><?= e($kat['nazev']) ?></span>
                             <span class="shrink-0 font-display font-bold tabular-nums text-slate-900"><?= e($kat['cena']) ?></span>
                         </div>
-                        <p class="mt-1 text-sm text-slate-500"><?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?></p>
+                        <p class="mt-1 text-sm text-slate-500">
+                            <?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?>
+                            <?php if ($kat['cena_na_miste'] !== $kat['cena']): ?>
+                                &middot; na místě <?= e($kat['cena_na_miste']) ?>
+                            <?php endif; ?>
+                        </p>
                     </li>
                 <?php endforeach; ?>
             </ul>
 
-            <!-- Tablet a výš: tabulka se od md: vždy vejde (40rem ≤ 720 px) -->
+            <!-- Tablet a výš: tabulka se od md: vždy vejde (44rem ≤ 720 px) -->
             <div class="mt-10 hidden overflow-x-auto md:block">
-                <table class="w-full min-w-[40rem] text-sm">
+                <table class="w-full min-w-[44rem] text-sm">
                     <caption class="sr-only">Kategorie, tratě, styl a startovné ročníku 2026</caption>
                     <thead>
                         <tr class="border-b border-slate-300 text-xs font-medium uppercase tracking-wider text-slate-500">
                             <th scope="col" class="py-3 pr-4 text-left">Kategorie</th>
                             <th scope="col" class="w-24 py-3 pr-4 text-right">Trať</th>
                             <th scope="col" class="w-28 py-3 pr-4 text-left">Styl</th>
-                            <th scope="col" class="w-32 py-3 text-right">Startovné</th>
+                            <th scope="col" class="w-32 py-3 pr-4 text-right">Včasná platba</th>
+                            <th scope="col" class="w-28 py-3 text-right">Na místě</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 border-b border-slate-200">
@@ -100,7 +106,8 @@ require __DIR__ . '/partials/page_header.php';
                                 <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($kat['nazev']) ?></td>
                                 <td class="py-3.5 pr-4 text-right tabular-nums text-slate-500"><?= e($kat['trat']) ?></td>
                                 <td class="py-3.5 pr-4 text-slate-500"><?= e($kat['styl']) ?></td>
-                                <td class="py-3.5 text-right tabular-nums text-slate-900"><?= e($kat['cena']) ?></td>
+                                <td class="py-3.5 pr-4 text-right tabular-nums text-slate-900"><?= e($kat['cena']) ?></td>
+                                <td class="py-3.5 text-right tabular-nums text-slate-500"><?= e($kat['cena_na_miste']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -6,20 +6,26 @@ class AboutController
 {
     public function index()
     {
-        // Mock data – údaje z posledního zveřejněného ročníku 2026.
+        // Mock data – základní údaje o závodě; termín a pořadatelé z config/zavod.php.
+        $rocnik     = zavod()['rocnik'];
+        $archiv     = zavod()['archiv'];
+        $poradatele = zavod()['poradatele'];
+
         $fakta = [
-            ['label' => 'Datum ročníku 2026',  'hodnota' => '17. ledna 2026'],
-            ['label' => 'Pořadatel',           'hodnota' => 'TJ KVT Pardubice'],
-            ['label' => 'Ředitel závodu',      'hodnota' => 'Aleš Křivka'],
-            ['label' => 'Hlavní rozhodčí',     'hodnota' => 'Jirka Roleček'],
-            ['label' => 'Místo startu a cíle', 'hodnota' => 'Bedřichovka, Orlické Záhoří'],
-            ['label' => 'Hlavní trať',         'hodnota' => '30 km'],
-            ['label' => 'Dětské tratě',        'hodnota' => '3 km klasicky · 7 km volně'],
-            ['label' => 'Kontrolní bod',       'hodnota' => 'Pěticestí'],
+            ['label' => 'Termín dalšího ročníku', 'hodnota' => $rocnik['datum']],
+            ['label' => 'Datum ročníku 2026',     'hodnota' => $archiv['datum']],
+            ['label' => 'Pořadatel',              'hodnota' => $poradatele['poradatel']['jmeno']],
+            ['label' => 'Ředitel závodu',         'hodnota' => $poradatele['reditel']['jmeno']],
+            ['label' => 'Hlavní rozhodčí',        'hodnota' => $poradatele['rozhodci']['jmeno']],
+            ['label' => 'Místo startu a cíle',    'hodnota' => zavod()['start_cil']],
+            ['label' => 'Hlavní trať',            'hodnota' => '30 km'],
+            ['label' => 'Dětské tratě',           'hodnota' => '3 km klasicky · 7 km volně'],
+            ['label' => 'Kontrolní bod',          'hodnota' => zavod()['kontrolni_bod']],
         ];
 
-        $title = 'O závodu | Vodácká 30';
-        $view  = APP_ROOT . '/app/Views/about.php';
+        $title       = 'O závodu | Vodácká 30';
+        $description = 'Základní informace o závodu Vodácká 30 – tradičním běžkařském závodě pro vodáky v Orlických horách. Termín, pořadatel, trať a místo konání.';
+        $view        = APP_ROOT . '/app/Views/about.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }
