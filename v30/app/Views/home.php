@@ -9,8 +9,14 @@
         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/40" aria-hidden="true"></div>
         <div class="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-night to-transparent" aria-hidden="true"></div>
     <?php else: ?>
-        <?php require __DIR__ . '/partials/contours.php'; ?>
-        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-deep/60 via-transparent to-night" aria-hidden="true"></div>
+        <div class="absolute inset-0 -z-20 bg-deep" aria-hidden="true"></div>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/95 to-deep/90" aria-hidden="true"></div>
+        <div class="absolute inset-y-0 right-0 hidden w-[56%] border-l border-white/10 bg-white/5 lg:block" aria-hidden="true"></div>
+        <div class="absolute inset-y-0 right-0 w-full opacity-90 lg:w-[58%]" aria-hidden="true">
+            <?php require __DIR__ . '/partials/contours.php'; ?>
+        </div>
+        <div class="absolute left-[-8rem] top-[-6rem] -z-10 h-64 w-64 rounded-full bg-brand-500/10 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-night to-transparent" aria-hidden="true"></div>
     <?php endif; ?>
 
     <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
