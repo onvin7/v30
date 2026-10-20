@@ -7,11 +7,12 @@ class HomeController
     public function index()
     {
         // Mock data – později nahradí Model / databáze.
+        // Hero míří na nejbližší ročník, proto bere termín i místo z config/zavod.php.
         $hero = [
             'nazev'    => 'Vodácká 30',
             'podtitul' => 'Tradiční běžkařský závod pro vodáky v Orlických horách',
-            'datum'    => '17. ledna 2026',
-            'misto'    => 'Chata Bedřichovka, Orlické hory',
+            'datum'    => zavod()['rocnik']['datum'],
+            'misto'    => zavod()['misto'],
         ];
 
         $trat = [
@@ -27,12 +28,12 @@ class HomeController
             ],
         ];
 
-        // Ročník 2026 v číslech.
+        // Ročník 2026 v číslech (počet kategorií se bere z configu, aby seděl s propozicemi).
         $rocnik = [
             ['hodnota' => '30',    'jednotka' => 'km',  'label' => 'Hlavní trať'],
             ['hodnota' => '3 a 7', 'jednotka' => 'km',  'label' => 'Dětské tratě'],
             ['hodnota' => '26.',   'jednotka' => '',    'label' => 'Ročník'],
-            ['hodnota' => '10',    'jednotka' => '',    'label' => 'Vypsaných kategorií'],
+            ['hodnota' => (string) count(zavod()['kategorie']), 'jednotka' => '', 'label' => 'Vypsaných kategorií'],
         ];
 
         // Klíčové body závodního dne (úplný program je v propozicích).
@@ -52,8 +53,13 @@ class HomeController
             ['poradi' => 3, 'jmeno' => 'Strnad Tomáš',   'oddil' => '3D Fitness Race Team',  'cas' => '1:44:43'],
         ];
 
-        $title = 'Vodácká 30 | Tradiční běžkařský závod pro vodáky v Orlických horách';
-        $view  = APP_ROOT . '/app/Views/home.php';
+        $title       = 'Vodácká 30 | Tradiční běžkařský závod pro vodáky v Orlických horách';
+        $description = 'Vodácká 30 – tradiční běžkařský závod pro vodáky v Orlických horách. Termín, trať, výsledky, galerie a přihlášky na nadcházející ročník.';
+
+        // Poslední zveřejněné příspěvky pro sekci "Novinky" (bez DB, čte se z JSON).
+        $novinky = (new \App\Models\PostRepository())->published(3);
+
+        $view = APP_ROOT . '/app/Views/home.php';
 
         require APP_ROOT . '/app/Views/layout.php';
     }
