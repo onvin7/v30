@@ -1,0 +1,5 @@
+# Archivy a vývojové pomocné soubory ve webrootu – nikdy do repozitáře.
+*.zip
+v30/nahled-fotek.html
+
+# Runtime data aplikace (JSON úložiště, logy a zámky) řeší v30/.gitignore.

@@ -1,0 +1,6 @@
+# Runtime data ve /storage (bez databáze) – JSON úložiště, logy a zámky
+# se necommitují: obsahují osobní údaje účastníků a přihlašovací logy.
+# Složka i .htaccess zůstávají v repozitáři, aby fungovalo blokování přístupu.
+/storage/*.json
+/storage/*.log
+/storage/*.lock
