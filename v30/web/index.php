@@ -29,11 +29,15 @@ use App\Controllers\AboutController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\HomeController;
+use App\Controllers\OddilAuthController;
+use App\Controllers\OddilController;
+use App\Controllers\OddilRegistrationController;
 use App\Controllers\RaceController;
 use App\Controllers\RegistrationController;
 use App\Controllers\ResultsController;
 use App\Controllers\StartListController;
 use App\Helpers\Seo;
+use App\Middleware\OddilAuth;
 
 // URI bez query stringu.
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -78,7 +82,8 @@ if ($method === 'GET' && $uri === '/robots.txt') {
     exit;
 }
 
-// Mapa rout podle metody: metoda => [cesta (regex) => [třída kontroleru, metoda]].
+// Mapa rout podle metody: metoda => [cesta (regex) => [třída kontroleru, metoda, nastavení]].
+// Nastavení 'auth' => 'oddil' znamená přihlášeného vedoucího oddílu.
 $routes = [
     'GET' => [
         '/'                    => [HomeController::class, 'index'],
@@ -90,9 +95,28 @@ $routes = [
         '/vysledky'            => [ResultsController::class, 'index'],
         '/galerie'             => [GalleryController::class, 'index'],
         '/kontakt'             => [ContactController::class, 'index'],
+
+        // Zóna oddílu – veřejná jen přihlášení a registrace.
+        '/oddil'                       => [OddilController::class, 'index', ['auth' => 'oddil']],
+        '/oddil/prihlaseni'            => [OddilAuthController::class, 'showLogin'],
+        '/oddil/registrace'            => [OddilAuthController::class, 'showRegister'],
+        '/oddil/oznameni/([a-z-]+)/([A-Za-z0-9]+)' => [OddilAuthController::class, 'oznameni'],
+        '/oddil/zavodnici'             => [OddilController::class, 'zavodnici', ['auth' => 'oddil']],
+        '/oddil/prihlaska'             => [OddilRegistrationController::class, 'create', ['auth' => 'oddil']],
+        '/oddil/prihlaska/potvrzeni'   => [OddilRegistrationController::class, 'confirmation', ['auth' => 'oddil']],
+        '/oddil/prihlaska/(V30-\d{4}-\d{4})' => [OddilRegistrationController::class, 'show', ['auth' => 'oddil']],
     ],
     'POST' => [
         '/prihlaska' => [RegistrationController::class, 'store'],
+
+        // Zóna oddílu
+        '/oddil/prihlaseni'             => [OddilAuthController::class, 'login'],
+        '/oddil/registrace'             => [OddilAuthController::class, 'register'],
+        '/oddil/odhlaseni'              => [OddilAuthController::class, 'logout', ['auth' => 'oddil']],
+        '/oddil/zavodnici'              => [OddilController::class, 'pridejZavodnika', ['auth' => 'oddil']],
+        '/oddil/zavodnici/(\d+)'        => [OddilController::class, 'upravZavodnika', ['auth' => 'oddil']],
+        '/oddil/zavodnici/(\d+)/smazat' => [OddilController::class, 'smazZavodnika', ['auth' => 'oddil']],
+        '/oddil/prihlaska'              => [OddilRegistrationController::class, 'store', ['auth' => 'oddil']],
     ],
 ];
 
@@ -103,6 +127,12 @@ foreach ($routes[$method] ?? [] as $path => $route) {
     if (preg_match('#^' . $path . '$#', $uri, $matches)) {
         $controllerClass  = $route[0];
         $controllerMethod = $route[1];
+        $options          = $route[2] ?? [];
+
+        // Ochrana zóny oddílu – jen pro přihlášeného vedoucího oddílu.
+        if (! empty($options['auth'])) {
+            OddilAuth::guard();
+        }
 
         // Bez DB – kontrolery zatím nemají závislosti.
         $controller = new $controllerClass();
