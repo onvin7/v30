@@ -26,6 +26,10 @@ require APP_ROOT . '/config/autoloader.php';
 require APP_ROOT . '/config/helpers.php';
 
 use App\Controllers\AboutController;
+use App\Controllers\Admin\AuthAdminController;
+use App\Controllers\Admin\OddilAdminController;
+use App\Controllers\Admin\PostAdminController;
+use App\Controllers\Admin\RegistrationAdminController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\HomeController;
@@ -34,6 +38,7 @@ use App\Controllers\RegistrationController;
 use App\Controllers\ResultsController;
 use App\Controllers\StartListController;
 use App\Helpers\Seo;
+use App\Middleware\AdminAuth;
 
 // URI bez query stringu.
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -78,7 +83,8 @@ if ($method === 'GET' && $uri === '/robots.txt') {
     exit;
 }
 
-// Mapa rout podle metody: metoda => [cesta (regex) => [třída kontroleru, metoda]].
+// Mapa rout podle metody: metoda => [cesta (regex) => [třída kontroleru, metoda, nastavení]].
+// Nastavení 'auth' => true znamená přihlášeného administrátora.
 $routes = [
     'GET' => [
         '/'                    => [HomeController::class, 'index'],
@@ -90,9 +96,31 @@ $routes = [
         '/vysledky'            => [ResultsController::class, 'index'],
         '/galerie'             => [GalleryController::class, 'index'],
         '/kontakt'             => [ContactController::class, 'index'],
+
+        // Administrace
+        '/admin'                              => [PostAdminController::class, 'index', ['auth' => true]],
+        '/admin/prihlaseni'                   => [AuthAdminController::class, 'showLogin'],
+        '/admin/prispevky/novy'               => [PostAdminController::class, 'create', ['auth' => true]],
+        '/admin/prispevky/(\d+)/upravit'      => [PostAdminController::class, 'edit', ['auth' => true]],
+        '/admin/oddily'                       => [OddilAdminController::class, 'index', ['auth' => true]],
+        '/admin/prihlasky'                    => [RegistrationAdminController::class, 'index', ['auth' => true]],
+        '/admin/prihlasky/export'             => [RegistrationAdminController::class, 'export', ['auth' => true]],
     ],
     'POST' => [
         '/prihlaska' => [RegistrationController::class, 'store'],
+
+        // Administrace
+        '/admin/prihlaseni'                     => [AuthAdminController::class, 'login'],
+        '/admin/odhlaseni'                      => [AuthAdminController::class, 'logout', ['auth' => true]],
+        '/admin/prispevky'                      => [PostAdminController::class, 'store', ['auth' => true]],
+        '/admin/prispevky/(\d+)'                => [PostAdminController::class, 'update', ['auth' => true]],
+        '/admin/prispevky/(\d+)/smazat'         => [PostAdminController::class, 'delete', ['auth' => true]],
+        '/admin/oddily/import'                  => [OddilAdminController::class, 'import', ['auth' => true]],
+        '/admin/oddily/(\d+)/schvalit'          => [OddilAdminController::class, 'schvalit', ['auth' => true]],
+        '/admin/oddily/(\d+)/zamitnout'         => [OddilAdminController::class, 'zamitnout', ['auth' => true]],
+        '/admin/oddily/(\d+)/reset-hesla'       => [OddilAdminController::class, 'resetHeslo', ['auth' => true]],
+        '/admin/oddily/(\d+)/smazat'            => [OddilAdminController::class, 'smazat', ['auth' => true]],
+        '/admin/prihlasky/(V30-\d{4}-\d{4})'    => [RegistrationAdminController::class, 'setStav', ['auth' => true]],
     ],
 ];
 
@@ -103,6 +131,12 @@ foreach ($routes[$method] ?? [] as $path => $route) {
     if (preg_match('#^' . $path . '$#', $uri, $matches)) {
         $controllerClass  = $route[0];
         $controllerMethod = $route[1];
+        $options          = $route[2] ?? [];
+
+        // Ochrana administrace – jen pro přihlášeného administrátora.
+        if (! empty($options['auth'])) {
+            AdminAuth::guard();
+        }
 
         // Bez DB – kontrolery zatím nemají závislosti.
         $controller = new $controllerClass();
