@@ -4,7 +4,7 @@
  *
  * Architektura: čisté PHP MVC (vlastní router, kontrolery, šablony) bez frameworku.
  * Stejný princip jako v referenčním projektu Cyklistickey:
- *   - mapa rout  path(regex) => [Controller::class, 'metoda']
+ *   - mapa rout  path(regex) => [Controller::class, 'metoda', (nepovinná nastavení)]
  *   - shoda se hledá přes preg_match nad normalizovaným URI
  *   - kontroler na konci nastaví $view a vykreslí se přes app/Views/layout.php
  */
@@ -14,7 +14,7 @@ if (!ob_get_level()) {
     ob_start();
 }
 
-// Session (pro budoucí formuláře / flash zprávy).
+// Session (pro formuláře, flash zprávy a přihlášení do administrace).
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -33,6 +33,7 @@ use App\Controllers\RaceController;
 use App\Controllers\RegistrationController;
 use App\Controllers\ResultsController;
 use App\Controllers\StartListController;
+use App\Helpers\Seo;
 
 // URI bez query stringu.
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -47,6 +48,35 @@ if ($uri !== '/') {
 
 // HTTP metoda požadavku (GET / POST).
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
+
+// --- Generované soubory pro vyhledávače -----------------------------------
+
+// sitemap.xml
+if ($method === 'GET' && $uri === '/sitemap.xml') {
+    header('Content-Type: application/xml; charset=utf-8');
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    foreach (Seo::sitemapUrls() as $polozka) {
+        echo "  <url>\n";
+        echo '    <loc>' . htmlspecialchars($polozka['loc'], ENT_XML1 | ENT_QUOTES, 'UTF-8') . "</loc>\n";
+        echo '    <changefreq>' . $polozka['changefreq'] . "</changefreq>\n";
+        echo '    <priority>' . $polozka['priority'] . "</priority>\n";
+        echo "  </url>\n";
+    }
+    echo "</urlset>\n";
+    exit;
+}
+
+// robots.txt
+if ($method === 'GET' && $uri === '/robots.txt') {
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "User-agent: *\n";
+    echo "Allow: /\n";
+    echo "Disallow: /admin\n";
+    echo "Disallow: /oddil/oznameni/\n\n";
+    echo 'Sitemap: ' . Seo::baseUrl() . "/sitemap.xml\n";
+    exit;
+}
 
 // Mapa rout podle metody: metoda => [cesta (regex) => [třída kontroleru, metoda]].
 $routes = [
@@ -71,12 +101,12 @@ $routeFound = false;
 // Nejdřív hledáme v mapě pro aktuální metodu.
 foreach ($routes[$method] ?? [] as $path => $route) {
     if (preg_match('#^' . $path . '$#', $uri, $matches)) {
-        $controllerClass = $route[0];
+        $controllerClass  = $route[0];
         $controllerMethod = $route[1];
 
         // Bez DB – kontrolery zatím nemají závislosti.
         $controller = new $controllerClass();
-        $controller->$controllerMethod();
+        $controller->$controllerMethod(...array_slice($matches, 1));
 
         $routeFound = true;
         break;
@@ -94,8 +124,10 @@ if (!$routeFound) {
             if (preg_match('#^' . $path . '$#', $uri)) {
                 http_response_code(405);
                 header('Allow: ' . implode(', ', array_keys($routes)));
-                $title = 'Metoda není povolena | Vodácká 30';
-                $view  = APP_ROOT . '/app/Views/405.php';
+                $title       = 'Metoda není povolena | Vodácká 30';
+                $description = 'Požadovanou stránku nelze načíst touto metodou.';
+                $robots      = false;
+                $view        = APP_ROOT . '/app/Views/405.php';
                 require APP_ROOT . '/app/Views/layout.php';
                 exit;
             }
@@ -106,8 +138,10 @@ if (!$routeFound) {
 // 404 – na URI nesedla žádná routa.
 if (!$routeFound) {
     http_response_code(404);
-    $title = 'Stránka nenalezena | Vodácká 30';
-    $view  = APP_ROOT . '/app/Views/404.php';
+    $title       = 'Stránka nenalezena | Vodácká 30';
+    $description = 'Hledaná stránka na webu Vodácká 30 neexistuje.';
+    $robots      = false;
+    $view        = APP_ROOT . '/app/Views/404.php';
     require APP_ROOT . '/app/Views/layout.php';
     exit;
 }
