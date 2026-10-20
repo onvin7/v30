@@ -20,7 +20,7 @@
 
 return [
     // Úvodní stránka.
-    'home-hero'  => '',
+    'home-hero'  => 'https://eu.zonerama.com/photos/510724217_1920x1280_2.jpg',
     'home-trail' => 'https://eu.zonerama.com/photos/592525360_1200x800_2.jpg',
 
     // Záhlaví podstránek.
