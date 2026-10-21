@@ -3,11 +3,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # 1) Vynucení HTTPS (vyjma lokálního vývoje: localhost, 127.0.0.1 a *.test).
+    # 1) Vynucení HTTPS (vyjma lokálního vývoje a hostingu Webzdarma bez HTTPS).
     RewriteCond %{HTTPS} off
     RewriteCond %{HTTP_HOST} !^localhost [NC]
     RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
     RewriteCond %{HTTP_HOST} !\.test$ [NC]
+    RewriteCond %{HTTP_HOST} !\.wz\.cz(?::[0-9]+)?$ [NC]
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # 2) Blokace interních složek – nesmí být dostupné z webu.
