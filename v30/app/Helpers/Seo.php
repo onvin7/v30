@@ -98,9 +98,15 @@ class Seo
      */
     public static function image(): string
     {
-        $klic = (string) (self::config()['og_obrazek_klic'] ?? '');
+        $klic  = (string) (self::config()['og_obrazek_klic'] ?? '');
+        $cesta = $klic !== '' ? img_url($klic) : '';
 
-        return $klic !== '' ? img_url($klic) : '';
+        // og:image musí být absolutní URL; lokální cesty doplníme o adresu webu.
+        if ($cesta !== '' && $cesta[0] === '/') {
+            return self::baseUrl() . $cesta;
+        }
+
+        return $cesta;
     }
 
     /**
