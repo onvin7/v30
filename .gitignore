@@ -2,4 +2,9 @@
 *.zip
 v30/nahled-fotek.html
 
+# Stažený zdroj fotek z veřejných alb Zoneramy (rozděleno po ročnících).
+# Slouží jen jako podklad pro výběr; do repozitáře patří až zkopírované
+# a pojmenované fotky ve v30/assets/img/.
+fotky_zonerama_milvin/
+
 # Runtime data aplikace (JSON úložiště, logy a zámky) řeší v30/.gitignore.
