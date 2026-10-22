@@ -11,7 +11,7 @@
         </h1>
 
         <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
-            Požadovaná stránka na webu Vodácká 30 neexistuje.
+            Tahle stránka neexistuje nebo se přesunula.
         </p>
 
         <div class="mt-9 flex flex-wrap gap-3">

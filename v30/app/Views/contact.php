@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Pořadatel',
     'title'      => 'Kontakt',
-    'lead'       => 'Vodáckou 30 pořádá TJ KVT Pardubice. Aktuální kontakty na organizační výbor zveřejňuje pořadatel.',
+    'lead'       => 'Vodáckou 30 pořádá TJ KVT Pardubice. Kontakty na organizační výbor najdete níže.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Kontakt']],
     'image'      => 'header-contact',
 ];
@@ -17,7 +17,7 @@ require __DIR__ . '/partials/page_header.php';
             <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Organizační výbor</p>
                 <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                    Potřebujete se na něco zeptat?
+                    Na koho se obrátit
                 </h2>
 
                 <dl class="mt-10 divide-y divide-slate-200 border-y border-slate-200">
@@ -38,8 +38,7 @@ require __DIR__ . '/partials/page_header.php';
                 </dl>
 
                 <p class="mt-6 max-w-prose text-sm leading-6 text-slate-600">
-                    Aktuální kontakty na organizační výbor, ředitele závodu a hlavního rozhodčího zveřejňuje pořadatel
-                    na původním webu.
+                    Další kontakty najdete na webu pořadatelského oddílu.
                 </p>
 
                 <a href="https://vodacka30.cz/index.php?menu=5" target="_blank" rel="noopener noreferrer"
@@ -81,7 +80,7 @@ require __DIR__ . '/partials/page_header.php';
                 Chata Bedřichovka
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
-                Start, cíl i vyhlášení jsou u chaty Bedřichovka v Orlickém Záhoří. Ubytování a stravování lze domluvit
+                Start, cíl i vyhlášení jsou u chaty Bedřichovka v Orlickém Záhoří. Ubytování a stravu domluvíte
                 přímo s chatou.
             </p>
             <dl class="mt-9 flex flex-wrap gap-x-12 gap-y-5 border-t border-white/10 pt-6 text-sm">

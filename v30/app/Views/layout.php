@@ -313,7 +313,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                         <span class="font-display text-lg font-extrabold uppercase leading-none tracking-tight text-white">Vodácká&nbsp;30</span>
                     </a>
                     <p class="mt-4 max-w-xs text-sm leading-6">
-                        Tradiční běžkařský závod pro vodáky v Orlických horách. Pořádá TJ KVT Pardubice.
+                        Běžkařský závod v Orlických horách. Pořádá TJ KVT Pardubice.
                     </p>
                 </div>
 
@@ -354,7 +354,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
             </div>
 
             <div class="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between">
-                <p>&copy; <?= date('Y') ?> Vodácká 30 &middot; TJ KVT Pardubice</p>
+                <p>&copy; <?= date('Y') ?> Vodácká 30 &middot; Ondřej Vincenc</p>
                 <p>Bedřichovka, Orlické hory</p>
             </div>
         </div>

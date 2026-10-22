@@ -11,7 +11,7 @@
         </h1>
 
         <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
-            Tuto adresu nelze otevřít tímto způsobem. Zkuste se vrátit na úvod.
+            Tuhle adresu takhle otevřít nelze.
         </p>
 
         <div class="mt-9 flex flex-wrap gap-3">

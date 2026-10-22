@@ -11,7 +11,7 @@ return [
     'url'              => 'http://v30.test',
 
     'nazev'            => 'Vodácká 30',
-    'popis'            => 'Tradiční běžkařský závod pro vodáky v Orlických horách. Pořádá TJ KVT Pardubice.',
+    'popis'            => 'Běžkařský závod v Orlických horách – třicet kilometrů po hřebenech, dětské tratě a zázemí na chatě Bedřichovka. Pořádá TJ KVT Pardubice.',
     'klicova_slova'    => 'Vodácká 30, běžkařský závod, Orlické hory, Bedřichovka, běžky, závod vodáků',
     'autor'            => 'TJ KVT Pardubice',
     'locale'           => 'cs_CZ',

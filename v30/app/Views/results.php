@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Oficiální archiv',
     'title'      => 'Výsledky a archiv',
-    'lead'       => 'Oficiální výsledky 26. ročníku (17. ledna 2026) podle kategorií. Starší ročníky přidáváme po ověření zdrojových listin.',
+    'lead'       => 'Výsledky 26. ročníku (17. ledna 2026) podle kategorií.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Výsledky a archiv']],
     'image'      => 'header-results',
 ];
@@ -32,7 +32,7 @@ require __DIR__ . '/partials/page_header.php';
 
         <?php if (empty($kategorie)): ?>
             <p class="border-l-2 border-brand-600 bg-snow px-5 py-4 text-sm text-slate-600">
-                Pro zvolenou kategorii nejsou zveřejněné výsledky.
+                Pro tuto kategorii zatím výsledky nemáme.
             </p>
         <?php endif; ?>
 
@@ -122,7 +122,7 @@ require __DIR__ . '/partials/page_header.php';
                 Výsledky 2026
             </h2>
             <p class="mt-5 text-base leading-7 text-slate-600">
-                Výsledky přebíráme z oficiální listiny pořadatele. Originální dokumenty zůstávají dostupné na původním webu závodu.
+                Vycházíme z oficiální listiny pořadatele. Originální dokumenty najdete na původním webu závodu.
             </p>
 
             <div class="mt-8 divide-y divide-slate-200 border-y border-slate-200">
@@ -150,8 +150,7 @@ require __DIR__ . '/partials/page_header.php';
                 Ročníky 2015–2026
             </h2>
             <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600">
-                Starší ročníky budeme přidávat po kontrole zdrojových listin a potvrzení pořadatelem.
-                Neověřené výsledky zde nevydáváme za oficiální.
+                Starší ročníky postupně doplňujeme.
             </p>
 
             <ul class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">

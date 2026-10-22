@@ -16,12 +16,8 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-deep/60 via-transparent to-night" aria-hidden="true"></div>
     <?php endif; ?>
 
-    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
-        <p class="hero-in text-xs font-semibold uppercase tracking-[0.3em] text-ice">
-            Závod vodáků na běžkách
-        </p>
-
-        <h1 class="hero-in hero-in-2 mt-5 font-display text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-8xl">
+    <div class="mx-auto max-w-7xl px-4 pb-16 pt-24 sm:px-6 sm:pb-28 sm:pt-36 lg:px-8 lg:pb-36 lg:pt-48">
+        <h1 class="hero-in hero-in-2 font-display text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-8xl">
             <?= e($hero['nazev']) ?>
         </h1>
 
@@ -94,7 +90,7 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
                 <?php else: ?>
                     <div class="relative isolate flex aspect-[4/3] w-full items-end overflow-hidden rounded-md bg-deep p-6 lg:aspect-[3/2]">
                         <?php require __DIR__ . '/partials/contours.php'; ?>
-                        <p class="text-sm text-white/60">Fotografie z trati bude doplněna pořadatelem.</p>
+                        <p class="text-sm text-white/60">Fotku z trati doplníme.</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -130,11 +126,10 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
             <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Den závodu</p>
                 <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                    Od registrace k vyhlášení
+                    Program závodního dne
                 </h2>
                 <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
-                    Klíčové body programu 26. ročníku. Kompletní propozice včetně kategorií, tratí a startovného
-                    najdete na samostatné stránce.
+                    Důležité časy 26. ročníku. Kategorie, tratě a startovné najdete v propozicích.
                 </p>
                 <a href="/propozice"
                    class="mt-8 inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
@@ -168,7 +163,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
         <div class="reveal max-w-2xl" x-intersect.once="$el.classList.add('is-visible')">
             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Novinky</p>
             <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                Ze zákulisí závodu
+                Co nového
             </h2>
         </div>
 
@@ -250,8 +245,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
                 Přihlaste se na další ročník
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
-                Registrace dalšího ročníku zatím není pořadatelem potvrzená. Přihlášku můžete odeslat už teď –
-                s dotazy na termín a podmínky se obraťte přímo na pořadatele.
+                Přihlaste se online a startovné uhraďte převodem. Termín i podmínky najdete v propozicích.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/prihlaska"

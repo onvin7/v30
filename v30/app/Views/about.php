@@ -1,8 +1,8 @@
 <?php
 $pageHeader = [
-    'eyebrow'    => 'Běžecké lyžování · Orlické hory',
+    'eyebrow'    => 'Orlické hory · Bedřichovka',
     'title'      => 'O závodu',
-    'lead'       => 'Vodácká 30 je zimní běžecký závod po hřebenech Orlických hor, který pořádá TJ KVT Pardubice.',
+    'lead'       => 'Zimní běžkařský závod na hřebenech Orlických hor. Pořádá ho pardubický vodácký oddíl KVT.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'O závodu']],
     'image'      => 'about',
 ];
@@ -17,16 +17,15 @@ require __DIR__ . '/partials/page_header.php';
             <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
                 <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 sm:tracking-[0.3em]">Vodácké mistrovství ČR v běhu na lyžích</p>
                 <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                    Závod na horách, pořádaný vodáky.
+                    Běžky místo pádla
                 </h2>
                 <div class="mt-6 space-y-5 text-base leading-7 text-slate-600">
                     <p>
-                        Název odkazuje na pořadatelský klub; hlavní závod se jede na běžkách. V roce 2026 vedla dospělá
-                        trať na 30 km, dětské závody měly tratě 3 a 7 km.
+                        Název nese pořadatelský oddíl; závodí se na běžkách. Dospělí jedou 30 km, děti 3 nebo 7 km.
                     </p>
                     <p>
-                        Start a cíl ročníku 2026 byly u chaty Bedřichovka v Orlickém Záhoří. Další ročník je potvrzený
-                        na <?= e(zavod()['rocnik']['datum']) ?>; jeho propozice se ale mohou od loňska lišit.
+                        Start i cíl jsou u chaty Bedřichovka v Orlickém Záhoří. Další ročník se jede
+                        <?= e(zavod()['rocnik']['datum']) ?>, propozice vyjdou později.
                     </p>
                 </div>
 
@@ -51,7 +50,7 @@ require __DIR__ . '/partials/page_header.php';
                 <?php else: ?>
                     <div class="relative isolate flex aspect-[4/3] w-full items-end overflow-hidden rounded-md bg-deep p-6">
                         <?php require __DIR__ . '/partials/contours.php'; ?>
-                        <p class="text-sm text-white/60">Fotografie z trati bude doplněna pořadatelem.</p>
+                        <p class="text-sm text-white/60">Fotku z trati doplníme.</p>
                     </div>
                 <?php endif; ?>
             </div>

@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Rekapitulace přihlášky',
     'title'      => 'Přihláška odeslána',
-    'lead'       => 'Děkujeme. Níže je rekapitulace přihlášky a platební instrukce. Zkontrolujte prosím, že údaje odpovídají skutečnosti.',
+    'lead'       => 'Přihlášku jsme přijali. Zkontrolujte prosím údaje a podle instrukcí níže uhraďte startovné.',
     'breadcrumb' => [
         ['label' => 'Úvod', 'href' => '/'],
         ['label' => 'Přihlášky', 'href' => '/prihlaska'],
@@ -57,7 +57,7 @@ require __DIR__ . '/partials/page_header.php';
                 </dl>
 
                 <p class="mt-6 text-sm text-slate-500">
-                    Potvrzení o přijetí přihlášky e-mailem bude součástí produkční verze webu.
+                    Kdyby něco nesedělo, napište pořadateli.
                 </p>
             </div>
 
@@ -66,14 +66,14 @@ require __DIR__ . '/partials/page_header.php';
                 <div class="border-l-2 border-brand-600 bg-snow px-5 py-6 sm:px-6 sm:py-7">
                     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Platební instrukce</p>
                     <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Startovné uhraďte bankovním převodem. Platba se považuje za přijatou až po jejím ověření pořadatelem.
+                        Startovné uhraďte převodem. Za přijatou platbu se počítá až po ověření pořadatelem.
                     </p>
 
                     <?php if ($platba['ucet'] === ''): ?>
                         <p class="mt-4 text-sm leading-6 text-slate-600">
-                            Číslo účtu pořadatel zatím nezveřejnil. Doporučujeme jej ověřit v
+                            Číslo účtu pořadatel zatím nezveřejnil. Ověřte ho v
                             <a href="/propozice" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">propozicích</a>
-                            nebo přímo u pořadatele, a teprve poté platbu odeslat.
+                            nebo u pořadatele, ať peníze neposíláte naslepo.
                         </p>
                     <?php endif; ?>
 
@@ -104,8 +104,7 @@ require __DIR__ . '/partials/page_header.php';
 
                     <?php if ($platba['na_miste'] !== ''): ?>
                         <p class="mt-4 text-sm leading-6 text-slate-500">
-                            Při platbě na místě startu se startovné zvyšuje na <?= e($platba['na_miste']) ?>
-                            &ndash; včasná platba se proto vyplatí.
+                            Na místě startu se platí <?= e($platba['na_miste']) ?>, takže včasná platba se vyplatí.
                         </p>
                     <?php endif; ?>
                 </div>

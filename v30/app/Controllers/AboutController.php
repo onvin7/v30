@@ -24,7 +24,7 @@ class AboutController
         ];
 
         $title       = 'O závodu | Vodácká 30';
-        $description = 'Základní informace o závodu Vodácká 30 – tradičním běžkařském závodě pro vodáky v Orlických horách. Termín, pořadatel, trať a místo konání.';
+        $description = 'Základní informace o Vodácké 30 – termín, pořadatel, trať a místo konání v Orlických horách.';
         $view        = APP_ROOT . '/app/Views/about.php';
 
         require APP_ROOT . '/app/Views/layout.php';

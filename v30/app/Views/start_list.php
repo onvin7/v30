@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Ročník 2026',
     'title'      => 'Startovní listina',
-    'lead'       => 'Závodníci 26. ročníku (17. ledna 2026) podle kategorií. Zveřejňujeme pouze schválené veřejné údaje.',
+    'lead'       => 'Závodníci 26. ročníku (17. ledna 2026) podle kategorií.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Startovní listina']],
     'image'      => 'header-startlist',
 ];
@@ -91,8 +91,8 @@ foreach ($startovniListina as $skupina) {
         <div class="reveal mt-16 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6" x-intersect.once="$el.classList.add('is-visible')">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Ochrana osobních údajů</p>
             <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
-                Ve veřejné startovní listině se nezobrazují e-mail, telefon, datum narození, poznámka ani stav platby.
-                Závodníci jsou uvedeni pouze se souhlasem a v rozsahu schváleném pořadatelem.
+                Zveřejňujeme jen jméno, oddíl a startovní číslo. E-mail, telefon, datum narození ani stav platby
+                veřejně neuvádíme.
             </p>
         </div>
 

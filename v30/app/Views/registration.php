@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Další ročník · ' . zavod()['rocnik']['rok'],
     'title'      => 'Přihlášky',
-    'lead'       => 'Vyplňte přihlášku do běžkařské Vodácké 30. Lodní kategorie ze staršího formuláře se do tohoto závodu nepřebírají.',
+    'lead'       => 'Vyplňte přihlášku do běžkařské Vodácké 30.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Přihlášky']],
     'image'      => 'header-registration',
 ];
@@ -140,7 +140,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                     <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
                         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Přihlašujete víc závodníků?</p>
                         <p class="mt-3 text-sm leading-6 text-slate-600">
-                            Založte si účet oddílu, uložte si soupisku a přihlaste celý oddíl jedním krokem
+                            Založte si účet oddílu, uložte soupisku a přihlaste celý oddíl jednou přihláškou
                             s jedním variabilním symbolem. Účet zpřístupníme po schválení pořadatelem.
                         </p>
                         <a href="/oddil/registrace" class="mt-4 inline-flex items-center text-sm font-semibold text-brand-700 transition-colors hover:text-brand-500">
@@ -165,7 +165,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             </div>
                         </dl>
                         <p class="mt-4 text-sm text-slate-500">
-                            Aktuální stav podmínek závodu najdete v
+                            Podmínky závodu najdete v
                             <a href="/propozice" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">propozicích</a>.
                         </p>
                     </div>

@@ -2,7 +2,7 @@
 $pageHeader = [
     'eyebrow'    => 'Fotografie ze závodu',
     'title'      => 'Galerie',
-    'lead'       => 'Tři poslední ročníky závodu ve fotografiích pořadatele. Kompletní alba jsou v externí galerii.',
+    'lead'       => 'Tři poslední ročníky ve fotografiích. Celá alba najdete v externí galerii.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Galerie']],
     'image'      => 'header-gallery',
 ];
@@ -15,7 +15,7 @@ require __DIR__ . '/partials/page_header.php';
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Alba</p>
             <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                Ročníky v obrazech
+                Fotky z posledních ročníků
             </h2>
         </div>
 
@@ -35,7 +35,7 @@ require __DIR__ . '/partials/page_header.php';
                             <?php else: ?>
                                 <div class="relative isolate flex aspect-[3/2] w-full items-end p-5">
                                     <?php require __DIR__ . '/partials/contours.php'; ?>
-                                    <p class="text-sm text-white/50">Album bude doplněno.</p>
+                                    <p class="text-sm text-white/50">Album doplníme.</p>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -91,7 +91,7 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <p class="mt-6 text-sm text-slate-500">
-                Starší ročníky (2023 a starší) doplníme po ověření práv k fotografiím.
+                Starší ročníky doplníme.
             </p>
         </div>
     </div>

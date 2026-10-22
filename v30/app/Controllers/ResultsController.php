@@ -171,7 +171,7 @@ class ResultsController
         ];
 
         $title       = 'Výsledky a archiv | Vodácká 30';
-        $description = 'Výsledky 26. ročníku Vodácké 30 (17. ledna 2026) podle kategorií a archiv výsledků předchozích ročníků závodu.';
+        $description = 'Výsledky 26. ročníku Vodácké 30 (17. ledna 2026) podle kategorií.';
         $view        = APP_ROOT . '/app/Views/results.php';
 
         require APP_ROOT . '/app/Views/layout.php';
