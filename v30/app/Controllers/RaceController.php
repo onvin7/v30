@@ -40,7 +40,7 @@ class RaceController
             ];
         }
 
-        // Trasy závodu a mapové podklady. Dětské tratě zatím používají stejný podklad jako hlavní trať.
+        // Trasy závodu a mapové podklady.
         $trasy = [
             [
                 'nazev' => 'Hlavní trať',
@@ -48,20 +48,23 @@ class RaceController
                 'styl'  => 'volně nebo klasicky',
                 'popis' => 'Okruh pro juniory a dospělé kategorie. Start a cíl u chaty Bedřichovka v Orlickém Záhoří, kontrolní bod na Pěticestí u Horské služby.',
                 'mapa'  => 'https://mapy.com/s/calefedoho',
+                'priblizeni_mapy' => 'scale(1.12)',
             ],
             [
                 'nazev' => 'Dětská trať',
                 'trat'  => '7 km',
                 'styl'  => 'volně',
                 'popis' => 'Trať pro děti 7–10 a 11–14 let a kategorii dětí PRO.',
-                'mapa'  => 'https://mapy.com/s/calefedoho',
+                'mapa'  => 'https://mapy.com/s/pusuredena',
+                'priblizeni_mapy' => '',
             ],
             [
                 'nazev' => 'Dětská trať',
                 'trat'  => '3 km',
                 'styl'  => 'klasicky',
                 'popis' => 'Nejlehčí trať pro nejmenší závodníky do 6 let.',
-                'mapa'  => 'https://mapy.com/s/calefedoho',
+                'mapa'  => 'https://mapy.com/s/gofahujogo',
+                'priblizeni_mapy' => '',
             ],
         ];
 

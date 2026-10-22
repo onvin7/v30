@@ -69,7 +69,6 @@ require __DIR__ . '/partials/page_header.php';
                 Rozpis odpovídá poslednímu zveřejněnému ročníku 2026.
             </p>
 
-            <!-- Mobil: záznamový seznam – tabulka potřebuje 44rem, do telefonu se nevejde -->
             <ul class="mt-10 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
                 <?php foreach ($kategorie as $kat): ?>
                     <li class="py-3.5">
@@ -87,7 +86,6 @@ require __DIR__ . '/partials/page_header.php';
                 <?php endforeach; ?>
             </ul>
 
-            <!-- Tablet a výš: tabulka se od md: vždy vejde (44rem ≤ 720 px) -->
             <div class="mt-10 hidden overflow-x-auto md:block">
                 <table class="w-full min-w-[44rem] text-sm">
                     <caption class="sr-only">Kategorie, tratě, styl a startovné ročníku 2026</caption>
@@ -113,6 +111,7 @@ require __DIR__ . '/partials/page_header.php';
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </section>
@@ -220,6 +219,9 @@ require __DIR__ . '/partials/page_header.php';
                                 title="Mapa trasy <?= e($trasa['nazev']) ?>"
                                 loading="lazy"
                                 class="h-80 w-full border-0 sm:h-96"
+                                <?php if (($trasa['priblizeni_mapy'] ?? '') !== ''): ?>
+                                    style="transform: <?= e($trasa['priblizeni_mapy']) ?>; transform-origin: center center;"
+                                <?php endif; ?>
                                 allowfullscreen></iframe>
                         </div>
                         <a href="<?= e($trasa['mapa']) ?>" target="_blank" rel="noopener noreferrer"
