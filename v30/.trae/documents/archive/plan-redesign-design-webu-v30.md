@@ -1,3 +1,5 @@
+> **ARCHIV – NEPLATÍ.** Redesign je hotový a vizuální pravidla platí v podobě, kterou popisuje `DESIGN.md` v kořeni repozitáře.
+
 # Plán: Redesign webu Vodácká 30 (modrá, „zimní expedice“)
 
 ## Shrnutí

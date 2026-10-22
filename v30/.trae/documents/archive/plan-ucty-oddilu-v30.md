@@ -1,3 +1,5 @@
+> **ARCHIV – NEPLATÍ.** Zóna oddílu je hotová ve větvi `feature/ucty-oddilu`. Aktuální stav je v `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` v kořeni repozitáře.
+
 # Plán: uživatelské účty pro oddíly (Vodácká 30)
 
 ## 1. Shrnutí

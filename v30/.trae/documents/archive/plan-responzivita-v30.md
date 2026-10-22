@@ -1,3 +1,5 @@
+> **ARCHIV – NEPLATÍ.** Většina nálezů (P0 a skoro celé P1) je opravená; seznam zbytku je v `PROJEKT.md` v části „Co zbývá“. Tento dokument slouží jako detailní podklad auditu.
+
 # Plán: audit a dotažení responzivity webu Vodácká 30
 
 ## Shrnutí

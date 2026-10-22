@@ -1,3 +1,5 @@
+> **ARCHIV – NEPLATÍ.** Plán z rané fáze projektu; všechno, co popisuje, je hotové. Aktuální stav je v `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` v kořeni repozitáře.
+
 # Plán: dokončení webu Vodácká 30 (plain PHP MVC)
 
 ## Shrnutí

@@ -1,3 +1,5 @@
+> **ARCHIV – NEPLATÍ.** Část o bezpečnosti a SEO je hotová, administrace žije ve větvi `feature/administrace`. Aktuální stav je v `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` v kořeni repozitáře.
+
 # Plán: zabezpečení + SEO/meta + jednoduchá administrace (Vodácká 30)
 
 ## 1. Shrnutí
