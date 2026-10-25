@@ -28,6 +28,8 @@ return [
     // Pořadatel (pro strukturovaná data Organization/Event).
     'poradatel'        => 'TJ KVT Pardubice',
     'misto'            => 'Chata Bedřichovka, Orlické Záhoří, Orlické hory',
-    'datum_zacatku'    => '2026-01-17',
-    'datum_konce'      => '2026-01-17',
+    // Termín nejbližšího ročníku. Primárně se bere z config/zavod.php
+    // (`rocnik.datum_iso`); tady je jen záložní hodnota.
+    'datum_zacatku'    => '2027-01-16',
+    'datum_konce'      => '2027-01-16',
 ];

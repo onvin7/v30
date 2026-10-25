@@ -27,6 +27,10 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
 
         <dl class="hero-in hero-in-3 mt-9 flex flex-wrap gap-x-12 gap-y-5 border-t border-white/10 pt-6 text-sm">
             <div>
+                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Ročník</dt>
+                <dd class="mt-1 font-semibold tabular-nums"><?= e($hero['rocnik']) ?></dd>
+            </div>
+            <div>
                 <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Termín</dt>
                 <dd class="mt-1 font-semibold tabular-nums"><?= e($hero['datum']) ?></dd>
             </div>
@@ -39,7 +43,7 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
         <div class="hero-in hero-in-4 mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="/prihlaska"
                class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
-                Registrovat do závodu
+                Přihlásit se
             </a>
             <a href="/startovni-listina"
                class="inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
@@ -99,11 +103,11 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
     </div>
 </section>
 
-<!-- Ročník 2026 v číslech -->
+<!-- Poslední odjetý ročník v číslech -->
 <section class="border-t border-slate-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník 2026 v číslech</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník <?= e($archiv['rok']) ?> v číslech</p>
             <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
                 <?php foreach ($rocnik as $metrika): ?>
                     <div class="border-t border-slate-200 pt-5">
@@ -129,7 +133,7 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
                     Program závodního dne
                 </h2>
                 <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
-                    Důležité časy 26. ročníku. Kategorie, tratě a startovné najdete v propozicích.
+                    Důležité časy <?= e($archiv['cislo']) ?>. ročníku. Kategorie, tratě a startovné najdete v propozicích.
                 </p>
                 <a href="/propozice"
                    class="mt-8 inline-flex items-center gap-2 border-b border-brand-600 pb-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-400 hover:text-brand-500">
@@ -202,7 +206,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
 
             <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Výsledky 2026</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Výsledky <?= e($archiv['rok']) ?></p>
                     <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
                         Nejrychlejší muži PRO
                     </h2>
@@ -229,7 +233,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
                 <?php endforeach; ?>
             </ol>
 
-            <p class="mt-4 text-sm text-slate-500">Kategorie <?= e($podiumKategorie) ?> &middot; 26. ročník, 17. ledna 2026</p>
+            <p class="mt-4 text-sm text-slate-500">Kategorie <?= e($podiumKategorie) ?> &middot; <?= e($archiv['cislo']) ?>. ročník, <?= e($archiv['datum']) ?></p>
         </div>
     </div>
 </section>
@@ -250,7 +254,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/prihlaska"
                    class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
-                    Podat přihlášku
+                    Přihlásit se
                 </a>
                 <a href="/kontakt"
                    class="inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">

@@ -6,12 +6,18 @@ class HomeController
 {
     public function index()
     {
-        // Mock data – později nahradí Model / databáze.
+        // Termín, místo a počet kategorií se berou z config/zavod.php, aby homepage
+        // netvrdila jiný ročník ani jiná čísla než zbytek webu.
+        $zavod     = zavod();
+        $nejblizsi = $zavod['rocnik'];
+        $archiv    = $zavod['archiv'];
+
         $hero = [
             'nazev'    => 'Vodácká 30',
             'podtitul' => 'Tradiční vodácký běžkařský závod v Orlických horách',
-            'datum'    => '17. ledna 2026',
-            'misto'    => 'Chata Bedřichovka, Orlické hory',
+            'datum'    => $nejblizsi['datum'],
+            'misto'    => $zavod['misto'],
+            'rocnik'   => $nejblizsi['cislo'] . '. ročník',
         ];
 
         $trat = [
@@ -22,16 +28,17 @@ class HomeController
                 ['label' => 'Délka trati', 'hodnota' => '30 km'],
                 ['label' => 'Start a cíl',  'hodnota' => 'Chata Bedřichovka'],
                 ['label' => 'Pohoří',       'hodnota' => 'Orlické hory'],
-                ['label' => 'Styl',         'hodnota' => 'Klasicky i bruslením'],
+                ['label' => 'Styl',         'hodnota' => 'Klasicky i volně'],
             ],
         ];
 
-        // Ročník 2026 v číslech.
+        // Poslední odjetý ročník v číslech (archiv). Počet kategorií se počítá
+        // z configu, aby se nemohl rozejít s propozicemi ani s přihláškou.
         $rocnik = [
             ['hodnota' => '30',    'jednotka' => 'km',  'label' => 'Hlavní trať'],
             ['hodnota' => '3 a 7', 'jednotka' => 'km',  'label' => 'Dětské tratě'],
-            ['hodnota' => '26.',   'jednotka' => '',    'label' => 'Ročník'],
-            ['hodnota' => '10',    'jednotka' => '',    'label' => 'Vypsaných kategorií'],
+            ['hodnota' => $archiv['cislo'] . '.', 'jednotka' => '', 'label' => 'Ročník'],
+            ['hodnota' => (string) count($zavod['kategorie']), 'jednotka' => '', 'label' => 'Vypsaných kategorií'],
         ];
 
         // Klíčové body závodního dne (úplný program je v propozicích).
@@ -43,7 +50,7 @@ class HomeController
             ['cas' => '17:00', 'polozka' => 'Vyhlášení PRO RADOST a konec závodu'],
         ];
 
-        // Podium nejrychlejší kategorie 26. ročníku.
+        // Podium nejrychlejší kategorie posledního odjetého ročníku.
         $podiumKategorie = 'Muži PRO – volně';
         $podium = [
             ['poradi' => 1, 'jmeno' => 'Skotálek Jan',   'oddil' => 'FORT SMC',              'cas' => '1:43:08'],

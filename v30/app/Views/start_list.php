@@ -17,7 +17,7 @@ foreach ($startovniListina as $skupina) {
 <!-- Rychlé kotvy na kategorie -->
 <section class="border-b border-slate-200 bg-snow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav aria-label="Kategorie" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:px-0">
+        <nav aria-label="Kategorie" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar scroll-fade sm:mx-0 sm:px-0">
             <?php foreach ($startovniListina as $index => $skupina): ?>
                 <a href="#kategorie-<?= $index + 1 ?>"
                    class="whitespace-nowrap border-b-2 border-transparent py-4 text-sm font-medium text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-900">

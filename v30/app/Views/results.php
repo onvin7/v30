@@ -12,7 +12,7 @@ require __DIR__ . '/partials/page_header.php';
 <!-- Filtr kategorií -->
 <section class="border-b border-slate-200 bg-snow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav aria-label="Filtr kategorií" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:px-0">
+        <nav aria-label="Filtr kategorií" class="-mx-4 -mb-px flex gap-7 overflow-x-auto px-4 no-scrollbar scroll-fade sm:mx-0 sm:px-0">
             <a href="/vysledky"
                class="whitespace-nowrap border-b-2 py-4 text-sm font-medium transition-colors <?= $vybranaKategorie === '' ? 'border-brand-600 text-slate-900' : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-900' ?>"
                <?= $vybranaKategorie === '' ? 'aria-current="true"' : '' ?>>Vše</a>

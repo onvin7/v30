@@ -19,6 +19,20 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
 
             <!-- Formulář -->
             <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
+                <?php if ($errors !== []): ?>
+                    <div id="souhrn-chyb" role="alert" tabindex="-1"
+                         class="mb-6 rounded-md border-l-2 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-900">
+                        <p class="font-semibold">Přihlášku se nepodařilo odeslat. Zkontrolujte zvýrazněná pole.</p>
+                        <ul class="mt-2 list-disc space-y-1 pl-5">
+                            <?php foreach ($errors as $klic => $zprava): ?>
+                                <li>
+                                    <a href="#<?= e($klic) ?>" class="underline decoration-red-400 underline-offset-2"><?= e($zprava) ?></a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
                 <form method="post" action="/prihlaska"
                       class="rounded-md border border-slate-200 bg-white p-6 sm:p-8"
                       novalidate>
@@ -35,7 +49,9 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <!-- Kategorie -->
                         <div>
                             <label for="kategorie" class="<?= $labelClass ?>">Kategorie</label>
-                            <select id="kategorie" name="kategorie" required class="<?= $inputClass ?>">
+                            <select id="kategorie" name="kategorie" required
+                                    class="<?= $inputClass ?>"
+                                    <?= isset($errors['kategorie']) ? 'aria-invalid="true" aria-describedby="kategorie-error"' : '' ?>>
                                 <option value="">Vyberte kategorii</option>
                                 <?php foreach ($kategorie as $kod => $kat): ?>
                                     <option value="<?= e($kod) ?>" <?= old_get('kategorie') === $kod ? 'selected' : '' ?>>
@@ -44,7 +60,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                                 <?php endforeach; ?>
                             </select>
                             <?php if (isset($errors['kategorie'])): ?>
-                                <p class="<?= $errorClass ?>"><?= e($errors['kategorie']) ?></p>
+                                <p id="kategorie-error" class="<?= $errorClass ?>"><?= e($errors['kategorie']) ?></p>
                             <?php endif; ?>
                         </div>
 
@@ -52,9 +68,10 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <div>
                             <label for="oddil" class="<?= $labelClass ?>">Oddíl / tým</label>
                             <input type="text" id="oddil" name="oddil" value="<?= e(old_get('oddil')) ?>" required maxlength="100"
-                                   autocomplete="organization" class="<?= $inputClass ?>" placeholder="Např. TJ KVT Pardubice">
+                                   autocomplete="organization" class="<?= $inputClass ?>" placeholder="Např. TJ KVT Pardubice"
+                                   <?= isset($errors['oddil']) ? 'aria-invalid="true" aria-describedby="oddil-error"' : '' ?>>
                             <?php if (isset($errors['oddil'])): ?>
-                                <p class="<?= $errorClass ?>"><?= e($errors['oddil']) ?></p>
+                                <p id="oddil-error" class="<?= $errorClass ?>"><?= e($errors['oddil']) ?></p>
                             <?php endif; ?>
                         </div>
 
@@ -63,17 +80,19 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             <div>
                                 <label for="jmeno" class="<?= $labelClass ?>">Jméno</label>
                                 <input type="text" id="jmeno" name="jmeno" value="<?= e(old_get('jmeno')) ?>" required maxlength="60"
-                                       autocomplete="given-name" enterkeyhint="next" class="<?= $inputClass ?>">
+                                       autocomplete="given-name" enterkeyhint="next" class="<?= $inputClass ?>"
+                                       <?= isset($errors['jmeno']) ? 'aria-invalid="true" aria-describedby="jmeno-error"' : '' ?>>
                                 <?php if (isset($errors['jmeno'])): ?>
-                                    <p class="<?= $errorClass ?>"><?= e($errors['jmeno']) ?></p>
+                                    <p id="jmeno-error" class="<?= $errorClass ?>"><?= e($errors['jmeno']) ?></p>
                                 <?php endif; ?>
                             </div>
                             <div>
                                 <label for="prijmeni" class="<?= $labelClass ?>">Příjmení</label>
                                 <input type="text" id="prijmeni" name="prijmeni" value="<?= e(old_get('prijmeni')) ?>" required maxlength="60"
-                                       autocomplete="family-name" enterkeyhint="next" class="<?= $inputClass ?>">
+                                       autocomplete="family-name" enterkeyhint="next" class="<?= $inputClass ?>"
+                                       <?= isset($errors['prijmeni']) ? 'aria-invalid="true" aria-describedby="prijmeni-error"' : '' ?>>
                                 <?php if (isset($errors['prijmeni'])): ?>
-                                    <p class="<?= $errorClass ?>"><?= e($errors['prijmeni']) ?></p>
+                                    <p id="prijmeni-error" class="<?= $errorClass ?>"><?= e($errors['prijmeni']) ?></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -83,18 +102,20 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                             <div>
                                 <label for="rocnik_narozeni" class="<?= $labelClass ?>">Ročník narození</label>
                                 <input type="text" id="rocnik_narozeni" name="rocnik_narozeni" value="<?= e(old_get('rocnik_narozeni')) ?>" required inputmode="numeric" autocomplete="bday-year" enterkeyhint="next" maxlength="4"
-                                       class="<?= $inputClass ?>" placeholder="Např. 1985">
+                                       class="<?= $inputClass ?>" placeholder="Např. 1985"
+                                       <?= isset($errors['rocnik_narozeni']) ? 'aria-invalid="true" aria-describedby="rocnik_narozeni-error"' : '' ?>>
                                 <?php if (isset($errors['rocnik_narozeni'])): ?>
-                                    <p class="<?= $errorClass ?>"><?= e($errors['rocnik_narozeni']) ?></p>
+                                    <p id="rocnik_narozeni-error" class="<?= $errorClass ?>"><?= e($errors['rocnik_narozeni']) ?></p>
                                 <?php endif; ?>
                             </div>
                             <div>
                                 <label for="email" class="<?= $labelClass ?>">E-mail</label>
                                 <input type="email" id="email" name="email" value="<?= e(old_get('email')) ?>" required
                                        autocomplete="email" inputmode="email" enterkeyhint="next"
-                                       class="<?= $inputClass ?>" placeholder="jmeno@email.cz">
+                                       class="<?= $inputClass ?>" placeholder="jmeno@email.cz"
+                                       <?= isset($errors['email']) ? 'aria-invalid="true" aria-describedby="email-error"' : '' ?>>
                                 <?php if (isset($errors['email'])): ?>
-                                    <p class="<?= $errorClass ?>"><?= e($errors['email']) ?></p>
+                                    <p id="email-error" class="<?= $errorClass ?>"><?= e($errors['email']) ?></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -111,14 +132,15 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <!-- Souhlas -->
                         <div>
                             <label class="flex items-start gap-3">
-                                <input type="checkbox" name="souhlas" value="1" <?= old_get('souhlas') === '1' ? 'checked' : '' ?> required
-                                       class="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600">
+                                <input type="checkbox" id="souhlas" name="souhlas" value="1" <?= old_get('souhlas') === '1' ? 'checked' : '' ?> required
+                                       class="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600"
+                                       <?= isset($errors['souhlas']) ? 'aria-invalid="true" aria-describedby="souhlas-error"' : '' ?>>
                                 <span class="text-sm leading-6 text-slate-600">
                                     Souhlasím se zpracováním uvedených osobních údajů pro účely závodu Vodácká 30.
                                 </span>
                             </label>
                             <?php if (isset($errors['souhlas'])): ?>
-                                <p class="<?= $errorClass ?>"><?= e($errors['souhlas']) ?></p>
+                                <p id="souhlas-error" class="<?= $errorClass ?>"><?= e($errors['souhlas']) ?></p>
                             <?php endif; ?>
                         </div>
 

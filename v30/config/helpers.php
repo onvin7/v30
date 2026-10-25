@@ -77,7 +77,14 @@ function flash_get(string $key, mixed $default = null): mixed
  */
 function old_get(string $key, string $default = ''): string
 {
-    $old = $_SESSION['_flash']['old'] ?? [];
+    // Předvyplněné hodnoty se načtou při prvním použití a hned se ze session
+    // smažou, aby formulář po odchodu ze stránky nezůstal vyplněný.
+    static $old = null;
+
+    if ($old === null) {
+        $nacteno = flash_get('old', []);
+        $old     = is_array($nacteno) ? $nacteno : [];
+    }
 
     return isset($old[$key]) ? (string) $old[$key] : $default;
 }

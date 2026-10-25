@@ -4,3 +4,4 @@
 /storage/*.json
 /storage/*.log
 /storage/*.lock
+.agenttrail/

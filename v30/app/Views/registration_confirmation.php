@@ -57,7 +57,8 @@ require __DIR__ . '/partials/page_header.php';
                 </dl>
 
                 <p class="mt-6 text-sm text-slate-500">
-                    Kdyby něco nesedělo, napište pořadateli.
+                    Kdyby něco nesedělo,
+                    <a href="/kontakt" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">napište pořadateli</a>.
                 </p>
             </div>
 
@@ -65,15 +66,19 @@ require __DIR__ . '/partials/page_header.php';
             <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
                 <div class="border-l-2 border-brand-600 bg-snow px-5 py-6 sm:px-6 sm:py-7">
                     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Platební instrukce</p>
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Startovné uhraďte převodem. Za přijatou platbu se počítá až po ověření pořadatelem.
-                    </p>
 
                     <?php if ($platba['ucet'] === ''): ?>
-                        <p class="mt-4 text-sm leading-6 text-slate-600">
-                            Číslo účtu pořadatel zatím nezveřejnil. Ověřte ho v
-                            <a href="/propozice" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">propozicích</a>
-                            nebo u pořadatele, ať peníze neposíláte naslepo.
+                        <p class="mt-3 text-sm leading-6 text-slate-600">
+                            Číslo účtu pořadatel zatím nezveřejnil, proto platbu teď neposílejte. Ozvěte se
+                            pořadateli, domluvte s ním způsob úhrady a peníze pošlete až po té.
+                        </p>
+                        <a href="/kontakt"
+                           class="mt-5 inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                            Kontakt na pořadatele
+                        </a>
+                    <?php else: ?>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">
+                            Startovné uhraďte převodem. Za přijatou platbu se počítá až po ověření pořadatelem.
                         </p>
                     <?php endif; ?>
 
@@ -107,6 +112,24 @@ require __DIR__ . '/partials/page_header.php';
                             Na místě startu se platí <?= e($platba['na_miste']) ?>, takže včasná platba se vyplatí.
                         </p>
                     <?php endif; ?>
+                </div>
+
+                <div class="mt-8 border-t border-slate-200 pt-6">
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Co bude dál</p>
+                    <ol class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+                        <li class="flex gap-3">
+                            <span class="font-display font-bold tabular-nums text-brand-700">1</span>
+                            <span>Uhraďte startovné<?= $platba['ucet'] === '' ? ' – způsob platby vám sdělí pořadatel' : ' podle instrukcí výše' ?>.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="font-display font-bold tabular-nums text-brand-700">2</span>
+                            <span>Pořadatel platbu ověří. Do té doby platí přihláška jako nepřijatá.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="font-display font-bold tabular-nums text-brand-700">3</span>
+                            <span>Před závodem zkontrolujte startovní listinu a propozice.</span>
+                        </li>
+                    </ol>
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">

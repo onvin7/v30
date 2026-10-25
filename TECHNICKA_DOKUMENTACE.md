@@ -9,7 +9,7 @@ Jak je web Vodácké 30 postavený, kde co leží a jak se změny dělají. Kont
 - **Bez databáze.** Živá data (přihlášky, později účty oddílů a příspěvky) se ukládají do JSON souborů ve `storage/` přes repozitáře v `app/Models/`. Ukázková data závodu jsou v PHP a `config/zavod.php`.
 - **Tailwind CSS přes CDN** v `<head>` `layout.php` (vlastní paleta v `tailwind.config`), **Alpine.js přes CDN** s pluginem `intersect` pro mobilní menu a scroll-reveal.
 - **Fonty** Inter (tělo) a Archivo (nadpisy) z Google Fonts.
-- **Obrázky nejsou v repozitáři.** `config/images.php` drží klíč → URL z alb pořadatele na Zoneramě, šablony je vykreslují pomocí `img_url()` a `img_srcset()`. Chybějící obrázek nahradí grafický blok, nikdy se negeneruje náhradní fotka.
+- **Obrázky jsou součástí repozitáře.** `config/images.php` mapuje klíč → cestu k souboru v `assets/img/` (63 souborů, každý ve více šířkách `{klíč}-{šířka}.jpg`); šablony je vykreslují pomocí `img_url()` a `img_srcset()`. Předlohou jsou veřejná alba pořadatele na Zoneramě, která hotlinking blokují, proto se fotky hostují lokálně. Chybějící obrázek nahradí grafický blok, nikdy se negeneruje náhradní fotka.
 
 Požadavek na běhové prostředí je jen PHP a zapisovatelná složka `storage/`.
 
@@ -22,23 +22,24 @@ v30/                                  kořen repozitáře – dokumentace
     |-- index.php                     vstupní bod, zpevní session → web/index.php
     |-- .htaccess                     přepis cest, blokace interních složek, hlavičky, gzip, cache
     |-- .gitignore                    storage/*.json, storage/*.log, storage/*.lock
-    |-- .trae/documents/              archiv plánů a designové koncepty
+    |-- .trae/documents/              archiv plánů, audit a designové koncepty
+    |-- assets/img/                   fotky ve více šířkách (servírované lokálně)
     |-- web/index.php                 front controller: router, sitemap.xml, robots.txt, 404/405
     |-- config/
     |   |-- autoloader.php            PSR-4: App\ → app/
     |   |-- helpers.php               e(), CSRF, flash, redirect, zavod(), img_url(), img_srcset()
     |   |-- zavod.php                 jediný zdroj pravdy: ročník, místo, kontakty, kategorie, ceny
-    |   |-- images.php                klíč → URL obrázku v albech na Zoneramě
+    |   |-- images.php                klíč → cesta k lokálnímu souboru v assets/img/
     |   `-- seo.php                   adresa webu, seznam URL pro sitemapu, strukturovaná data
     |-- app/
     |   |-- Controllers/              8 veřejných kontrolerů
-    |   |-- Models/                   RegistrationRepository (zatím jediný repozitář)
+    |   |-- Models/                   RegistrationRepository (využitý), OddilRepository a PostRepository (na main bez volajícího)
     |   |-- Helpers/                  Client, Log, RateLimit, Seo, Text
     |   `-- Views/                    layout.php, šablony stránek, partials/, 404.php, 405.php
     `-- storage/                      .htaccess; JSON soubory a logy (mimo Git)
 ```
 
-`app/Controllers/Admin/`, `app/Middleware/`, `app/Views/admin/`, `app/Views/oddil/`, `app/Models/OddilRepository.php`, `config/admin.php` a `config/oddily-2026.php` **na `main` neexistují** – patří do větví `feature/administrace` a `feature/ucty-oddilu` (viz část 8).
+`app/Controllers/Admin/`, `app/Middleware/`, `app/Views/admin/`, `app/Views/oddil/`, `config/admin.php` a `config/oddily-2026.php` **na `main` neexistují** – patří do větví `feature/administrace` a `feature/ucty-oddilu` (viz část 8). Naproti tomu `app/Models/OddilRepository.php` a `app/Models/PostRepository.php` na `main` leží, ale zatím je nikdo nevolá.
 
 ## 3. Tok požadavku
 
@@ -111,39 +112,39 @@ Mapa rout je v `web/index.php` a hledá se podle metody (`GET` / `POST`) a regul
 
 ### `config/zavod.php`
 
-Jediný zdroj pravdy pro parametry závodu: číslo a termín ročníku, uzávěrka včasné platby, archivní ročník, místo a trať, kontakty na pořadatele, číslo účtu (zatím prázdné) a seznam kategorií (kód, název, trať, styl, cena, cena na místě, věkové hranice). Kontrolery ani šablony hodnoty neopisují, čtou je přes `zavod()`. Kategorie a ceny se proto nemůžou na jednotlivých stránkách rozejít a nový ročník se mění na jednom místě.
+Jediný zdroj pravdy pro parametry závodu: číslo a termín ročníku (lidsky i strojově přes `datum_iso`), uzávěrka včasné platby, archivní ročník, místo a trať, kontakty na pořadatele, číslo účtu (zatím prázdné) a seznam kategorií (kód, název, trať, styl, cena, cena na místě, věkové hranice). Kontrolery ani šablony hodnoty neopisují, čtou je přes `zavod()`. Kategorie a ceny se proto nemůžou na jednotlivých stránkách rozejít a nový ročník se mění na jednom místě.
 
 ### `config/helpers.php`
 
 - `e($value)` – escapování výstupu.
 - `csrf_token()`, `csrf_field()`, `csrf_verify()` – CSRF ochrana formulářů.
 - `flash_set()`, `flash_get()` – jednorázové zprávy v session.
-- `old_get($key)` – vrací vyplněnou hodnotu po neúspěšné validaci.
+- `old_get($key)` – vrací vyplněnou hodnotu po neúspěšné validaci; hodnoty načte jednou za vykreslení a hned je ze session smaže, aby formulář nezůstal vyplněný napořád.
 - `redirect($path)` – přesměrování a ukončení požadavku (PRG vzor).
 - `zavod()` – načte `config/zavod.php`, jednou za požadavek.
 - `images()`, `img_url($key)`, `has_img($key)` – mapa obrázků; prázdný řetězec znamená „obrázek není k dispozici“.
-- `img_srcset($key, $sirky)` – sestaví varianty pro `srcset` z URL na Zoneramě.
+- `img_srcset($key, $sirky)` – sestaví varianty pro `srcset` z výchozí cesty v `config/images.php` (odvodí `{klíč}-{šířka}.jpg`).
 
 ### `config/seo.php`, `config/images.php`, `app/Helpers/`
 
-- `seo.php` – adresa webu, seznam URL pro sitemapu, strukturovaná data.
-- `images.php` – klíč → URL obrázku (alba pořadatele na Zoneramě).
+- `seo.php` – adresa webu, seznam URL pro sitemapu, strukturovaná data; termín akce bere z `config/zavod.php` (`rocnik.datum_iso`), tady je jen záložní hodnota.
+- `images.php` – klíč → cesta k lokálnímu souboru v `assets/img/`.
 - `Seo` – titulek, popis, canonical, Open Graph, Twitter card, sitemap a strukturovaná data (používá i router pro `/sitemap.xml`).
 - `Client` – IP adresa klienta a její anonymizace pro logy.
-- `Log` – zápisy o přihlášeních a zásazích do `storage/*.log`.
-- `RateLimit` – limit pokusů přes `storage/rate_limit.json` (blokace po 5 neúspěšných pokusech).
+- `Log` – zápisy o přihlášeních a zásazích do `storage/*.log`. Hotový, ale na `main` ho zatím nikdo nevolá.
+- `RateLimit` – limit pokusů přes `storage/rate_limit.json` (blokace po 5 neúspěšných pokusech). Hotový, ale na `main` ho zatím nikdo nevolá.
 - `Text` – drobné úpravy textů a tvorba slugu.
 
 ## 6. Data a jejich ukládání
 
 - **Data závodu** (ročník, termín, kategorie, ceny, kontakty, místo, trať) jsou v `config/zavod.php`. Ostatní ukázkový obsah (startovní listina, výsledky, alba galerie) je napevno v kontrolerech.
 - **Živá data** ukládají repozitáře z `app/Models/` do JSON souborů ve `storage/`: zámek a atomický zápis přes dočasný soubor, žádná databáze. Do souborů se nesahá přímo z kontroleru ani ze šablony.
-- `RegistrationRepository` spravuje přihlášky jednotlivců (`storage/prihlasky.json`), jejich stav a identifikátor `V30-<rok>-XXXX` s náhodným variabilním symbolem. Ve větvích k němu přibývají `OddilRepository` (`storage/oddily.json`) a `PostRepository` (`storage/prispevky.json`).
+- `RegistrationRepository` spravuje přihlášky jednotlivců (`storage/prihlasky.json`), jejich stav a identifikátor `V30-<rok>-XXXX` s náhodným variabilním symbolem. Na `main` dále leží `OddilRepository` (`storage/oddily.json`) a `PostRepository` (`storage/prispevky.json`), ale volá je až zóna oddílu a administrace ve větvích.
 - Soubory ve `storage/` obsahují osobní údaje, proto jsou v `.gitignore` a nesmí se commitovat. Složka `storage/` musí být pro PHP zapisovatelná.
 
 ## 7. Bezpečnost
 
-- **Formuláře:** serverová validace, CSRF token (`csrf_field()`, ověření `csrf_verify()`), honeypot pole `website` a limitování pokusů (blokace po 5 neúspěšných) přes `RateLimit`.
+- **Formuláře:** serverová validace, CSRF token (`csrf_field()`, ověření `csrf_verify()`) a honeypot pole `website`. Limitování pokusů přes `RateLimit` (blokace po 5 neúspěšných) je hotové, ale přihláška ho zatím nevolá.
 - **Vstup do zón:** hesla se ukládají jen jako hash (`password_hash()`), přihlášení administrátora se po 30 minutách nečinnosti ukončí, obnova hesla oddílu je možná jen přes administraci. Guardy `AdminAuth` a `OddilAuth` (ve větvích) přesměrují nepřihlášeného na přihlášení.
 - **Session:** nastavení cookie se zpevňuje v `v30/v30/index.php` ještě před `session_start()` v routeru.
 - **`.htaccess`:** blokuje přístup do `app/`, `config/` a `storage/`, skryté soubory, archivy (`.zip`, `.tar.gz` a další) a vývojové pomocníky ve webrootu; vynucuje HTTPS mimo lokální vývoj a Webzdarma; nastavuje hlavičky `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection` a `Referrer-Policy` a doplňuje gzip a cache statických souborů.
@@ -181,7 +182,7 @@ Obě funkční větve přidávají routy do `web/index.php`, takže při slouče
 
 ### Chování
 
-- Při chybě validace se uživatel vrátí na formulář s chybovými zprávami u polí a se zachovanými hodnotami (`old_get()`).
+- Při chybě validace se uživatel vrátí na formulář s chybovými zprávami u polí a se zachovanými hodnotami (`old_get()`). Nad formulářem je souhrn chyb s `role="alert"` a odkazy na jednotlivá pole; `aria-invalid` a `aria-describedby` u polí zatím chybí.
 - Při úspěchu se přesměruje na `/prihlaska/potvrzeni` s rekapitulací, identifikátorem `V30-<rok>-XXXX` a platebními instrukcemi. Uložení probíhá přes `RegistrationRepository`.
 - Neplatný CSRF token nebo vyplněný honeypot se odmítne bez uložení.
 - Potvrzovací e-mail se neposílá. Text, který by e-mail obsahoval, se zobrazí přímo na stránce.
@@ -201,11 +202,11 @@ Obě funkční větve přidávají routy do `web/index.php`, takže při slouče
 - **Syntaxe:** `php -l <soubor>` pro každý upravený PHP soubor.
 - **Routy:** `GET /`, `/zavod`, `/propozice`, `/prihlaska`, `/startovni-listina`, `/vysledky`, `/galerie`, `/kontakt`, `/sitemap.xml` a `/robots.txt` musí vracet 200 a očekávaný obsah.
 - **Přihláška:** platný `POST /prihlaska` vede na `/prihlaska/potvrzeni`; nevalidní vstup zpět na formulář s chybou a zachovanými hodnotami; neplatný CSRF nebo vyplněný honeypot se odmítne bez uložení.
-- **Uložení:** po odeslání přibude záznam ve `storage/prihlasky.json`; neúspěšné pokusy se projeví ve `storage/rate_limit.json`.
-- **Chybové stavy:** neexistující cesta vrací 404, existující cesta s jinou metodou 405.
+- **Uložení:** po odeslání přibude záznam ve `storage/prihlasky.json`. Rate limiter se na `main` nevolá, takže `storage/rate_limit.json` zatím nevzniká.
+- **Chybové stavy:** neexistující cesta vrací 404, existující cesta s jinou metodou 405; hlavička `Allow` obsahuje jen metody platné pro danou cestu.
 - **Zóna oddílu a administrace (po sloučení větví):** registrace oddílu → schválení v `/admin` → přihlášení do `/oddil` → hromadná přihláška → CSV export s oddělovačem `;` a UTF-8 BOM.
 - **Responzivita:** v DevTools na šířkách 320, 360, 390, 640, 768, 1024, 1280 a 1920 px zkontroluj, že stránka nemá horizontální scroll (`document.documentElement.scrollWidth <= window.innerWidth`).
-- **Úklid:** po testech nenechávej ve `storage/` testovací záznamy. Soubor `storage/rate_limit.json` blokuje přihlášení po 5 neúspěšných pokusech, takže počítej s tím při testování.
+- **Úklid:** po testech nenechávej ve `storage/` testovací záznamy. Až se rate limiter zapojí, bude blokovat přihlášení po 5 neúspěšných pokusech přes `storage/rate_limit.json` – počítej s tím při testování.
 
 ## 12. Lokální spuštění
 

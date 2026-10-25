@@ -1,8 +1,8 @@
 <?php
 $pageHeader = [
-    'eyebrow'    => 'Poslední zveřejněný ročník · 2026',
+    'eyebrow'    => 'Propozice',
     'title'      => 'Propozice a trať',
-    'lead'       => 'Podmínky 26. ročníku (17. ledna 2026) vycházejí ze zveřejněných propozic pořadatele.',
+    'lead'       => 'Program závodního dne, vypsané kategorie, tratě, startovné a mapové podklady.',
     'breadcrumb' => [['label' => 'Úvod', 'href' => '/'], ['label' => 'Propozice a trať']],
     'image'      => 'header-propositions',
 ];
@@ -18,11 +18,13 @@ require __DIR__ . '/partials/page_header.php';
                 <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
                     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Informace k ročníku 2026</p>
                     <h2 class="mt-3 font-display text-lg font-extrabold leading-snug tracking-tight sm:text-xl">
-                        Údaje z posledního zveřejněného ročníku.
+                        Údaje z posledního odjetého ročníku.
                     </h2>
                     <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Datum, kategorie, tratě, ceny a termíny přihlášek níže popisují ročník 2026. Termín dalšího ročníku
-                        je potvrzený na <?= e(zavod()['rocnik']['datum']) ?>; propozice k němu pořadatel zveřejní později.
+                        Program, kategorie, tratě, ceny a termíny přihlášek níže popisují ročník 2026 – tedy poslední
+                        odjetý. Termín dalšího ročníku je potvrzený na <?= e(zavod()['rocnik']['datum']) ?>
+                        (<?= e(zavod()['rocnik']['cislo']) ?>. ročník); propozice k němu pořadatel zveřejní později.
+                        Do té doby se držíme loňského rozpisu.
                     </p>
                 </div>
 
@@ -65,21 +67,15 @@ require __DIR__ . '/partials/page_header.php';
             <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
                 Kategorie a tratě
             </h2>
-            <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600">
-                Rozpis odpovídá poslednímu zveřejněnému ročníku 2026.
-            </p>
 
             <ul class="mt-10 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
                 <?php foreach ($kategorie as $kat): ?>
                     <li class="py-3.5">
-                        <div class="flex items-baseline justify-between gap-4">
-                            <span class="min-w-0 font-semibold text-slate-900"><?= e($kat['nazev']) ?></span>
-                            <span class="shrink-0 font-display font-bold tabular-nums text-slate-900"><?= e($kat['cena']) ?></span>
-                        </div>
+                        <span class="block font-semibold text-slate-900"><?= e($kat['nazev']) ?></span>
                         <p class="mt-1 text-sm text-slate-500">
-                            <?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?>
+                            <?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?> &middot; <?= e($kat['cena']) ?>
                             <?php if ($kat['cena_na_miste'] !== $kat['cena']): ?>
-                                &middot; na místě <?= e($kat['cena_na_miste']) ?>
+                                (na místě <?= e($kat['cena_na_miste']) ?>)
                             <?php endif; ?>
                         </p>
                     </li>
@@ -88,7 +84,7 @@ require __DIR__ . '/partials/page_header.php';
 
             <div class="mt-10 hidden overflow-x-auto md:block">
                 <table class="w-full min-w-[44rem] text-sm">
-                    <caption class="sr-only">Kategorie, tratě, styl a startovné ročníku 2026</caption>
+                    <caption class="sr-only">Kategorie, tratě, styl a startovné</caption>
                     <thead>
                         <tr class="border-b border-slate-300 text-xs font-medium uppercase tracking-wider text-slate-500">
                             <th scope="col" class="py-3 pr-4 text-left">Kategorie</th>
@@ -145,7 +141,7 @@ require __DIR__ . '/partials/page_header.php';
                 </p>
                 <a href="/prihlaska"
                    class="mt-8 inline-flex w-full items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400 sm:w-auto">
-                    Přejít na přihlášku
+                    Přihlásit se
                 </a>
             </div>
 
@@ -196,7 +192,7 @@ require __DIR__ . '/partials/page_header.php';
                 Trasy a mapové podklady
             </h2>
             <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600">
-                Mapové podklady jednotlivých tratí ročníku 2026.
+                Mapové podklady jednotlivých tratí.
             </p>
         </div>
 
@@ -239,23 +235,28 @@ require __DIR__ . '/partials/page_header.php';
     </div>
 </section>
 
-<!-- Odkaz na oficiální propozice -->
+<!-- Uzavírací CTA -->
 <section class="relative isolate overflow-hidden bg-night text-white">
     <?php require __DIR__ . '/partials/contours.php'; ?>
 
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Archiv</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Přihlášky</p>
             <h2 class="mt-4 max-w-2xl font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-4xl">
-                Propozice 2026
+                Přihlaste se na <?= e(zavod()['rocnik']['datum']) ?>
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
-                Podmínky posledního zveřejněného ročníku zůstávají dostupné na původním webu závodu.
+                <?= e(zavod()['rocnik']['cislo']) ?>. ročník startuje <?= e(zavod()['rocnik']['datum']) ?>
+                u chaty Bedřichovka. Přihlaste se online, startovné uhraďte převodem.
             </p>
-            <div class="mt-8">
-                <a href="https://vodacka30.cz/index.php?menu=2" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex w-full items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10 sm:w-auto">
-                    Otevřít propozice 2026 ↗
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href="/prihlaska"
+                   class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                    Přihlásit se
+                </a>
+                <a href="/kontakt"
+                   class="inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+                    Kontakt na pořadatele
                 </a>
             </div>
         </div>

@@ -25,7 +25,7 @@ Repozitář obsahuje dokumentaci a web běžkařského závodu Vodácká 30 v Or
 1. `php -l` na každý upravený PHP soubor.
 2. Projdi dotčené routy (200) a ověř 404 a 405.
 3. U přihlášky zkus platný i neplatný `POST /prihlaska` a zkontroluj, že se uložilo jen to, co má.
-4. Ukliď po sobě `storage/` – `rate_limit.json` blokuje přihlášení po 5 neúspěšných pokusech, takže při testování hlídej počty.
+4. Ukliď po sobě `storage/` – JSON soubory, logy i zámky z testů nemají v repu co dělat. (Rate limiter se na `main` zatím nevolá, takže `rate_limit.json` při přihlášce nevzniká; až se zapojí, blokuje po 5 neúspěšných pokusech a hlídej počty.)
 5. Když se změní chování (routy, ukládání dat, vzhled), **aktualizuj odpovídající dokument ve stejném commitu**.
 
 Podrobný postup ověření je v [TECHNICKA_DOKUMENTACE.md](TECHNICKA_DOKUMENTACE.md#11-jak-změny-ověřit), spuštění lokálně v [README.md](README.md#jak-to-spustit).

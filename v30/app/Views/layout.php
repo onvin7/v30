@@ -178,6 +178,14 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
             display: none;
         }
 
+        /* Na mobilu je potřeba dát najevo, že lišta pokračuje do strany */
+        @media (max-width: 767px) {
+            .scroll-fade {
+                -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+                mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+            }
+        }
+
         /* Dlouhé nezlomitelné řetězce (e-maily, názvy oddílů) nesmí roztáhnout stránku */
         dd, dt, p, li, h1, h2, h3 {
             overflow-wrap: break-word;
@@ -319,34 +327,34 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
 
                 <div>
                     <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Navigace</p>
-                    <ul class="mt-4 space-y-2.5 text-sm">
-                        <li><a href="/zavod" class="transition-colors hover:text-white">O závodu</a></li>
-                        <li><a href="/galerie" class="transition-colors hover:text-white">Galerie</a></li>
-                        <li><a href="/kontakt" class="transition-colors hover:text-white">Kontakt</a></li>
+                    <ul class="mt-3 space-y-1 text-sm">
+                        <li><a href="/zavod" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">O závodu</a></li>
+                        <li><a href="/galerie" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Galerie</a></li>
+                        <li><a href="/kontakt" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Kontakt</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Závod</p>
-                    <ul class="mt-4 space-y-2.5 text-sm">
-                        <li><a href="/propozice" class="transition-colors hover:text-white">Propozice a trať</a></li>
-                        <li><a href="/prihlaska" class="transition-colors hover:text-white">Přihlášky</a></li>
-                        <li><a href="/startovni-listina" class="transition-colors hover:text-white">Startovní listina</a></li>
-                        <li><a href="/vysledky" class="transition-colors hover:text-white">Výsledky a archiv</a></li>
+                    <ul class="mt-3 space-y-1 text-sm">
+                        <li><a href="/propozice" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Propozice a trať</a></li>
+                        <li><a href="/prihlaska" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Přihlášky</a></li>
+                        <li><a href="/startovni-listina" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Startovní listina</a></li>
+                        <li><a href="/vysledky" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Výsledky a archiv</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Pořadatel</p>
-                    <ul class="mt-4 space-y-2.5 text-sm">
+                    <ul class="mt-3 space-y-1 text-sm">
                         <li>
-                            <a href="https://kvt.pardubice.cz/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
+                            <a href="https://kvt.pardubice.cz/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                                 TJ KVT Pardubice ↗
                             </a>
                         </li>
-                        <li>Chata Bedřichovka, Orlické Záhoří</li>
+                        <li class="py-2.5">Chata Bedřichovka, Orlické Záhoří</li>
                         <li>
-                            <a href="mailto:info@bedrichovka.cz" class="transition-colors hover:text-white">info@bedrichovka.cz</a>
+                            <a href="mailto:info@bedrichovka.cz" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">info@bedrichovka.cz</a>
                         </li>
                     </ul>
                 </div>

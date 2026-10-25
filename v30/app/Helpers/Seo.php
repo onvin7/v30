@@ -185,12 +185,19 @@ class Seo
             'inLanguage' => 'cs',
         ];
 
+        // Termín nejbližšího ročníku se bere z config/zavod.php, aby se ve
+        // strukturovaných datech nemohlo rozejít s tím, co tvrdí web.
+        $rocnik    = zavod()['rocnik'] ?? [];
+        $datumIso  = trim((string) ($rocnik['datum_iso'] ?? ''));
+        $zacatek   = $datumIso !== '' ? $datumIso : (string) ($c['datum_zacatku'] ?? '');
+        $konec     = $datumIso !== '' ? $datumIso : (string) ($c['datum_konce'] ?? '');
+
         $zavod = [
             '@context'  => 'https://schema.org',
             '@type'     => 'SportsEvent',
             'name'      => $nazev,
-            'startDate' => (string) ($c['datum_zacatku'] ?? ''),
-            'endDate'   => (string) ($c['datum_konce'] ?? ''),
+            'startDate' => $zacatek,
+            'endDate'   => $konec,
             'eventStatus' => 'https://schema.org/EventScheduled',
             'location'  => [
                 '@type' => 'Place',

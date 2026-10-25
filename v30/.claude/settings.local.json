@@ -1,0 +1,48 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\\\Users\\\\onvin\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\bd2315a3c5101db4\\\\node_modules\\\\agenttrail\\\\bin\\\\agenttrail.mjs\" hook"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\\\Users\\\\onvin\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\bd2315a3c5101db4\\\\node_modules\\\\agenttrail\\\\bin\\\\agenttrail.mjs\" hook"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\\\Users\\\\onvin\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\bd2315a3c5101db4\\\\node_modules\\\\agenttrail\\\\bin\\\\agenttrail.mjs\" hook"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\\\Users\\\\onvin\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\bd2315a3c5101db4\\\\node_modules\\\\agenttrail\\\\bin\\\\agenttrail.mjs\" hook"
+          }
+        ]
+      }
+    ]
+  }
+}

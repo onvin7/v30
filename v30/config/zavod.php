@@ -15,6 +15,8 @@ return [
         'rok'          => 2027,
         'datum'        => '16. ledna 2027',
         'datum_kratce' => '16. 1. 2027',
+        // Strojový termín pro strukturovaná data a strojové zpracování.
+        'datum_iso'    => '2027-01-16',
         // Uzávěrka včasné platby – odhad podle ročníku 2026 (přihláška i platba do 15. ledna).
         'uzavierka'    => '15. ledna 2027',
     ],
@@ -31,6 +33,9 @@ return [
     'misto'         => 'Chata Bedřichovka, Orlické hory',
     'start_cil'     => 'Bedřichovka, Orlické Záhoří',
     'kontrolni_bod' => 'Pěticestí',
+    // Délky tratí pro souhrny na úvodu. Jedna hodnota pro celý web, aby se
+    // čísla na homepage neopisovala ručně.
+    'trate_km'      => ['hlavni' => '30', 'detske' => '3 a 7'],
 
     // Číslo účtu zveřejněné není (propozice mluví jen o „platbě na účet“).
     // Doplní pořadatel; dokud je prázdné, potvrzení přihlášky na to upozorní,
@@ -42,6 +47,25 @@ return [
         'poradatel' => ['role' => 'Pořadatel',       'jmeno' => 'TJ KVT Pardubice', 'telefon' => ''],
         'reditel'   => ['role' => 'Ředitel závodu',  'jmeno' => 'Aleš Křivka',      'telefon' => '724 308 469'],
         'rozhodci'  => ['role' => 'Hlavní rozhodčí', 'jmeno' => 'Jiří Roleček',     'telefon' => '775 125 883'],
+    ],
+
+    // Podklady pro úvodní stránku (hero a blok o trati) – aby je kontroler
+    // neopisoval ručně a nerozešly se s ostatními stránkami.
+    'uvod' => [
+        'nazev'    => 'Vodácká 30',
+        'podtitul' => 'Tradiční vodácký běžkařský závod v Orlických horách',
+        'trat' => [
+            'nazev' => 'Bílou stopou okolím Bedřichovky',
+            'popis' => 'Třicet kilometrů po hřebenech Orlických hor, se startem i cílem u chaty '
+                     . 'Bedřichovka. Stopa vede zasněženými lesy a loukami Orlického Záhoří a je '
+                     . 'upravená pro klasický styl i bruslení.',
+            'fakta' => [
+                ['label' => 'Délka trati', 'hodnota' => '30 km'],
+                ['label' => 'Start a cíl',  'hodnota' => 'Chata Bedřichovka'],
+                ['label' => 'Pohoří',       'hodnota' => 'Orlické hory'],
+                ['label' => 'Styl',         'hodnota' => 'Klasicky i volně'],
+            ],
+        ],
     ],
 
     // kod => [nazev, trat, styl, cena (včasná platba), cena_na_miste, vek_od, vek_do].
@@ -60,5 +84,23 @@ return [
         'women-classic'     => ['nazev' => 'Ženy KLASIČKY',                      'trat' => '30 km', 'styl' => 'klasicky', 'cena' => 300, 'cena_na_miste' => 400, 'vek_od' => null, 'vek_do' => null],
         'pro-for-fun'       => ['nazev' => 'Muži a ženy PRO RADOST',             'trat' => '30 km', 'styl' => 'volně',    'cena' => 300, 'cena_na_miste' => 400, 'vek_od' => null, 'vek_do' => null],
         'veterans'          => ['nazev' => 'Veteráni a veteránky',               'trat' => '30 km', 'styl' => 'volně',    'cena' => 300, 'cena_na_miste' => 400, 'vek_od' => null, 'vek_do' => null],
+    ],
+
+    // Program závodního dne na jednom místě – úvod i propozice ho čtou odtud.
+    // `skupina` rozděluje den na části (děti / dospělí / večer) pro přehled
+    // v propozicích, úvod vypisuje celý program.
+    'program' => [
+        ['cas' => '9:00',  'polozka' => 'Registrace dětských kategorií',               'skupina' => 'Děti'],
+        ['cas' => '10:00', 'polozka' => 'Start dětí do 6 let (3 km klasicky)',          'skupina' => 'Děti'],
+        ['cas' => '10:00', 'polozka' => 'Registrace dospělých kategorií',               'skupina' => 'Dospělí'],
+        ['cas' => '10:30', 'polozka' => 'Start dětí 7–10, 11–14 a PRO (7 km volně)',    'skupina' => 'Děti'],
+        ['cas' => '11:30', 'polozka' => 'Vyhlášení dětských kategorií',                 'skupina' => 'Děti'],
+        ['cas' => '11:45', 'polozka' => 'Výklad trati pro dospělé',                     'skupina' => 'Dospělí'],
+        ['cas' => '12:00', 'polozka' => 'Start hlavního závodu na 30 km',               'skupina' => 'Dospělí'],
+        ['cas' => '15:00', 'polozka' => 'Vyhlášení kategorií PRO',                      'skupina' => 'Dospělí'],
+        ['cas' => '17:00', 'polozka' => 'Vyhlášení kategorií PRO RADOST a konec závodu', 'skupina' => 'Dospělí'],
+        ['cas' => '18:00', 'polozka' => 'Večeře',                                       'skupina' => 'Večer'],
+        ['cas' => '19:00', 'polozka' => 'Promítání',                                    'skupina' => 'Večer'],
+        ['cas' => '20:00', 'polozka' => 'Pohoda',                                       'skupina' => 'Večer'],
     ],
 ];

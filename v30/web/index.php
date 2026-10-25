@@ -122,8 +122,19 @@ if (!$routeFound) {
 
         foreach ($otherRoutes as $path => $route) {
             if (preg_match('#^' . $path . '$#', $uri)) {
+                // Hlavička Allow smí uvádět jen metody, které na dané cestě opravdu existují.
+                $povoleneMetody = [];
+                foreach ($routes as $metoda => $metodyRouty) {
+                    foreach ($metodyRouty as $cesta => $routa) {
+                        if (preg_match('#^' . $cesta . '$#', $uri)) {
+                            $povoleneMetody[] = $metoda;
+                            break;
+                        }
+                    }
+                }
+
                 http_response_code(405);
-                header('Allow: ' . implode(', ', array_keys($routes)));
+                header('Allow: ' . implode(', ', $povoleneMetody));
                 $title       = 'Metoda není povolena | Vodácká 30';
                 $description = 'Požadovanou stránku nelze načíst touto metodou.';
                 $robots      = false;

@@ -69,7 +69,7 @@ Vše je na jednom místě v `config/zavod.php` a čte se přes `zavod()`. Starto
 
 ## 6. Rozsah funkcí
 
-**Hotové (první spuštění veřejného webu):** responzivní web v češtině s přístupnou navigací, úvod s termínem a místem, strukturované propozice včetně trati a map, online přihláška s validací, CSRF ochranou, honeypotem a limitem pokusů, veřejná startovní listina a výsledky jen se schválenými údaji, filtr výsledků podle kategorie, archiv ročníků, chybové stránky 404 a 405, `/sitemap.xml` a `/robots.txt`.
+**Hotové (první spuštění veřejného webu):** responzivní web v češtině s přístupnou navigací, úvod s termínem a místem, strukturované propozice včetně trati a map, online přihláška s validací, CSRF ochranou a honeypotem, veřejná startovní listina a výsledky jen se schválenými údaji, filtr výsledků podle kategorie, archiv ročníků, chybové stránky 404 a 405, `/sitemap.xml` a `/robots.txt`. Fotky se servírují z repozitáře, ne přes hotlinking.
 
 **Hotové nad původní plán, ale zatím ve větvích:** zóna oddílu se schválením účtu a hromadnou přihláškou, administrace pro pořadatele, ukládání přihlášek, oddílů a příspěvků do JSON souborů.
 
@@ -107,7 +107,7 @@ Vše je na jednom místě v `config/zavod.php` a čte se přes `zavod()`. Starto
 
 ## Co zbývá
 
-Pořadí odpovídá tomu, co je potřeba udělat dřív.
+Pořadí odpovídá tomu, co je potřeba udělat dřív. Průběžně aktualizovaný stav (co už je hotové v kódu, co běží a co je rozpracované) je v živém plánu `v30/PLAN.md`; nálezy z auditu veřejného webu `.trae/documents/audit-webu-v30.md` jsou do něj rozdané.
 
 1. **Sloučit větve.** `feature/administrace` a `feature/ucty-oddilu` do `main` a vyřešit konflikt v mapě rout `web/index.php` (obě větve přidávají routy pro `/admin` a `/oddil`). Pak ověřit, že odkaz `/oddil/registrace` na stránce přihlášky vede na funkční cíl.
 2. **Napojit reálná data ročníku 2027.** Termín je potvrzený, obsah (kategorie, ceny, kapacity, uzávěrky, kontakty, číslo účtu) musí doplnit pořadatel. Ověřené starší ročníky doplnit do archivu.
