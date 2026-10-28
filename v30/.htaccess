@@ -18,6 +18,9 @@
     RewriteRule \.(zip|tar|gz|tgz|7z|rar)$ - [F,L]
     RewriteRule ^nahled-fotek\.html$ - [F,L]
 
+    # 2c) Dokumentace (markdown) ve webrootu nesmí být veřejně dostupná.
+    RewriteRule \.(md|markdown)$ - [F,L]
+
     # 3) Blokace skrytých souborů a složek (např. .env, .git).
     RewriteRule (^|/)\. - [F,L]
 
