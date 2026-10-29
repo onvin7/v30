@@ -54,7 +54,7 @@ require __DIR__ . '/partials/page_header.php';
                             <?php foreach ($rows as $radek): ?>
                                 <tr class="transition-colors hover:bg-snow">
                                     <td class="py-3.5 pr-4 tabular-nums text-slate-500"><?= e($radek['rok']) ?></td>
-                                    <td class="py-3.5 pr-4 text-slate-500">Výsledky</td>
+                                    <td class="py-3.5 pr-4 text-slate-500"><?= e($radek['zdroj'] ?? ('Výsledky ' . $radek['rok'])) ?></td>
                                     <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
                                     <td class="py-3.5 pr-4 text-slate-500"><?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?></td>
                                     <td class="py-3.5 pr-4 text-slate-500"><?= e($radek['kategorie']) ?></td>

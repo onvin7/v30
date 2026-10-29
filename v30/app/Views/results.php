@@ -26,6 +26,19 @@ require __DIR__ . '/partials/page_header.php';
     </div>
 </section>
 
+<section class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+        <div class="border-l-2 border-slate-400 bg-snow px-5 py-4 sm:px-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Archivní výsledky</p>
+            <p class="mt-2 text-sm leading-6 text-slate-600">
+                Zobrazené výsledky patří k <?= e(zavod()['archiv']['cislo']) ?>. ročníku
+                (<?= e(zavod()['archiv']['datum']) ?>). Výsledky <?= e(zavod()['rocnik']['rok']) ?>
+                budou doplněny po závodě.
+            </p>
+        </div>
+    </div>
+</section>
+
 <!-- Výsledkové listiny -->
 <section class="bg-white">
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">

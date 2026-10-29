@@ -29,6 +29,7 @@ class AthleteRepository
                     'cislo'     => (string) $radek['cislo'],
                     'poradi'    => (string) $radek['poradi'],
                     'cas'       => (string) $radek['cas'],
+                    'zdroj'     => 'Výsledková listina 2026',
                     'overeno'   => true,
                 ];
             }
@@ -69,6 +70,7 @@ class AthleteRepository
                 'cislo'     => (string) $row['cislo'],
                 'poradi'    => (string) ($row['poradi'] ?? ''),
                 'cas'       => (string) ($row['cas'] ?? ''),
+                'zdroj'     => (string) ($row['zdroj'] ?? ('Výsledková listina ' . (int) $row['rok'])),
                 'overeno'   => true,
             ];
         }

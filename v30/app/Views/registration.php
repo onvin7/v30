@@ -15,6 +15,14 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
 
 <section class="bg-white">
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="mb-10 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6" role="note">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Důležité k ročníku 2027</p>
+            <p class="mt-3 text-sm leading-6 text-slate-600">
+                Termín <?= e(zavod()['rocnik']['datum']) ?> je potvrzený. Kategorie, ceny a platební údaje
+                se ještě mohou změnit podle finálních pokynů pořadatele. Přihlášku odešlete bez účtu;
+                po odeslání dostanete rekapitulaci a další instrukce.
+            </p>
+        </div>
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 
             <!-- Formulář -->

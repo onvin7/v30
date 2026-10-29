@@ -6,7 +6,7 @@ Tento dokument popisuje zadání a kontext – co web je, odkud se berou data, c
 
 Vodácká 30 je běžkařský závod v Orlických horách; název má z pořadatelského klubu (vodáci), ale jede se na běžkách. Web má zachovat identitu závodu, dobře fungovat na mobilu a pomoct návštěvníkovi rychle najít to podstatné: kdy se závod koná, kde se přihlásit, jaká platí pravidla, kudy vede trať a kde jsou výsledky.
 
-Hlavní zásada: obsah a pravidla patří ke **konkrétnímu ročníku závodu**. Údaj o kategorii, termínu, ceně nebo trati se nemá ručně kopírovat mezi stránkami – drží se na jednom místě (`config/zavod.php`) a stránky si ho čtou.
+Hlavní zásada: obsah a pravidla patří ke **konkrétnímu ročníku závodu**. Údaj o kategorii, termínu, ceně nebo trati se nemá ručně kopírovat mezi stránkami – drží se na jednom místě (`config/zavod.php`) a stránky si ho čtou. Veřejné stránky navíc musí jasně odlišit potvrzený další ročník od archivních údajů posledního závodu.
 
 ## 2. Původní web a co z něj web přebírá
 
@@ -36,19 +36,19 @@ Původní přihlašovací formulář (`?menu=6`) nabízel lodní kategorie C2, K
 
 ## 4. Navigace a obsah stránek
 
-Hlavní navigace je krátká: Úvod (`/`), O závodu (`/zavod`), Propozice a trať (`/propozice`), Přihlášky (`/prihlaska`), Hledat závodníka (`/zavodnici`), Startovní listina (`/startovni-listina`), Výsledky a archiv (`/vysledky`), Galerie (`/galerie`), Kontakt (`/kontakt`). Na mobilu se schová do menu, tlačítko **Přihlásit se** zůstává po ruce. V patičce je pořadatel, kontakt a odkazy na hlavní stránky.
+Hlavní navigace je krátká: Úvod (`/`), O závodu (`/zavod`), Propozice a trať (`/propozice`), Přihlášky (`/prihlaska`), Hledat závodníka (`/zavodnici`), Startovní listina (`/startovni-listina`), Výsledky a archiv (`/vysledky`), Galerie (`/galerie`), Kontakt (`/kontakt`). Na mobilu se schová do menu, ale rychlé akce **Startovka**, **Trasa** a **Přihláška** zůstávají přímo pod hlavičkou. V patičce je pořadatel, kontakt a odkazy na hlavní stránky.
 
 Mimo navigaci existují dvě chráněné zóny: **zóna oddílu** `/oddil` (registrace oddílu, soupiska, hromadná přihláška) a **administrace** `/admin` (příspěvky, schvalování oddílů, přehled přihlášek a export do CSV). Obě jsou zatím ve větvích.
 
 | Stránka | Co obsahuje |
 |---|---|
-| Úvod | Rozcestník závodu: název, aktuální ročník s termínem a místem, hlavní akce (přihláška, propozice, startovní listina), stručný přehled trati a místa. |
+| Úvod | Rozcestník závodu: název, aktuální ročník s termínem a místem, jasné upozornění na stav propozic 2027, hlavní akce (přihláška, propozice, startovní listina), stručný přehled trati a místa. |
 | O závodu | Charakter závodu (běžky v Orlických horách, pořadatel TJ KVT Pardubice) a přehled faktů ročníku. Odkazy na propozice a výsledky. |
 | Propozice a trať | Pořadatelé, časový program, kategorie a tratě, startovné, platba a přihlášení, trať a bezpečnost, ubytování, kontakt, trasy s mapami. U každé informace je zřejmé, ke kterému ročníku patří. |
 | Přihláška | Formulář a po odeslání rekapitulace s identifikátorem přihlášky a platebními instrukcemi (bankovní převod). |
 | Hledat závodníka | Veřejné hledání podle jména nebo oddílu s filtrem ověřeného ročníku. Zobrazuje jen schválená veřejná pole; bez účtů a bez hromadné registrace. |
-| Startovní listina | Jen povolené údaje: jméno, oddíl, kategorie a startovní číslo. |
-| Výsledky a archiv | Filtr podle kategorie, tabulka s pořadím, startovním číslem, jménem, oddílem, časem a ztrátou, odkaz na oficiální PDF. Archiv ročníků rozlišuje ověřené a zatím neověřené. Pořadí se nepřepočítává bez schválených pravidel pořadatele. |
+| Startovní listina | Jen povolené údaje: jméno, oddíl, kategorie a startovní číslo. Stránka výrazně označuje listinu 2026 jako archivní a uvádí, že listina 2027 zatím není zveřejněná. |
+| Výsledky a archiv | Filtr podle kategorie, tabulka s pořadím, startovním číslem, jménem, oddílem, časem a ztrátou, odkaz na oficiální PDF. Stránka výrazně označuje výsledky 2026 jako archivní a archiv ročníků rozlišuje ověřené a zatím neověřené. Pořadí se nepřepočítává bez schválených pravidel pořadatele. |
 | Galerie | Alba podle ročníků, kompletní alba zůstávají u externí galerie pořadatele. |
 | Kontakt | Role a aktuální údaje pořadatele. |
 

@@ -40,6 +40,11 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
             </div>
         </dl>
 
+        <p class="hero-in hero-in-3 mt-6 max-w-2xl border-l-2 border-ice pl-4 text-sm leading-6 text-white/80">
+            Termín 27. ročníku je potvrzený. Propozice, ceny a platební údaje pro rok 2027
+            pořadatel ještě připravuje; níže uvedené archivní údaje se mohou změnit.
+        </p>
+
         <div class="hero-in hero-in-4 mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="/prihlaska"
                class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">

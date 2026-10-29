@@ -55,7 +55,7 @@ Prohlížeč
        připraví data (případně přes repozitář z app/Models/)
        nastaví $title, $description, $view
   → require app/Views/layout.php
-       hlavička s navigací, SEO metadata, flash zprávy
+       hlavička s navigací, mobilní rychlé akce, SEO metadata, flash zprávy
        require $view  (obsah stránky)
        patička
   → HTML odpověď
@@ -208,7 +208,8 @@ Obě funkční větve přidávají routy do `web/index.php`, takže při slouče
 - **Přihláška:** platný `POST /prihlaska` vede na `/prihlaska/potvrzeni`; nevalidní vstup zpět na formulář s chybou a zachovanými hodnotami; neplatný CSRF nebo vyplněný honeypot se odmítne bez uložení.
 - **Uložení:** po odeslání přibude záznam ve `storage/prihlasky.json`. Rate limiter se na `main` nevolá, takže `storage/rate_limit.json` zatím nevzniká.
 - **Chybové stavy:** neexistující cesta vrací 404, existující cesta s jinou metodou 405; hlavička `Allow` obsahuje jen metody platné pro danou cestu.
-- **Hledání závodníků:** `/zavodnici`, `/zavodnici?q=Novak` a `/zavodnici?rok=2026` vrací 200; dotaz kratší než dva znaky a nepovolený ročník vrací viditelnou chybu. Každý dotaz se započítává do limitu 30 dotazů za hodinu a zapisuje se do bezpečnostního logu.
+- **Hledání závodníků:** `/zavodnici`, `/zavodnici?q=Novak` a `/zavodnici?rok=2026` vrací 200; dotaz kratší než dva znaky a nepovolený ročník vrací viditelnou chybu. Výsledek uvádí konkrétní zdrojovou listinu. Každý dotaz se započítává do limitu 30 dotazů za hodinu a zapisuje se do bezpečnostního logu.
+- **Ročník a mobilní UX:** úvod, přihláška, propozice, startovní listina a výsledky jasně rozlišují potvrzený ročník 2027 od archivních údajů 2026. Na mobilu jsou pod hlavičkou přímo dostupné akce Startovka, Trasa a Přihláška.
 - **Zóna oddílu a administrace (po sloučení větví):** registrace oddílu → schválení v `/admin` → přihlášení do `/oddil` → hromadná přihláška → CSV export s oddělovačem `;` a UTF-8 BOM.
 - **Responzivita:** v DevTools na šířkách 320, 360, 390, 640, 768, 1024, 1280 a 1920 px zkontroluj, že stránka nemá horizontální scroll (`document.documentElement.scrollWidth <= window.innerWidth`).
 - **Úklid:** po testech nenechávej ve `storage/` testovací záznamy, `rate_limit.json` ani `security.log`.

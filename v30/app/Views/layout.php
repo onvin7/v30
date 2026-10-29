@@ -266,6 +266,24 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
             </div>
         </div>
 
+        <!-- Rychlé akce pro závodníka na mobilu -->
+        <nav class="border-t border-white/10 xl:hidden" aria-label="Rychlé akce">
+            <div class="mx-auto grid max-w-7xl grid-cols-3 gap-px bg-white/10 px-4 sm:px-6">
+                <a href="/startovni-listina"
+                   class="flex min-h-[44px] items-center justify-center bg-night px-2 text-center text-xs font-semibold text-white/80 transition-colors hover:bg-white/10 hover:text-white">
+                    Startovka
+                </a>
+                <a href="/propozice"
+                   class="flex min-h-[44px] items-center justify-center bg-night px-2 text-center text-xs font-semibold text-white/80 transition-colors hover:bg-white/10 hover:text-white">
+                    Trasa
+                </a>
+                <a href="/prihlaska"
+                   class="flex min-h-[44px] items-center justify-center bg-brand-500 px-2 text-center text-xs font-semibold text-white transition-colors hover:bg-brand-400">
+                    Přihláška
+                </a>
+            </div>
+        </nav>
+
         <!-- Navigace (mobil) -->
         <div id="mobilni-menu" x-show="open" x-cloak @click.outside="open = false"
              class="border-t border-white/10 bg-night xl:hidden">

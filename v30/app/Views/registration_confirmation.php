@@ -1,8 +1,11 @@
 <?php
+$platebniLead = $platba['ucet'] === ''
+    ? 'Přihlášku jsme přijali. Číslo účtu zatím není zveřejněné, proto platbu neposílejte naslepo.'
+    : 'Přihlášku jsme přijali. Zkontrolujte prosím údaje a podle instrukcí níže uhraďte startovné.';
 $pageHeader = [
     'eyebrow'    => 'Rekapitulace přihlášky',
     'title'      => 'Přihláška odeslána',
-    'lead'       => 'Přihlášku jsme přijali. Zkontrolujte prosím údaje a podle instrukcí níže uhraďte startovné.',
+    'lead'       => $platebniLead,
     'breadcrumb' => [
         ['label' => 'Úvod', 'href' => '/'],
         ['label' => 'Přihlášky', 'href' => '/prihlaska'],
