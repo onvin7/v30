@@ -32,10 +32,10 @@ Průběžný stav práce – co je hotové v kódu, co právě běží a co je r
 
 Veřejný web je hotový a naplněný daty:
 
-- Úvod, O závodu, Propozice a trať (včetně map všech tří tratí), Startovní listina, Výsledky s archivem ročníků, Galerie, Kontakt.
+- Úvod, O závodu, Propozice a trať (včetně map všech tří tratí), Přihláška, veřejné hledání závodníků, Startovní listina, Výsledky s archivem ročníků, Galerie, Kontakt.
 - Fotky se servírují z repozitáře (`v30/v30/assets/img/`, 63 souborů ve více šířkách), web už neodkazuje na Zoneramu.
 - Chybové stránky 404 a 405, mapa stránek `/sitemap.xml` a `/robots.txt`.
-- Přihláška jednotlivce: serverová validace, CSRF ochrana, honeypot. Přihláška se uloží a zobrazí se rekapitulace s platebními instrukcemi. Potvrzovací e-mail se zatím neposílá, text se zobrazí přímo na stránce. Limit pokusů je hotový v `App\Helpers\RateLimit`, ale přihláška ho zatím nevolá.
+- Přihláška jednotlivce: serverová validace, CSRF ochrana, honeypot. Přihláška se uloží a zobrazí se rekapitulace s platebními instrukcemi. Potvrzovací e-mail se zatím neposílá, text se zobrazí přímo na stránce. Veřejné hledání závodníků je na `/zavodnici` a pracuje jen s ověřenými veřejnými poli.
 
 ## Co je rozpracované
 
@@ -46,7 +46,7 @@ Dvě části jsou hotové ve větvích, které **nejsou sloučené do `main`**:
 | `feature/ucty-oddilu` | Zóna oddílu `/oddil` – registrace oddílu se schválením, soupiska závodníků, hromadná přihláška. |
 | `feature/administrace` | Administrace `/admin` – příspěvky na úvod, schvalování oddílů, přehled přihlášek a export do CSV. |
 
-Obě větve přidávají routy do `web/index.php`, takže při sloučení vznikne v mapě rout konflikt. Na `main` proto zóna oddílu ani administrace neběží a odkaz `/oddil/registrace` na stránce přihlášky vrací 404. Sloučení větví je první bod v seznamu [co zbývá](PROJEKT.md#co-zbývá).
+Obě větve přidávají routy do `web/index.php`, takže při sloučení vznikne v mapě rout konflikt. Na `main` proto zóna oddílu ani administrace neběží; veřejná přihláška zůstává jednoduchým formulářem bez účtů a doplňuje ji veřejné hledání závodníků `/zavodnici`. Sloučení větví je první bod v seznamu [co zbývá](PROJEKT.md#co-zbývá).
 
 ## Jak to spustit
 

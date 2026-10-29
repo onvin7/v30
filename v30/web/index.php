@@ -32,6 +32,7 @@ use App\Controllers\HomeController;
 use App\Controllers\RaceController;
 use App\Controllers\RegistrationController;
 use App\Controllers\ResultsController;
+use App\Controllers\SearchController;
 use App\Controllers\StartListController;
 use App\Helpers\Seo;
 
@@ -88,6 +89,7 @@ $routes = [
         '/prihlaska/potvrzeni' => [RegistrationController::class, 'confirmation'],
         '/startovni-listina'   => [StartListController::class, 'index'],
         '/vysledky'            => [ResultsController::class, 'index'],
+        '/zavodnici'           => [SearchController::class, 'index'],
         '/galerie'             => [GalleryController::class, 'index'],
         '/kontakt'             => [ContactController::class, 'index'],
     ],

@@ -6,7 +6,7 @@ namespace App\Helpers;
  * Jednoduchý souborový rate limiter (bez databáze).
  *
  * Pokusy se drží v JSON souboru ve /storage podle klíče (např. IP adresa).
- * Používá se pro omezení počtu pokusů o přihlášení do administrace.
+ * Používá se pro omezení veřejných formulářů a přihlášení.
  */
 class RateLimit
 {
