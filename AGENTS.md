@@ -2,12 +2,21 @@
 
 Repozitář obsahuje dokumentaci a web běžkařského závodu Vodácká 30 v Orlických horách. Než začneš pracovat, přečti si [README.md](README.md) a [PROJEKT.md](PROJEKT.md); technické detaily jsou v [TECHNICKA_DOKUMENTACE.md](TECHNICKA_DOKUMENTACE.md) a vzhled v [DESIGN.md](DESIGN.md).
 
-**Tyto čtyři dokumenty jsou zdroje pravdy.** Neopisuj z nich obsah sem, nezakládej další dokumenty a neopravuj v nich jen formulace – měň je, jen když se změní skutečný stav projektu.
+**Tyto čtyři dokumenty jsou zdroje pravdy.** Neopisuj z nich obsah sem, nezakládej další dokumenty a neopravuj v nich jen formulace – měň je, jen když se změní skutečný stav projektu. Živý plán práce je v [`v30/PLAN.md`](v30/PLAN.md).
+
+## Směr produktu
+
+Web slouží **jednorázovému komunitnímu závodu** (akce 1× ročně). Cíl je mobilní UX, přihláška bez tření a viditelní partneři – ne další přihlašovací zóny.
+
+- **Přihláška bez účtu.** Trenér ani závodník si nemá pamatovat heslo jednou za rok. Aktuální veřejný tok je jednoduchá individuální přihláška na `/prihlaska`; účty ani hromadná přihláška nejsou součástí `main`.
+- **Účty oddílů a CMS neslučuj do `main`.** Větve `feature/ucty-oddilu` a `feature/administrace` existují jako nerealizovaný návrh; produktová cesta je hostující přihláška a aktuality v `config/zavod.php`, ne login `/oddil` ani redakční CRUD na čtyři novinky za sezónu.
+- **Partneři jsou obsah ročníku.** Tři úrovně (hlavní / dodavatelé cen / instituce) v `config/zavod.php`, veřejné logo-partnerské bloky a kontextové zmínky u cen a servisu.
+- **Operativa dne závodu** jde přes podmíněný pruh v `layout.php` řízený configem (`upozorneni`), ne přes nový redakční systém.
 
 ## Kde pracovat
 
 - **Aplikace je v podsložce `v30/v30`** a tam patří veškeré úpravy kódu. Kořen repozitáře obsahuje jen dokumentaci (Markdown); nemaž zde soubory ani nepřidávej nové, pokud to zadání výslovně nevyžaduje.
-- Práce je rozdělená do větví: `main` (veřejný web), `feature/ucty-oddilu` (zóna `/oddil`), `feature/administrace` (zóna `/admin`) a záložní `backup/ucty-oddilu-pred-rozdelenim`. **Feature větve nejsou sloučené**, takže na `main` soubory pro `/oddil` a `/admin` neexistují. Obě přidávají routy do `web/index.php` – při sloučení tam vznikne konflikt.
+- Na `main` běží jen veřejný web a přihláška jednotlivce. Soubory pro `/oddil` a `/admin` tam nejsou. Kdyby se feature větve slučovaly, v `web/index.php` vznikne konflikt v mapě rout – **to ale není další krok**; viz Směr produktu.
 - Hotové a neaktuální plány jsou v `v30/v30/.trae/documents/archive/`. Neber je jako zdroj pravdy.
 
 ## Co nedělat
@@ -19,6 +28,7 @@ Repozitář obsahuje dokumentaci a web běžkařského závodu Vodácká 30 v Or
 - **Nezveřejňuj nic nad rámec** startovního čísla, jména, oddílu a kategorie. E-mail, telefon, ročník narození, poznámka ani stav platby se nesmí objevit ve výstupu, filtru ani exportu.
 - **Neměň metodu ani pořadí rout bez důvodu.** Chybějící routa pro existující cestu vrací 405, ne 404.
 - **Nepřidávej vlastní CSS třídy** ani nové abstrakce pro jednorázové použití. Drž vzory z [DESIGN.md](DESIGN.md).
+- **Nestav login oddílu, soupisku za heslem ani blogový CMS.** Hromadnou přihlášku řeš na veřejném formuláři; novinky, partnery a krizový pruh drž v `config/zavod.php`.
 
 ## Než řekneš hotovo
 

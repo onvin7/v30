@@ -16,6 +16,7 @@ $navItems = [
     ['href' => '/prihlaska',         'label' => 'Přihlášky'],
     ['href' => '/startovni-listina', 'label' => 'Startovní listina'],
     ['href' => '/vysledky',          'label' => 'Výsledky a archiv'],
+    ['href' => '/zavodnici',         'label' => 'Hledat závodníka'],
     ['href' => '/galerie',           'label' => 'Galerie'],
     ['href' => '/kontakt',           'label' => 'Kontakt'],
 ];
@@ -341,6 +342,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                         <li><a href="/prihlaska" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Přihlášky</a></li>
                         <li><a href="/startovni-listina" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Startovní listina</a></li>
                         <li><a href="/vysledky" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Výsledky a archiv</a></li>
+                        <li><a href="/zavodnici" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Hledat závodníka</a></li>
                     </ul>
                 </div>
 

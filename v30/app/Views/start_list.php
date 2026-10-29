@@ -37,6 +37,22 @@ foreach ($startovniListina as $skupina) {
             <span class="font-semibold tabular-nums text-slate-900"><?= count($startovniListina) ?></span> kategoriích.
         </p>
 
+        <!-- Filtr -->
+        <div class="mt-8 space-y-4">
+            <div>
+                <label for="filter-text" class="sr-only">Hledat jméno nebo klub</label>
+                <input type="text" id="filter-text" placeholder="Hledat jméno nebo klub"
+                       class="block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button type="button" class="filter-chip active inline-flex items-center rounded-full border border-brand-600 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition-colors hover:bg-brand-100" data-filter="all">Vše</button>
+                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="30km-muzi">Muži 30 km</button>
+                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="30km-zeny">Ženy 30 km</button>
+                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="deti">Děti</button>
+                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="turistika">Turistická</button>
+            </div>
+        </div>
+
         <div class="mt-12 space-y-10 sm:space-y-14">
             <?php foreach ($startovniListina as $index => $skupina): ?>
                 <div id="kategorie-<?= $index + 1 ?>" class="reveal" x-intersect.once="$el.classList.add('is-visible')">
@@ -49,8 +65,11 @@ foreach ($startovniListina as $skupina) {
                     <!-- Mobil: záznamový seznam – tabulka potřebuje 34rem, do telefonu se nevejde -->
                     <ul class="mt-6 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
                         <?php foreach ($skupina['zavodnici'] as $zavodnik): ?>
-                            <li class="flex items-baseline gap-3 py-3.5">
-                                <span class="w-8 shrink-0 text-right font-display text-base font-black tabular-nums text-brand-600"><?= $zavodnik['cislo'] !== '' ? e($zavodnik['cislo']) : '—' ?></span>
+                            <li class="flex items-baseline gap-3 py-3.5"
+                                data-jmeno="<?= e($zavodnik['jmeno']) ?>"
+                                data-oddil="<?= e($zavodnik['oddil']) ?>"
+                                data-kategorie="<?= e($skupina['kategorie']) ?>">
+                                <span class="w-8 shrink-0 text-right font-mono text-base font-black tabular-nums text-brand-600"><?= $zavodnik['cislo'] !== '' ? e($zavodnik['cislo']) : '—' ?></span>
                                 <span class="min-w-0">
                                     <span class="block font-semibold text-slate-900"><?= e($zavodnik['jmeno']) ?></span>
                                     <span class="mt-0.5 block text-sm text-slate-500"><?= $zavodnik['oddil'] !== '' ? e($zavodnik['oddil']) : '—' ?></span>
@@ -72,9 +91,12 @@ foreach ($startovniListina as $skupina) {
                             </thead>
                             <tbody class="divide-y divide-slate-200 border-b border-slate-200">
                                 <?php foreach ($skupina['zavodnici'] as $zavodnik): ?>
-                                    <tr class="transition-colors hover:bg-snow">
+                                    <tr class="transition-colors hover:bg-snow start-list-row"
+                                        data-jmeno="<?= e($zavodnik['jmeno']) ?>"
+                                        data-oddil="<?= e($zavodnik['oddil']) ?>"
+                                        data-kategorie="<?= e($skupina['kategorie']) ?>">
                                         <td class="py-3.5 pr-4 text-right">
-                                            <span class="font-display text-base font-black tabular-nums text-brand-600"><?= $zavodnik['cislo'] !== '' ? e($zavodnik['cislo']) : '—' ?></span>
+                                            <span class="font-mono text-base font-black tabular-nums text-brand-600"><?= $zavodnik['cislo'] !== '' ? e($zavodnik['cislo']) : '—' ?></span>
                                         </td>
                                         <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($zavodnik['jmeno']) ?></td>
                                         <td class="py-3.5 text-slate-500"><?= $zavodnik['oddil'] !== '' ? e($zavodnik['oddil']) : '—' ?></td>
@@ -98,3 +120,100 @@ foreach ($startovniListina as $skupina) {
 
     </div>
 </section>
+
+<script>
+(function() {
+    var filterText = document.getElementById('filter-text');
+    var filterChips = document.querySelectorAll('.filter-chip');
+    var rows = document.querySelectorAll('li.start-list-row, tr.start-list-row');
+
+    // Stav filtru
+    var currentCategory = 'all';
+    var currentSearch = '';
+
+    // Filtrování podle kategorie
+    function filterByCategory(category) {
+        currentCategory = category;
+        applyFilter();
+    }
+
+    // Filtrování podle textu
+    function filterByText(text) {
+        currentSearch = text.toLowerCase();
+        applyFilter();
+    }
+
+    // Aplikace filtru
+    function applyFilter() {
+        var visibleCount = 0;
+
+        rows.forEach(function(row) {
+            var jmeno = (row.dataset.jmeno || '').toLowerCase();
+            var oddil = (row.dataset.oddil || '').toLowerCase();
+            var kategorie = (row.dataset.kategorie || '').toLowerCase();
+
+            // Kategorie
+            var categoryMatch = currentCategory === 'all';
+            if (!categoryMatch) {
+                if (currentCategory === '30km-muzi' && kategorie.includes('muži') && !kategorie.includes('radost')) {
+                    categoryMatch = true;
+                } else if (currentCategory === '30km-zeny' && kategorie.includes('ženy') && !kategorie.includes('radost')) {
+                    categoryMatch = true;
+                } else if (currentCategory === 'deti' && (kategorie.includes('mládež') || kategorie.includes('junioři'))) {
+                    categoryMatch = true;
+                } else if (currentCategory === 'turistika' && kategorie.includes('radost')) {
+                    categoryMatch = true;
+                }
+            }
+
+            // Text
+            var textMatch = currentSearch === '' || jmeno.includes(currentSearch) || oddil.includes(currentSearch);
+
+            // Zobrazení
+            if (categoryMatch && textMatch) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Zpráva o prázdném výsledku
+        var emptyMessage = document.getElementById('empty-message');
+        if (visibleCount === 0 && !emptyMessage) {
+            var section = document.querySelector('section.bg-white');
+            var message = document.createElement('p');
+            message.id = 'empty-message';
+            message.className = 'mt-4 text-sm text-slate-500';
+            message.textContent = 'Žádný závodník neodpovídá filtru.';
+            section.appendChild(message);
+        } else if (visibleCount > 0 && emptyMessage) {
+            emptyMessage.remove();
+        }
+    }
+
+    // Event listener na textové pole
+    if (filterText) {
+        filterText.addEventListener('input', function(e) {
+            filterByText(e.target.value);
+        });
+    }
+
+    // Event listener na chipy
+    filterChips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+            var filter = this.dataset.filter;
+
+            // Aktualizace aktivního chipu
+            filterChips.forEach(function(c) {
+                c.classList.remove('active', 'border-brand-600', 'bg-brand-50', 'text-brand-700');
+                c.classList.add('border-slate-300', 'bg-white', 'text-slate-700');
+            });
+            this.classList.remove('border-slate-300', 'bg-white', 'text-slate-700');
+            this.classList.add('active', 'border-brand-600', 'bg-brand-50', 'text-brand-700');
+
+            filterByCategory(filter);
+        });
+    });
+})();
+</script>

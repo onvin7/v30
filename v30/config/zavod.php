@@ -103,4 +103,106 @@ return [
         ['cas' => '19:00', 'polozka' => 'Promítání',                                    'skupina' => 'Večer'],
         ['cas' => '20:00', 'polozka' => 'Pohoda',                                       'skupina' => 'Večer'],
     ],
+
+    // Krizový pruh (Race Day Alert) – zobrazí se pod hlavičkou, když je aktivni.
+    // Typy: warning (amber), alert (red), info (brand).
+    'upozorneni' => [
+        'aktivni' => false,
+        'typ'     => 'warning',
+        'text'    => '',
+        'odkaz'   => '',
+    ],
+
+    // Aktuality – organizační zprávy na úvodní stránce.
+    // Zdroj pravdy pro sekci Novinky, ne PostRepository ani /admin.
+    'aktuality' => [
+        [
+            'datum'   => '2026-01-10',
+            'nadpis'  => 'Termín 27. ročníku je potvrzen',
+            'text'    => 'Pořadatel potvrdil termín na 16. ledna 2027. Přihlášky budou otevřeny v listopadu 2026.',
+            'dulezite' => true,
+        ],
+        [
+            'datum'   => '2025-12-01',
+            'nadpis'  => 'Připravujeme propozice',
+            'text'    => 'Propozice pro 27. ročník jsou v přípravě. Do té doby se držíme rozpisu z loňského ročníku.',
+            'dulezite' => false,
+        ],
+    ],
+
+    // Partneři – tři úrovně (generální, dodavatelé cen, instituce).
+    // Zobrazují se v gridu nad patičkou na každé stránce.
+    'partneri' => [
+        'generalni' => [
+            [
+                'nazev' => 'Vella Trutnov',
+                'logo' => 'partner-vella',
+                'odkaz' => 'https://vellatu.webnode.cz',
+                'claim' => 'Hlavní partner závodu',
+            ],
+        ],
+        'ceny' => [
+            [
+                'nazev' => 'Fischer Sports',
+                'logo' => 'partner-fischer',
+                'odkaz' => 'http://www.fischersports.com',
+            ],
+            [
+                'nazev' => 'SWIX',
+                'logo' => 'partner-swix',
+                'odkaz' => 'http://www.swix.cz/',
+            ],
+            [
+                'nazev' => 'Pinguin outdoor equipment',
+                'logo' => 'partner-pinguin',
+                'odkaz' => 'http://www.pinguincz.cz',
+            ],
+            [
+                'nazev' => 'Kutlíci',
+                'logo' => 'partner-kutlici',
+                'odkaz' => 'http://kutlici.cz/',
+                'claim' => 'Výroba nafukovacích člunů a vodáckého vybavení',
+            ],
+            [
+                'nazev' => 'Chutná jídla bez výčitek',
+                'logo' => 'partner-chutna',
+                'odkaz' => 'https://www.expresmenu.com/',
+            ],
+            [
+                'nazev' => 'Výživa každým soustem',
+                'logo' => 'partner-vyziva',
+                'odkaz' => 'https://www.ace-agro.cz/',
+            ],
+        ],
+        'instituce' => [
+            [
+                'nazev' => 'Horská služba ČR',
+                'logo' => 'partner-horska-sluzba',
+                'odkaz' => 'http://www.horskasluzba.cz',
+            ],
+            [
+                'nazev' => 'Drotec s.r.o.',
+                'logo' => 'partner-drotec',
+                'odkaz' => 'https://drotec.cz',
+            ],
+            [
+                'nazev' => 'Správa CHKO Orlické hory',
+                'logo' => 'partner-chko',
+                'odkaz' => 'http://orlickehory.ochranaprirody.cz',
+            ],
+            [
+                'nazev' => 'Wiegel',
+                'logo' => 'partner-wiegel',
+                'odkaz' => 'https://wiegel.de/cs',
+            ],
+        ],
+    ],
+
+    // GPX soubory a kontrolní body trati.
+    'gpx' => [
+        'hlavni' => 'assets/gpx/hlavni-30km.gpx',
+        'detske-3km' => 'assets/gpx/detske-3km.gpx',
+        'detske-7km' => 'assets/gpx/detske-7km.gpx',
+    ],
+    'kontrolni_body' => ['Bedřichovka', 'Pěticestí', 'Bunkrovka', 'Korunka', 'Cíl'],
 ];

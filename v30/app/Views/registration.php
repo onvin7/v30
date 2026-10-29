@@ -160,13 +160,13 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                 <div class="lg:sticky lg:top-24 space-y-10">
 
                     <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Přihlašujete víc závodníků?</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Hledáte závodníka?</p>
                         <p class="mt-3 text-sm leading-6 text-slate-600">
-                            Založte si účet oddílu, uložte soupisku a přihlaste celý oddíl jednou přihláškou
-                            s jedním variabilním symbolem. Účet zpřístupníme po schválení pořadatelem.
+                            Ověřte si veřejně dostupné údaje ze schválených výsledků a startovních listin
+                            bez zakládání účtu.
                         </p>
-                        <a href="/oddil/registrace" class="mt-4 inline-flex items-center text-sm font-semibold text-brand-700 transition-colors hover:text-brand-500">
-                            Založit účet oddílu →
+                        <a href="/zavodnici" class="mt-4 inline-flex items-center text-sm font-semibold text-brand-700 transition-colors hover:text-brand-500">
+                            Hledat závodníka →
                         </a>
                     </div>
 

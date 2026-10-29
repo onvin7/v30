@@ -1,5 +1,15 @@
 # Plán redesignu a optimalizace webu Vodácká 30 (V30)
 
+**Zapracováno 25. 10. 2026.** Tento soubor je pracovní poznámka; závazné zadání je v dokumentech níže. Při rozporu platí oni, ne tenhle text.
+
+| Kam to patří | Soubor |
+|---|---|
+| Směr (bez účtů, bez CMS, partneři, alert) | [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md) |
+| Co dělat a v jakém pořadí | [PROJEKT.md](PROJEKT.md#co-zbývá), [README.md](README.md) |
+| Config, přihláška, větve | [TECHNICKA_DOKUMENTACE.md](TECHNICKA_DOKUMENTACE.md) |
+| Pruh, loga, mono čísla, mobilní akce | [DESIGN.md](DESIGN.md) |
+| Živé úkoly v kódu | [v30/PLAN.md](v30/PLAN.md), prompty [v30/TODO.md](v30/TODO.md) |
+
 Tento dokument shrnuje konkrétní kroky a doporučení pro dokončení návrhu a vývoje nového webu `vodacka30.cz`. Reflektuje specifika jednorázového komunitního závodu (akce 1× ročně), eliminuje zbytečnou komplexitu a zaměřuje se na perfektní UX, mobilní použití a viditelnost partnerů závodu.
 
 ---

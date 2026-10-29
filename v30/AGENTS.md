@@ -4,6 +4,7 @@ Use this file as the bootstrap note for any fresh AI agent entering this repo.
 
 - Canonical project root for the PHP app is `c:\Users\onvin\Documents\WEB\v30\v30`.
 - Do not work from the parent folder `c:\Users\onvin\Documents\WEB\v30` when running app-local commands. The nested `v30\v30` folder is the actual app, and `PLAN.md` for Agenttrail lives here.
+- Product direction lives in the parent docs (`../PROJEKT.md`, `../AGENTS.md`): once-a-year race, guest registration (no club logins), news/partners/race-day alert in `config/zavod.php`. Do not merge `feature/ucty-oddilu` or a news CMS into `main`.
 - This project benefits from the global Trae skills installed from `https://github.com/mattpocock/skills`. If they are missing in the current environment, install that repo's stable skills into the user-level Trae skills directory before substantial work.
 - The most useful installed skills for this repo are:
   - `writing-for-agents` for editing `AGENTS.md`, `CLAUDE.md`, and other agent-facing instructions

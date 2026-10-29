@@ -12,6 +12,9 @@ class HomeController
         $nejblizsi = $zavod['rocnik'];
         $archiv    = $zavod['archiv'];
 
+        // Aktuality z configu – sekce Novinky na úvodu.
+        $novinky = $zavod['aktuality'] ?? [];
+
         $hero = [
             'nazev'    => 'Vodácká 30',
             'podtitul' => 'Tradiční vodácký běžkařský závod v Orlických horách',

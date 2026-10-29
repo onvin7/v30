@@ -7,8 +7,8 @@ podle které se dá dohledat. Co se ověřit nepodařilo, je popsané v `## deci
 tech: čisté PHP MVC bez frameworku – vlastní router v `web/index.php`, kontrolery v `app/Controllers`, šablony přes `require` z `layout.php`
 links: [race-data, entries, hosting]
 files: [web/index.php, app/Controllers/*.php, app/Views/**, assets/**]
-- [x] Obsloužit devět veřejných stránek {#public-routes}
-  tech: web/index.php – mapa rout GET: /, /zavod, /propozice, /prihlaska, /prihlaska/potvrzeni, /startovni-listina, /vysledky, /galerie, /kontakt
+- [x] Obsloužit deset veřejných stránek {#public-routes}
+  tech: web/index.php – mapa rout GET: /, /zavod, /propozice, /prihlaska, /prihlaska/potvrzeni, /zavodnici, /startovni-listina, /vysledky, /galerie, /kontakt
 - [x] Vykreslit zimní expediční design {#public-design}
   tech: app/Views/layout.php – Tailwind CDN s paletou brand/night/deep/snow/ice, Alpine.js, scroll-reveal (`.reveal` → `.is-visible`)
 - [x] Odpovědět 404 a 405 na neznámé adresy {#public-errors}
@@ -38,6 +38,17 @@ files: [web/index.php, app/Controllers/*.php, app/Views/**, assets/**]
   tech: app/Controllers/StartListController.php, app/Controllers/ResultsController.php
 - [x] Nahradit široké tabulky seznamem na mobilu {#public-record-lists}
   tech: app/Views/results.php:61, app/Views/propositions.php:72, app/Views/start_list.php:50 – varianty s `md:hidden`
+- [x] Přidat veřejné hledání závodníků napříč ověřenými ročníky {#public-athlete-search}
+  needs: [race-data]
+  by: autopilot
+  tech: `/zavodnici`, `SearchController`, `AthleteRepository`; aktuální fallback čte ověřené výsledky 2026 z `PublicRaceRepository`, volitelný normalizovaný `storage/zavodnici.json` se stavem `overeno` je připraven pro další importy; veřejná pole jsou ročník závodu, jméno, oddíl, kategorie, startovní číslo a u výsledků pořadí/čas
+  scope: jeden jednoduchý dotaz podle jména nebo oddílu + filtr ročníku; bez účtů, bez hromadné registrace, bez e-mailu, telefonu, roku narození, poznámky, platby nebo interního ID
+- [x] Připravit první ověřená data pro hledání {#public-athlete-data}
+  needs: [race-data]
+  by: autopilot
+  tech: `PublicRaceRepository` drží ověřenou listinu 2026 jako importní fallback; `AthleteRepository` přijímá normalizovaný JSON se stavem `overeno` a neověřené záznamy vynechává
+  source: aktuální web `https://vodacka30.cz/?menu=3` uvádí 26. ročník (2026), 25. až 16. ročník (2025–2015); 21. ročník odpovídá roku 2020, protože ročník 2021 se podle archivu nejel
+  verification: stránka obsahuje kompletní tabulku 2026 a odkaz na `V30_2026_vysledkova_listina.pdf`; starší ročníky se nesmí označit jako ověřené jen podle seznamu roků, ale až po získání a kontrole konkrétní výsledkové listiny
 - [x] Zobrazit galerii z lokálně hostovaných fotek {#public-gallery}
   tech: app/Controllers/GalleryController.php + config/images.php
 - [ ] Zveřejnit sekci Novinky na úvodu {#public-news}
@@ -94,7 +105,7 @@ files: [app/Controllers/RegistrationController.php, app/Models/RegistrationRepos
   tech: app/Views/registration.php – chybující pole nesou `aria-invalid`/`aria-describedby`, chybové zprávy mají `id="<pole>-error"`, souhrn nad formulářem má `role="alert"`
 - [ ] Zapojit limit pokusů a bezpečnostní log do přihlášky {#entries-ratelimit}
   from: agent
-  tech: app/Helpers/RateLimit.php a app/Helpers/Log.php existují, ale na `main` je nikdo nevolá (grep: 0 volání)
+  tech: `SearchController` už používá `RateLimit` a `Log::security()` pro `/zavodnici`; `RegistrationController::store` je u přihlášky jednotlivce stále nevolá
 - [ ] Posílat potvrzení e-mailem {#entries-email}
   from: roadmap
   tech: dnes se text vykreslí přímo na stránce – app/Views/registration_confirmation.php
@@ -141,9 +152,9 @@ files: [web/index.php, .gitignore]
 - [ ] Zachovat lokální fotky při sloučení {#merge-photos}
   from: agent
   tech: obě větve proti `main` mažou všech 63 souborů assets/img/*.jpg – vznikly před commitem e0721cc
-- [ ] Opravit mrtvý odkaz /oddil/registrace na main {#merge-404}
-  from: roadmap
-  tech: odkaz je na stránce přihlášky, cíl existuje jen na větvi
+- [x] Opravit mrtvý odkaz /oddil/registrace na main {#merge-404}
+  by: autopilot
+  tech: app/Views/registration.php – doplňující odkaz vede na `/zavodnici`, která existuje na `main`
 
 ## Udržet web v bezpečí a hosting v souladu {#hosting}
 tech: `.htaccess` (HTTPS redirect, blokace, hlavičky, gzip, cache), hardening session v `index.php`, sitemap/robots z routeru
@@ -159,13 +170,16 @@ files: [.htaccess, index.php, config/autoloader.php, app/Helpers/Client.php, app
   tech: .htaccess:6-12
 - [ ] Volat rate limiter a bezpečnostní log při přihlašování {#hosting-logging}
   from: agent
-  tech: app/Helpers/RateLimit.php a app/Helpers/Log.php jsou hotové, ale na `main` je nikdo nevolá (grep: 0 volání)
+  tech: `SearchController` používá `RateLimit::check()` (30 dotazů za hodinu) a `Log::security()`; přihláška jednotlivce tyto helpery stále nevolá
 
 ## decisions
+- 2026-10-29 – Veřejné hledání bude bez účtů a bez hromadné přihlášky. První verze zobrazí jen schválená veřejná pole: ročník závodu, jméno, oddíl, kategorie, startovní číslo a u výsledků pořadí/čas. Neověřené ročníky se ve vyhledávání nepoužijí.
+  - **Zdroj historických dat:** aktuální web pořadatele `https://vodacka30.cz/?menu=3` byl načten přes Apify `web-fetch`; uvádí ročníky 2015–2026 a odkazuje na detailní výsledkovou listinu 2026. Archiv aktualit `https://vodacka30.cz/?menu=archiv` potvrzuje, že rok 2021 se nejel.
+  - **Důsledek pro import:** seznam ročníků lze převzít jako katalog, ale závodníky lze zveřejnit až po stažení a kontrole výsledků pro konkrétní ročník. Rok 2026 je první ověřený zdroj; starší PDF/listiny se dohledají po jednotlivých odkazech a jejich stav se uloží odděleně od samotných záznamů.
 - 2026-10-23 – Sepsal jsem do dokumentů práci, která byla hotová jen v kódu, aby plán i kořenové dokumenty seděly se skutečností:
   - **Opravy z auditu (`.trae/documents/audit-webu-v30.md`) jsou v PLAN.md jako `[x]`.** Termín a ročník v hero z `config/zavod.php`, ISO termín pro JSON-LD, počet kategorií z configu, mazání `old` hodnot, hlavička `Allow` u 405, souhrn chyb v přihlášce a sjednocená CTA. Vše je zatím **v pracovní kopii, ne v commitu** – `[x]` znamená hotové v kódu, ne nasazené.
   - **Chybové stavy přihlášky jsou hotové celé.** Z auditu (nález M9) je hotová viditelná část (souhrn chyb nad formulářem) i strojová část – pole nesou `aria-invalid` a `aria-describedby`, chybové zprávy mají `id="<pole>-error"`, proto je `{#entries-aria}` `[x]`.
-  - **Dokumentace se srovnala s kódem.** `README.md`, `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` přestaly tvrdit, že fotky v repu nejsou (jsou v `assets/img/`, commit `e0721cc`), že přihláška má hotový „limit pokusů“ (`RateLimit` i `Log` na `main` nikdo nevolá) a že `RegistrationRepository` je jediný repozitář (na `main` leží i `OddilRepository` a `PostRepository`, bez volajícího). Rozpory níže jsou proto přeškrtnuté.
+  - **Dokumentace se srovnala s kódem.** `README.md`, `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` přestaly tvrdit, že fotky v repu nejsou (jsou v `assets/img/`, commit `e0721cc`), že přihláška má hotový „limit pokusů“ (u přihlášky ho `RegistrationController` stále nevolá) a že `RegistrationRepository` je jediný repozitář (na `main` leží i `OddilRepository`, `PostRepository`, `PublicRaceRepository` a `AthleteRepository`). Veřejné hledání nyní limiter a bezpečnostní log používá.
   - **Nové soubory jsem do dokumentace dovedl odkazy.** Živý plán `v30/PLAN.md`, audit `v30/.trae/documents/audit-webu-v30.md` a zásobník promptů `v30/TODO.md` na sebe odkazují z `README.md`.
 - 2026-10-23 – Přepsal jsem `PLAN.md` ze stubu z `agenttrail init` na skutečnou mapu kódu. Rozhodnutí, která u toho padla:
   - **Stav jsem ověřoval v kódu, ne v dokumentaci.** Každý `[x]` má na řádku `tech:` cestu k souboru (u větví i jméno větve), aby se dal dohledat.
@@ -174,11 +188,11 @@ files: [.htaccess, index.php, config/autoloader.php, app/Helpers/Client.php, app
   - **`by:` u hotových úkolů chybí.** Nemůžu je poctivě připsat – dokončení předchází tuhle session; kdo co udělal, drží git log. (Úkoly přidané 2026-10-23 už `by:` mají.)
   - **Vzniklo sedm karet místo původní jedné `{#setup}`.** Kopírují hranice kódu (veřejný web, data závodu, přihláška, oddíly, administrace, sloučení větví, bezpečnost/hosting), každá má vlastní „hotovo“ a aspoň jednu hranu.
   - **Kartu pro dokumentaci jsem záměrně nezaložil.** Nic na ní nezávisí a její smazání by nezměnilo, co produkt dělá – test durability neprojde. Úklid dokumentů proto zůstává úkolem uvnitř karet, které ta fakta vlastní.
-  - **Roadmapu jsem nedělal jako jednu kartu.** Body z `PROJEKT.md` „Co zbývá“ jsem rozdal do karet podle souborů, kterých se týkají, a označil `from: roadmap`. Vlastní objevy z auditu kódu (`from: agent`) jsou čtyři: mrtvá sekce Novinky, nezapojený rate limiter a log u přihlášky a u přihlašování, a mazání fotek ve větvích.
+  - **Roadmapu jsem nedělal jako jednu kartu.** Body z `PROJEKT.md` „Co zbývá“ jsem rozdal do karet podle souborů, kterých se týkají, a označil `from: roadmap`. Vlastní objevy z auditu kódu (`from: agent`) jsou čtyři: mrtvá sekce Novinky, nezapojený rate limiter a log u přihlášky a u přihlašování, a mazání fotek ve větvích. Hledání závodníků bylo doplněno později a používá limiter i bezpečnostní log samostatně.
 
 - **Rozpory mezi dokumentací a kódem** (2026-10-23): dokumentace byla v těchto bodech zvetšelá, proto se jí nedalo věřit. První tři se při téhle revizi srovnaly s kódem, čtvrtý je věc kódu, ne dokumentace:
   - ~~fotky v repozitáři~~ → opraveno: `README.md` i `TECHNICKA_DOKUMENTACE.md` teď popisují 63 lokálních souborů v `assets/img/` (commit `e0721cc`), ne hotlinking na Zoneramu.
-  - ~~„limit pokusů“ u přihlášky~~ → opraveno: `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` už limit neuvádějí jako hotový. `RegistrationController::store` žádný limit nevolá a `App\Helpers\RateLimit` (ani `Log`) nemá na `main` jediného volajícího.
+  - ~~„limit pokusů“ u přihlášky~~ → opraveno: `PROJEKT.md` a `TECHNICKA_DOKUMENTACE.md` už limit neuvádějí jako hotový pro registrační formulář. `RegistrationController::store` žádný limit nevolá; `SearchController` ale `App\Helpers\RateLimit` a `Log::security()` používá pro veřejné hledání.
   - ~~jediný repozitář~~ → opraveno: `TECHNICKA_DOKUMENTACE.md` už zmiňuje i `OddilRepository` a `PostRepository`, které na `main` leží bez volajícího.
   - Sekce „Novinky“ na úvodu je mrtvá: `app/Views/home.php` ji vykresluje, ale `HomeController::index` `$novinky` nikdy nenastaví. Zůstává otevřený úkol `{#public-news}`.
 

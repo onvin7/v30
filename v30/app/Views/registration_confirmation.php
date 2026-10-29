@@ -130,6 +130,14 @@ require __DIR__ . '/partials/page_header.php';
                             <span>Před závodem zkontrolujte startovní listinu a propozice.</span>
                         </li>
                     </ol>
+                    <?php
+                    $partnerGeneralni = zavod()['partneri']['generalni'][0] ?? null;
+                    if ($partnerGeneralni):
+                    ?>
+                    <p class="mt-6 text-xs text-slate-500">
+                        Hlavní partner závodu: <a href="<?= e($partnerGeneralni['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="font-medium text-brand-700 hover:text-brand-500"><?= e($partnerGeneralni['nazev']) ?></a>.
+                    </p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">

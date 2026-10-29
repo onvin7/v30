@@ -2,7 +2,7 @@
 
 Vizuální jazyk webu Vodácké 30. Drž se ho, když saháš do šablon – kontext projektu je v [PROJEKT.md](PROJEKT.md), technické řešení v [TECHNICKA_DOKUMENTACE.md](TECHNICKA_DOKUMENTACE.md).
 
-**Téma:** „Zimní expedice / editorial“ – chladná modrá paleta, výrazná typografie, klidný profesionální dojem. **Uživatelé:** outdooroví sportovci, pořadatelé a diváci. **Cíl:** vysoká hustota dat (výsledky, startovní listiny), extrémní čitelnost a funkční minimalismus.
+**Téma:** „Zimní expedice / editorial“ – chladná modrá paleta, výrazná typografie, klidný profesionální dojem. **Uživatelé:** outdooroví sportovci, pořadatelé, diváci a partneři závodu. **Cíl:** vysoká hustota dat (výsledky, startovní listiny), extrémní čitelnost na mobilu, funkční minimalismus a **viditelná loga partnerů** – bez nich se jednorázový komunitní závod neobejde.
 
 Web nemá build krok: stylování jde přes Tailwind CDN a vlastní paletu v `tailwind.config` uvnitř `app/Views/layout.php`, interaktivitu řeší Alpine.js. Nepřidávej vlastní CSS třídy ani build pipeline.
 
@@ -38,6 +38,7 @@ Použití:
 ## 3. Typografie a rozestupy
 
 - **Fonty:** nadpisy `font-display` (Archivo), tělo `font-sans` (Inter); oba z Google Fonts v `layout.php`.
+- **Čísla v tabulkách:** startovní čísla a časy `font-mono`, aby na úzkém displeji držely svislé zarovnání.
 - **Rozestupy:** drž 8pt grid (`4`, `8`, `12`, `16`, `24`, `32`), žádné hodnoty na míru jako `-[17px]`.
 - **Whitespace:** velkorysé svislé odsazení sekcí (`py-16`, hero `py-24` a víc).
 - **Celoobrazovkové sekce:** `min-h-dvh` (ne `min-h-screen`), aby výška odpovídala i mobilním prohlížečům s adresní lištou.
@@ -61,8 +62,9 @@ Dotyková plocha má na mobilu aspoň 44 px (`min-h-[44px]`).
 
 - Hlavička: `text-xs font-medium uppercase tracking-wider text-slate-500` s `border-b border-slate-300`.
 - Řádky: `border-b border-slate-200 hover:bg-snow transition-colors` (tělo `divide-y divide-slate-200`).
-- Zarovnání: jména a oddíly vlevo, čísla (časy, startovní čísla, pořadí) vpravo (`text-right`).
+- Zarovnání: jména a oddíly vlevo, čísla (časy, startovní čísla, pořadí) vpravo (`text-right`) a `font-mono`.
 - **Na mobilu se místo široké tabulky vykresluje záznamový seznam** (od `md:` nahoru je tabulka). Obal tabulky má `overflow-x-auto` a `caption` s `sr-only`.
+- **Startovní listina:** nad tabulkou textové pole (jméno / klub) a tlačítka kategorií (`Vše`, `Muži 30 km`, `Ženy 30 km`, `Děti`, `Turistická`). Filtrování skrývá řádky v prohlížeči, bez reloadu a bez nové JS knihovny.
 
 ### Formuláře
 
@@ -70,14 +72,40 @@ Dotyková plocha má na mobilu aspoň 44 px (`min-h-[44px]`).
 - Popisky: `block text-sm font-medium leading-6 text-slate-900`.
 - Chyby u polí: `text-red-600 text-sm mt-1`.
 
+### Krizový pruh (Race Day Alert)
+
+Pod hlavičkou, jen když `zavod()['upozorneni']['aktivni']`. Plná šířka, vysoký kontrast, žádný gradient.
+
+- `info` – `bg-brand-700 text-white`
+- `warning` – `bg-amber-400 text-slate-900` (jediná výjimka ze „žádné teplé akcenty“: operační stav, ne dekorace)
+- `alert` – `bg-red-700 text-white`
+
+Text z configu, volitelný odkaz. Na mobilu musí jít pruh zavřít jen pokud to config dovolí; výchozí stav je trvale viditelný.
+
+### Partneři
+
+Tři vizuální úrovně ze stejných dat v `config/zavod.php`:
+
+1. **Generální / hlavní** – větší logo, volitelný claim, odkaz.
+2. **Dodavatelé cen** – střední grid.
+3. **Instituce** – menší loga.
+
+**Pre-footer** (`partials/sponsors.php`) je na každé stránce těsně nad patičkou: `bg-white` nebo `bg-snow`, ne `bg-night`, aby loga v tmavém tématu nezmizela. Ohraničení `border-slate-200`, žádné velké stíny.
+
+Kontextově, ne jen v patičce: u věcných cen v propozicích, u servisní zóny, u instrukcí k platbě na potvrzení přihlášky (hlavní partner).
+
+### Mobilní hlavička
+
+Vedle hamburgeru zůstanou na úzkém displeji tři akce s `min-h-[44px]`: Startovka (`/startovni-listina`), Trasa (`/propozice`), Registrace (`/prihlaska`). Tlačítko Přihlásit se tím nesmí zmizet z dosahu palce.
+
 ### Grafické bloky
 
 Chybějící fotografii nahrazuje grafický blok s vrstevnicemi (`app/Views/partials/contours.php`) na tmavém pozadí – nikdy negenerovaná fotka ani prázdné šedé pole.
 
 ## 5. Zásady pro šablony
 
-- Všechny stránky se vykreslují přes společný `layout.php`, který drží hlavičku, navigaci, SEO metadata, flash zprávy a patičku a na konci `require` dané view.
-- Opakující se prvky zůstávají v `layout.php`; nevytvářej nové abstrakce pro jednorázové použití.
+- Všechny stránky se vykreslují přes společný `layout.php`, který drží hlavičku, navigaci, SEO metadata, flash zprávy, krizový pruh, obsah, grid partnerů a patičku a na konci `require` dané view.
+- Opakující se prvky zůstávají v `layout.php`; výjimka se smyslem opakování je `partials/sponsors.php`. Nevytvářej nové abstrakce pro jednorázové použití.
 - Obrázky vkládej přes `img_url()` a `img_srcset()` z `config/helpers.php`, s `loading="lazy"` a rozměry kvůli stabilitě layoutu. Hero obrázek má `fetchpriority="high"` a `sizes="100vw"`.
 - U flex položek s textem používej `min-w-0`, aby se dlouhý obsah (e-mail, název oddílu) nepřelil mimo kartu.
 - Formuláře vkládají CSRF pole přes `csrf_field()` a chrání se honeypot políčkem.

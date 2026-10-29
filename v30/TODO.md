@@ -18,6 +18,65 @@ Tento soubor slouží jako zásobník konkrétních promptů pro další AI agen
   - `/kontakt`
 - U tohoto projektu dává smysl hlavně použít skills `frontend-skill`, `diagnosing-bugs`, `code-review`, `tdd`, `codebase-design`, `improve-codebase-architecture` a `writing-for-agents`.
 - Výstup má být vždy konkrétní, bez marketingové omáčky a bez obecných frází typu „zlepšit UX“. Každé doporučení musí říct co je špatně, kde se to projevuje a co přesně změnit.
+- **Neimplementuj** login `/oddil`, CMS `/admin` ani sloučení `feature/ucty-oddilu` / `feature/administrace`. Zadání je v `../PROJEKT.md` (Co zbývá) a v `PLAN.md`.
+
+---
+
+## 0. Implementační úkoly ze zadání (ne audit)
+
+Pořadí drží `../PROJEKT.md#co-zbývá`. Každý prompt je jeden zásah; po něm `php -l` a kontrola dotčených stránek.
+
+### 0.1 Partneři
+
+```text
+Doplň partnery podle DESIGN.md a PROJEKT.md.
+
+1. V config/zavod.php přidej `partneri` ve 3 úrovních (generální, dodavatelé cen, instituce): název, logo, odkaz, volitelný claim.
+2. Vytvoř app/Views/partials/sponsors.php a vlož ho v layout.php těsně nad patičku (světlý podklad, ne night).
+3. Kontextové zmínky: u cen v propositions.php, u servisu, logo hlavního partnera na registration_confirmation.php.
+4. Drž Tailwind utility z DESIGN.md, žádné nové CSS třídy.
+5. Aktualizuj TECHNICKA_DOKUMENTACE.md jen pokud se chováním odchýlíš od popisu.
+```
+
+### 0.2 Krizový pruh
+
+```text
+Přidej operační pruh podle DESIGN.md.
+
+config/zavod.php: `upozorneni` => aktivni, typ (warning|alert|info), text, odkaz.
+layout.php: když aktivni, pruh pod hlavičkou. Barvy přesně podle DESIGN.md.
+Ověř zapnuto i vypnuto a že text jde přes e().
+```
+
+### 0.3 Aktuality z configu
+
+```text
+Napoj mrtvou sekci Novinky na úvodu.
+
+HomeController::index dnes nenastaví $novinky. Zdroj je pole `aktuality` v config/zavod.php (datum, nadpis, text, dulezite), ne PostRepository.
+Doplň 1–2 ukázkové položky bez osobních údajů. Žádné CMS, žádný admin.
+```
+
+### 0.4 Hromadná přihláška bez účtu
+
+```text
+Neimplementuj tento úkol. Aktuální produktové rozhodnutí je jednoduchá individuální přihláška bez účtů a bez hromadné registrace. Pokud se směr změní, aktualizuj nejdřív `../PROJEKT.md`, `../TECHNICKA_DOKUMENTACE.md` a `PLAN.md`.
+```
+
+### 0.5 Filtr startovní listiny
+
+```text
+V start_list.php přidej nativní JS: pole jméno/klub a chipy Vše / Muži 30 km / Ženy 30 km / Děti / Turistická.
+Skrývej řádky bez reloadu, bez nové knihovny. Startovní čísla font-mono. DESIGN.md tabulky.
+Ověř prázdný výsledek a že veřejně pořád nejsou e-mail, telefon, ročník, platba.
+```
+
+### 0.6 Trať: GPX a profil
+
+```text
+V propositions.php doplň Stáhnout GPX, Zobrazit na Mapy.cz a výškový profil s body Bedřichovka, Pěticestí, Bunkrovka, Korunka, Cíl.
+Cesty k souborům drž v config/zavod.php, neopisuj v šabloně. Chybějící podklad nesmí rozbít stránku.
+```
 
 ---
 

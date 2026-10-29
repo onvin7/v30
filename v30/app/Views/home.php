@@ -122,6 +122,9 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
     </div>
 </section>
 
+<!-- Partneři -->
+<?php require __DIR__ . '/partials/sponsors.php'; ?>
+
 <!-- Den závodu -->
 <section class="border-t border-slate-200 bg-snow">
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">

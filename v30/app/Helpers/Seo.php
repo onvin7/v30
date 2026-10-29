@@ -226,6 +226,7 @@ class Seo
             '/prihlaska'         => ['monthly', '0.7'],
             '/startovni-listina' => ['weekly', '0.6'],
             '/vysledky'          => ['monthly', '0.7'],
+            '/zavodnici'         => ['weekly', '0.5'],
             '/galerie'           => ['monthly', '0.6'],
             '/kontakt'           => ['yearly', '0.5'],
         ];

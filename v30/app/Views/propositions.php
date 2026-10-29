@@ -127,6 +127,20 @@ require __DIR__ . '/partials/page_header.php';
                         <li><?= e($radek) ?></li>
                     <?php endforeach; ?>
                 </ul>
+                <?php
+                $partneri = zavod()['partneri']['ceny'] ?? [];
+                if (!empty($partneri)):
+                ?>
+                <p class="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Partneři cen</p>
+                <div class="mt-3 flex flex-wrap gap-3">
+                    <?php foreach ($partneri as $partner): ?>
+                        <a href="<?= e($partner['odkaz']) ?>" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                            <?= e($partner['nazev']) ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
             </div>
 
             <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
@@ -160,6 +174,20 @@ require __DIR__ . '/partials/page_header.php';
                     Hlavní okruh má 30 km a vede po hřebenech Orlických hor. Start a cíl jsou u chaty Bedřichovka
                     v Orlickém Záhoří, kontrolní bod je na Pěticestí u Horské služby.
                 </p>
+                <?php
+                $partneriInstituce = zavod()['partneri']['instituce'] ?? [];
+                $horskaSluzba = null;
+                foreach ($partneriInstituce as $p) {
+                    if (strpos($p['nazev'], 'Horská služba') !== false) {
+                        $horskaSluzba = $p;
+                        break;
+                    }
+                }
+                if ($horskaSluzba): ?>
+                <p class="mt-3 text-xs text-slate-500">
+                    Bezpečnost závodu zajišťuje <a href="<?= e($horskaSluzba['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="font-medium text-brand-700 hover:text-brand-500"><?= e($horskaSluzba['nazev']) ?></a>.
+                </p>
+                <?php endif; ?>
             </div>
 
             <div class="border-t border-slate-300 pt-5">
@@ -177,6 +205,20 @@ require __DIR__ . '/partials/page_header.php';
                     <a href="mailto:info@bedrichovka.cz" class="font-medium text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">info@bedrichovka.cz</a>
                     nebo +420 775 346 832.
                 </p>
+                <?php
+                $partneriCeny = zavod()['partneri']['ceny'] ?? [];
+                $kutlici = null;
+                foreach ($partneriCeny as $p) {
+                    if (strpos($p['nazev'], 'Kutlíci') !== false) {
+                        $kutlici = $p;
+                        break;
+                    }
+                }
+                if ($kutlici): ?>
+                <p class="mt-3 text-xs text-slate-500">
+                    Vodácké vybavení zajišťuje <a href="<?= e($kutlici['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="font-medium text-brand-700 hover:text-brand-500"><?= e($kutlici['nazev']) ?></a>.
+                </p>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -229,11 +271,83 @@ require __DIR__ . '/partials/page_header.php';
                         <p class="mt-4 text-sm italic text-slate-500">Mapa této trati bude doplněna.</p>
                     <?php endif; ?>
 
+                    <!-- GPX a Mapy.cz -->
+                    <?php
+                    $gpxKey = '';
+                    if (strpos($trasa['nazev'], '30') !== false) {
+                        $gpxKey = 'hlavni';
+                    } elseif (strpos($trasa['nazev'], '3 km') !== false) {
+                        $gpxKey = 'detske-3km';
+                    } elseif (strpos($trasa['nazev'], '7 km') !== false) {
+                        $gpxKey = 'detske-7km';
+                    }
+                    $gpxPath = $gpxKey !== '' ? (zavod()['gpx'][$gpxKey] ?? '') : '';
+                    ?>
+                    <?php if ($gpxPath !== '' && file_exists(APP_ROOT . '/' . $gpxPath)): ?>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <a href="<?= e('/' . $gpxPath) ?>" download
+                               class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                Stáhnout GPX
+                            </a>
+                            <a href="https://mapy.cz/" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                                </svg>
+                                Zobrazit na Mapy.cz
+                            </a>
+                        </div>
+                    <?php endif; ?>
+
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
+
+<!-- Výškový profil -->
+<?php $kontrolniBody = zavod()['kontrolni_body']; ?>
+<?php if (!empty($kontrolniBody)): ?>
+<section class="border-t border-slate-200 bg-snow">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Trať</p>
+            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                Výškový profil
+            </h2>
+            <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600">
+                Kontrolní body na trati závodu.
+            </p>
+        </div>
+
+        <div class="mt-12">
+            <div class="relative isolate overflow-hidden rounded-md border border-slate-200 bg-white p-6 sm:p-8">
+                <?php require __DIR__ . '/partials/contours.php'; ?>
+                <div class="relative z-10">
+                    <ol class="relative border-l-2 border-slate-200 pl-6 space-y-8">
+                        <?php foreach ($kontrolniBody as $index => $bod): ?>
+                            <li class="relative">
+                                <span class="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2 border-white bg-brand-500"></span>
+                                <p class="font-display text-lg font-bold text-slate-900"><?= e($bod) ?></p>
+                                <?php if ($index === 0): ?>
+                                    <p class="mt-1 text-sm text-slate-500">Start závodu</p>
+                                <?php elseif ($index === count($kontrolniBody) - 1): ?>
+                                    <p class="mt-1 text-sm text-slate-500">Cíl závodu</p>
+                                <?php else: ?>
+                                    <p class="mt-1 text-sm text-slate-500">Kontrolní bod</p>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Uzavírací CTA -->
 <section class="relative isolate overflow-hidden bg-night text-white">

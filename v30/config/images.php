@@ -44,4 +44,17 @@ return [
     'photo-7' => '/assets/img/photo-7-900.jpg',
     'photo-8' => '/assets/img/photo-8-900.jpg',
     'photo-9' => '/assets/img/photo-9-900.jpg',
+
+    // Loga partnerů (SVG placeholder pro všechny - PNG stažené soubory byly chybné).
+    'partner-vella' => '/assets/sponzori/partner-vella.svg',
+    'partner-fischer' => '/assets/sponzori/partner-fischer.svg',
+    'partner-swix' => '/assets/sponzori/partner-swix.svg',
+    'partner-pinguin' => '/assets/sponzori/partner-pinguin.svg',
+    'partner-kutlici' => '/assets/sponzori/partner-kutlici.svg',
+    'partner-chutna' => '/assets/sponzori/partner-chutna.svg',
+    'partner-vyziva' => '/assets/sponzori/partner-vyziva.svg',
+    'partner-horska-sluzba' => '/assets/sponzori/partner-horska-sluzba.svg',
+    'partner-drotec' => '/assets/sponzori/partner-drotec.svg',
+    'partner-chko' => '/assets/sponzori/partner-chko.svg',
+    'partner-wiegel' => '/assets/sponzori/partner-wiegel.svg',
 ];
