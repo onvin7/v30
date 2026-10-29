@@ -32,8 +32,8 @@ v30/                                  kořen repozitáře – dokumentace
     |   |-- images.php                klíč → cesta k lokálnímu souboru v assets/img/
     |   `-- seo.php                   adresa webu, seznam URL pro sitemapu, strukturovaná data
     |-- app/
-    |   |-- Controllers/              8 veřejných kontrolerů
-    |   |-- Models/                   RegistrationRepository (využitý), OddilRepository a PostRepository (na main bez volajícího)
+    |   |-- Controllers/              9 veřejných kontrolerů
+    |   |-- Models/                   RegistrationRepository, PublicRaceRepository, AthleteRepository (využité), OddilRepository a PostRepository (na main bez volajícího)
     |   |-- Helpers/                  Client, Log, RateLimit, Seo, Text
     |   `-- Views/                    layout.php, šablony stránek, partials/, 404.php, 405.php
     `-- storage/                      .htaccess; JSON soubory a logy (mimo Git)
@@ -79,6 +79,7 @@ Mapa rout je v `web/index.php` a hledá se podle metody (`GET` / `POST`) a regul
 | GET | `/prihlaska/potvrzeni` | `RegistrationController::confirmation` |
 | GET | `/startovni-listina` | `StartListController::index` |
 | GET | `/vysledky` | `ResultsController::index` (filtr `?kategorie=`) |
+| GET | `/zavodnici` | `SearchController::index` (hledání `?q=` a filtr `?rok=`) |
 | GET | `/galerie` | `GalleryController::index` |
 | GET | `/kontakt` | `ContactController::index` |
 | GET | `/sitemap.xml`, `/robots.txt` | generuje router, bez kontroleru |
@@ -130,27 +131,30 @@ Jediný zdroj pravdy pro parametry závodu: číslo a termín ročníku (lidsky 
 - `seo.php` – adresa webu, seznam URL pro sitemapu, strukturovaná data; termín akce bere z `config/zavod.php` (`rocnik.datum_iso`), tady je jen záložní hodnota.
 - `images.php` – klíč → cesta k lokálnímu souboru v `assets/img/`.
 - `Seo` – titulek, popis, canonical, Open Graph, Twitter card, sitemap a strukturovaná data (používá i router pro `/sitemap.xml`).
+- `PublicRaceRepository` – sdílený zdroj ověřené startovní listiny a výsledků 2026 pro veřejné stránky.
+- `AthleteRepository` – veřejná projekce ověřených výsledků; pokud existuje normalizovaný `storage/zavodnici.json`, načte pouze záznamy s `overeno=true`, jinak použije ověřený fallback z `PublicRaceRepository`.
 - `Client` – IP adresa klienta a její anonymizace pro logy.
-- `Log` – zápisy o přihlášeních a zásazích do `storage/*.log`. Hotový, ale na `main` ho zatím nikdo nevolá.
-- `RateLimit` – limit pokusů přes `storage/rate_limit.json` (blokace po 5 neúspěšných pokusech). Hotový, ale na `main` ho zatím nikdo nevolá.
+- `Log` – zápisy o přihlášeních a zásazích do `storage/*.log`; `SearchController` zapisuje dotazy a překročení limitu do `security.log`.
+- `RateLimit` – souborový limit přes `storage/rate_limit.json`; veřejné hledání používá 30 dotazů za hodinu na anonymizovaný klientský klíč.
 - `Text` – drobné úpravy textů a tvorba slugu.
 
 ## 6. Data a jejich ukládání
 
-- **Data závodu** (ročník, termín, kategorie, ceny, kontakty, místo, trať) jsou v `config/zavod.php`. Ostatní ukázkový obsah (startovní listina, výsledky, alba galerie) je napevno v kontrolerech.
+- **Data závodu** (ročník, termín, kategorie, ceny, kontakty, místo, trať) jsou v `config/zavod.php`. Ověřená startovní listina a výsledky 2026 jsou ve sdíleném `PublicRaceRepository`; alba galerie jsou v konfiguraci obrázků a kontroleru galerie.
 - **Živá data** ukládají repozitáře z `app/Models/` do JSON souborů ve `storage/`: zámek a atomický zápis přes dočasný soubor, žádná databáze. Do souborů se nesahá přímo z kontroleru ani ze šablony.
 - `RegistrationRepository` spravuje přihlášky jednotlivců (`storage/prihlasky.json`), jejich stav a identifikátor `V30-<rok>-XXXX` s náhodným variabilním symbolem. Na `main` dále leží `OddilRepository` (`storage/oddily.json`) a `PostRepository` (`storage/prispevky.json`), ale volá je až zóna oddílu a administrace ve větvích.
 - Soubory ve `storage/` obsahují osobní údaje, proto jsou v `.gitignore` a nesmí se commitovat. Složka `storage/` musí být pro PHP zapisovatelná.
 
 ## 7. Bezpečnost
 
-- **Formuláře:** serverová validace, CSRF token (`csrf_field()`, ověření `csrf_verify()`) a honeypot pole `website`. Limitování pokusů přes `RateLimit` (blokace po 5 neúspěšných) je hotové, ale přihláška ho zatím nevolá.
+- **Formuláře:** serverová validace, CSRF token (`csrf_field()`, ověření `csrf_verify()`) a honeypot pole `website`.
 - **Vstup do zón:** hesla se ukládají jen jako hash (`password_hash()`), přihlášení administrátora se po 30 minutách nečinnosti ukončí, obnova hesla oddílu je možná jen přes administraci. Guardy `AdminAuth` a `OddilAuth` (ve větvích) přesměrují nepřihlášeného na přihlášení.
 - **Session:** nastavení cookie se zpevňuje v `v30/v30/index.php` ještě před `session_start()` v routeru.
 - **`.htaccess`:** blokuje přístup do `app/`, `config/` a `storage/`, skryté soubory, archivy (`.zip`, `.tar.gz` a další) a vývojové pomocníky ve webrootu; vynucuje HTTPS mimo lokální vývoj a Webzdarma; nastavuje hlavičky `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection` a `Referrer-Policy` a doplňuje gzip a cache statických souborů.
 - **Escapování:** veškerý výstup jde přes `e()`; uživatelský vstup se nikdy nevkládá do HTML přímo.
-- **Indexace:** `/sitemap.xml` a `/robots.txt` generuje router; `/admin` a veřejné texty oznámení oddílů jsou z indexace vyjmuty.
+- **Indexace:** `/sitemap.xml` a `/robots.txt` generuje router; `/admin` a veřejné texty oznámení oddílů jsou z indexace vyjmuty. `/zavodnici` je veřejná stránka a je v sitemapě.
 - **Soukromí:** veřejně se zobrazuje jen startovní číslo, jméno, oddíl a kategorie. E-mail, telefon, ročník narození, poznámka ani stav platby se nezobrazují nikdy – ani ve filtrech, ani v exportech.
+- **Veřejné hledání:** `/zavodnici` hledá pouze podle jména nebo oddílu v ověřených datech; neověřené ročníky se vynechávají a výsledek je omezen na 100 záznamů.
 
 ## 8. Větve a co v nich je
 
@@ -161,7 +165,7 @@ Jediný zdroj pravdy pro parametry závodu: číslo a termín ročníku (lidsky 
 | `feature/ucty-oddilu` | Zóna oddílu `/oddil`: registrace se schválením, soupiska, hromadná přihláška | Nesloučeno |
 | `backup/ucty-oddilu-pred-rozdelenim` | Záloha před rozdělením zóny oddílu | Archiv |
 
-Obě funkční větve přidávají routy do `web/index.php`, takže při sloučení vznikne v mapě rout konflikt. Na `main` proto odkaz `/oddil/registrace` ze stránky přihlášky vede na 404 – opraví to až sloučení (první bod v [PROJEKT.md](PROJEKT.md#co-zbývá)).
+Obě funkční větve přidávají routy do `web/index.php`, takže při sloučení vznikne v mapě rout konflikt. Na `main` veřejná přihláška neodkazuje na neexistující `/oddil/registrace`; doplňující odkaz vede na `/zavodnici`. Samotná zóna oddílu ale na `main` stále neexistuje.
 
 ## 9. Přihláška jednotlivce
 
@@ -204,9 +208,10 @@ Obě funkční větve přidávají routy do `web/index.php`, takže při slouče
 - **Přihláška:** platný `POST /prihlaska` vede na `/prihlaska/potvrzeni`; nevalidní vstup zpět na formulář s chybou a zachovanými hodnotami; neplatný CSRF nebo vyplněný honeypot se odmítne bez uložení.
 - **Uložení:** po odeslání přibude záznam ve `storage/prihlasky.json`. Rate limiter se na `main` nevolá, takže `storage/rate_limit.json` zatím nevzniká.
 - **Chybové stavy:** neexistující cesta vrací 404, existující cesta s jinou metodou 405; hlavička `Allow` obsahuje jen metody platné pro danou cestu.
+- **Hledání závodníků:** `/zavodnici`, `/zavodnici?q=Novak` a `/zavodnici?rok=2026` vrací 200; dotaz kratší než dva znaky a nepovolený ročník vrací viditelnou chybu. Každý dotaz se započítává do limitu 30 dotazů za hodinu a zapisuje se do bezpečnostního logu.
 - **Zóna oddílu a administrace (po sloučení větví):** registrace oddílu → schválení v `/admin` → přihlášení do `/oddil` → hromadná přihláška → CSV export s oddělovačem `;` a UTF-8 BOM.
 - **Responzivita:** v DevTools na šířkách 320, 360, 390, 640, 768, 1024, 1280 a 1920 px zkontroluj, že stránka nemá horizontální scroll (`document.documentElement.scrollWidth <= window.innerWidth`).
-- **Úklid:** po testech nenechávej ve `storage/` testovací záznamy. Až se rate limiter zapojí, bude blokovat přihlášení po 5 neúspěšných pokusech přes `storage/rate_limit.json` – počítej s tím při testování.
+- **Úklid:** po testech nenechávej ve `storage/` testovací záznamy, `rate_limit.json` ani `security.log`.
 
 ## 12. Lokální spuštění
 

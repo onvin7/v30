@@ -36,7 +36,7 @@ Původní přihlašovací formulář (`?menu=6`) nabízel lodní kategorie C2, K
 
 ## 4. Navigace a obsah stránek
 
-Hlavní navigace je krátká: Úvod (`/`), O závodu (`/zavod`), Propozice a trať (`/propozice`), Přihlášky (`/prihlaska`), Startovní listina (`/startovni-listina`), Výsledky a archiv (`/vysledky`), Galerie (`/galerie`), Kontakt (`/kontakt`). Na mobilu se schová do menu, tlačítko **Přihlásit se** zůstává po ruce. V patičce je pořadatel, kontakt a odkazy na hlavní stránky.
+Hlavní navigace je krátká: Úvod (`/`), O závodu (`/zavod`), Propozice a trať (`/propozice`), Přihlášky (`/prihlaska`), Hledat závodníka (`/zavodnici`), Startovní listina (`/startovni-listina`), Výsledky a archiv (`/vysledky`), Galerie (`/galerie`), Kontakt (`/kontakt`). Na mobilu se schová do menu, tlačítko **Přihlásit se** zůstává po ruce. V patičce je pořadatel, kontakt a odkazy na hlavní stránky.
 
 Mimo navigaci existují dvě chráněné zóny: **zóna oddílu** `/oddil` (registrace oddílu, soupiska, hromadná přihláška) a **administrace** `/admin` (příspěvky, schvalování oddílů, přehled přihlášek a export do CSV). Obě jsou zatím ve větvích.
 
@@ -46,6 +46,7 @@ Mimo navigaci existují dvě chráněné zóny: **zóna oddílu** `/oddil` (regi
 | O závodu | Charakter závodu (běžky v Orlických horách, pořadatel TJ KVT Pardubice) a přehled faktů ročníku. Odkazy na propozice a výsledky. |
 | Propozice a trať | Pořadatelé, časový program, kategorie a tratě, startovné, platba a přihlášení, trať a bezpečnost, ubytování, kontakt, trasy s mapami. U každé informace je zřejmé, ke kterému ročníku patří. |
 | Přihláška | Formulář a po odeslání rekapitulace s identifikátorem přihlášky a platebními instrukcemi (bankovní převod). |
+| Hledat závodníka | Veřejné hledání podle jména nebo oddílu s filtrem ověřeného ročníku. Zobrazuje jen schválená veřejná pole; bez účtů a bez hromadné registrace. |
 | Startovní listina | Jen povolené údaje: jméno, oddíl, kategorie a startovní číslo. |
 | Výsledky a archiv | Filtr podle kategorie, tabulka s pořadím, startovním číslem, jménem, oddílem, časem a ztrátou, odkaz na oficiální PDF. Archiv ročníků rozlišuje ověřené a zatím neověřené. Pořadí se nepřepočítává bez schválených pravidel pořadatele. |
 | Galerie | Alba podle ročníků, kompletní alba zůstávají u externí galerie pořadatele. |
@@ -69,11 +70,11 @@ Vše je na jednom místě v `config/zavod.php` a čte se přes `zavod()`. Starto
 
 ## 6. Rozsah funkcí
 
-**Hotové (první spuštění veřejného webu):** responzivní web v češtině s přístupnou navigací, úvod s termínem a místem, strukturované propozice včetně trati a map, online přihláška s validací, CSRF ochranou a honeypotem, veřejná startovní listina a výsledky jen se schválenými údaji, filtr výsledků podle kategorie, archiv ročníků, chybové stránky 404 a 405, `/sitemap.xml` a `/robots.txt`. Fotky se servírují z repozitáře, ne přes hotlinking.
+**Hotové (první spuštění veřejného webu):** responzivní web v češtině s přístupnou navigací, úvod s termínem a místem, strukturované propozice včetně trati a map, online přihláška s validací, CSRF ochranou a honeypotem, veřejné hledání závodníků na `/zavodnici`, veřejná startovní listina a výsledky jen se schválenými údaji, filtr výsledků podle kategorie, archiv ročníků, chybové stránky 404 a 405, `/sitemap.xml` a `/robots.txt`. Fotky se servírují z repozitáře, ne přes hotlinking.
 
 **Hotové nad původní plán, ale zatím ve větvích:** zóna oddílu se schválením účtu a hromadnou přihláškou, administrace pro pořadatele, ukládání přihlášek, oddílů a příspěvků do JSON souborů.
 
-**Zbývá doplnit:** mapy dětských tratí jsou hotové, ale chybí oficiální PDF propozic k aktuálnímu ročníku a potvrzená data ročníku 2027. Dále se počítá s přesměrováním původních adres `?menu=2`, `?menu=3` a `?menu=5` na nové stránky a s vyhledáváním ve výsledcích podle jména a oddílu.
+**Zbývá doplnit:** mapy dětských tratí jsou hotové, ale chybí oficiální PDF propozic k aktuálnímu ročníku a potvrzená data ročníku 2027. Dále se počítá s přesměrováním původních adres `?menu=2`, `?menu=3` a `?menu=5` na nové stránky a s doplněním dalších ověřených historických dat do veřejného hledání.
 
 **Mimo rozsah prvního spuštění:** databáze místo JSON souborů, odesílání potvrzovacích e-mailů, živé výsledky z časomíry a online platby (QR, platební brána). Platba zůstává bankovním převodem bez QR – zobrazení platebních instrukcí neznamená zaplaceno.
 
@@ -109,10 +110,11 @@ Vše je na jednom místě v `config/zavod.php` a čte se přes `zavod()`. Starto
 
 Pořadí odpovídá tomu, co je potřeba udělat dřív. Průběžně aktualizovaný stav (co už je hotové v kódu, co běží a co je rozpracované) je v živém plánu `v30/PLAN.md`; nálezy z auditu veřejného webu `.trae/documents/audit-webu-v30.md` jsou do něj rozdané.
 
-1. **Sloučit větve.** `feature/administrace` a `feature/ucty-oddilu` do `main` a vyřešit konflikt v mapě rout `web/index.php` (obě větve přidávají routy pro `/admin` a `/oddil`). Pak ověřit, že odkaz `/oddil/registrace` na stránce přihlášky vede na funkční cíl.
+1. **Sloučit větve.** `feature/administrace` a `feature/ucty-oddilu` do `main` a vyřešit konflikt v mapě rout `web/index.php` (obě větve přidávají routy pro `/admin` a `/oddil`). Odkaz na stránce přihlášky už na `main` vede na veřejné hledání `/zavodnici`; po sloučení je potřeba ověřit, že zůstane funkční i zóna oddílu.
 2. **Napojit reálná data ročníku 2027.** Termín je potvrzený, obsah (kategorie, ceny, kapacity, uzávěrky, kontakty, číslo účtu) musí doplnit pořadatel. Ověřené starší ročníky doplnit do archivu.
 3. **Doplnit propozice a PDF** k aktuálnímu ročníku.
 4. **Napojit odesílání e-mailů.** Dnes se potvrzovací text zobrazí přímo na stránce.
 5. **Doladit responzivitu.** Zbytek seznamu z auditu: sjednotit breakpoint hlavičky (sticky se vypíná na 768 px, ale hamburger mizí až na 1280 px), drobnější úpravy (tracking popisků, mezery sekcí, výška odkazů v mobilním menu, CTA tlačítka na malých šířkách). Podrobný seznam je v `.trae/documents/archive/plan-responzivita-v30.md`.
 6. **Volitelně build Tailwindu.** Styl se dnes načítá z CDN, což na mobilní síti způsobuje probliknutí nenastylované stránky. Řešením je standalone Tailwind CLI bez Node.js.
-7. **Rozšířit správu obsahu.** Aby pořadatel spravoval ročník, kategorie, propozice a výsledky bez zásahu do kódu. Databáze místo JSON souborů má smysl teprve tehdy, až objem dat přestane stačit.
+7. **Rozšířit historická data pro hledání.** Veřejná stránka `/zavodnici` už funguje bez účtů a bez hromadné registrace. Aktuálně používá ověřenou listinu 2026; další ročníky se smí přidat až po získání a kontrole konkrétních výsledkových listin/PDF. Neověřená data se nezobrazují.
+8. **Rozšířit správu obsahu.** Aby pořadatel spravoval ročník, kategorie, propozice a výsledky bez zásahu do kódu. Databáze místo JSON souborů má smysl teprve tehdy, až objem dat přestane stačit.
