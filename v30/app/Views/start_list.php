@@ -53,16 +53,16 @@ foreach ($startovniListina as $skupina) {
         <!-- Filtr -->
         <div class="mt-8 space-y-4">
             <div>
-                <label for="filter-text" class="sr-only">Hledat jméno nebo klub</label>
-                <input type="text" id="filter-text" placeholder="Hledat jméno nebo klub"
-                       class="block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
+                <label for="filter-text" class="sr-only">Hledat jméno nebo oddíl</label>
+                <input type="search" id="filter-text" placeholder="Hledat jméno nebo oddíl"
+                       class="block min-h-[48px] w-full rounded-md border-0 bg-white px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
             </div>
-            <div class="flex flex-wrap gap-2">
-                <button type="button" class="filter-chip active inline-flex items-center rounded-full border border-brand-600 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition-colors hover:bg-brand-100" data-filter="all">Vše</button>
-                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="30km-muzi">Muži 30 km</button>
-                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="30km-zeny">Ženy 30 km</button>
-                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="deti">Děti</button>
-                <button type="button" class="filter-chip inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50" data-filter="turistika">Turistická</button>
+            <div class="flex flex-wrap gap-2" aria-label="Filtrovat podle kategorie">
+                <button type="button" class="filter-chip active inline-flex min-h-[44px] items-center rounded-md border border-brand-600 bg-brand-50 px-4 py-2 text-xs font-semibold text-brand-700 transition-colors hover:bg-brand-100" data-filter="all" aria-pressed="true">Vše</button>
+                <button type="button" class="filter-chip inline-flex min-h-[44px] items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-slate-50" data-filter="30km-muzi" aria-pressed="false">Muži 30 km</button>
+                <button type="button" class="filter-chip inline-flex min-h-[44px] items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-slate-50" data-filter="30km-zeny" aria-pressed="false">Ženy 30 km</button>
+                <button type="button" class="filter-chip inline-flex min-h-[44px] items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-slate-50" data-filter="deti" aria-pressed="false">Děti</button>
+                <button type="button" class="filter-chip inline-flex min-h-[44px] items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-slate-50" data-filter="turistika" aria-pressed="false">Turistická</button>
             </div>
         </div>
 
@@ -221,9 +221,11 @@ foreach ($startovniListina as $skupina) {
             filterChips.forEach(function(c) {
                 c.classList.remove('active', 'border-brand-600', 'bg-brand-50', 'text-brand-700');
                 c.classList.add('border-slate-300', 'bg-white', 'text-slate-700');
+                c.setAttribute('aria-pressed', 'false');
             });
             this.classList.remove('border-slate-300', 'bg-white', 'text-slate-700');
             this.classList.add('active', 'border-brand-600', 'bg-brand-50', 'text-brand-700');
+            this.setAttribute('aria-pressed', 'true');
 
             filterByCategory(filter);
         });

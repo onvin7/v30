@@ -11,14 +11,18 @@ require __DIR__ . '/partials/page_header.php';
 <section class="bg-white">
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
         <form method="get" action="/zavodnici" class="rounded-md border border-slate-200 bg-white p-6 sm:p-8">
+            <div class="mb-8 border-b border-slate-200 pb-6">
+                <p class="font-display text-lg font-bold tracking-tight text-slate-900">Najděte svůj záznam</p>
+                <p class="mt-2 text-sm leading-6 text-slate-600">Hledání funguje i bez diakritiky. Pro zobrazení všech záznamů vyberte ročník.</p>
+            </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:items-end">
                 <div class="sm:col-span-2">
-                    <label for="q" class="block text-sm font-medium leading-6 text-slate-900">Jméno nebo oddíl</label>
-                    <input type="search" id="q" name="q" value="<?= e($query) ?>" minlength="2" class="mt-2 block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm" placeholder="Např. Novák nebo TJ KVT">
+                    <label for="q" class="block text-sm font-semibold leading-6 text-slate-900">Jméno nebo oddíl</label>
+                    <input type="search" id="q" name="q" value="<?= e($query) ?>" minlength="2" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm" placeholder="Např. Novák nebo TJ KVT">
                 </div>
                 <div>
-                    <label for="rok" class="block text-sm font-medium leading-6 text-slate-900">Ročník</label>
-                    <select id="rok" name="rok" class="mt-2 block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
+                    <label for="rok" class="block text-sm font-semibold leading-6 text-slate-900">Ročník</label>
+                    <select id="rok" name="rok" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
                         <option value="">Všechny ročníky</option>
                         <?php foreach ($years as $availableYear): ?>
                             <option value="<?= e($availableYear) ?>" <?= $year === (string) $availableYear ? 'selected' : '' ?>><?= e($availableYear) ?> · ověřeno</option>
@@ -26,7 +30,7 @@ require __DIR__ . '/partials/page_header.php';
                     </select>
                 </div>
             </div>
-            <button type="submit" class="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">Hledat</button>
+            <button type="submit" class="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">Hledat záznam</button>
         </form>
 
         <?php if ($error !== ''): ?>

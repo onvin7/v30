@@ -246,7 +246,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                 <!-- CTA (desktop) -->
                 <div class="hidden xl:block">
                     <a href="/prihlaska"
-                       class="inline-flex items-center rounded-md bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                       class="inline-flex min-h-[44px] items-center rounded-md bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                         Přihlásit se
                     </a>
                 </div>
@@ -300,7 +300,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                     </a>
                 <?php endforeach; ?>
                 <a href="/prihlaska"
-                   class="mt-2 inline-flex min-h-[44px] items-center justify-center rounded-md bg-brand-500 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="mt-2 inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                     Přihlásit se
                 </a>
             </nav>

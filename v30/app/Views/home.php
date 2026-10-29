@@ -47,7 +47,7 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
 
         <div class="hero-in hero-in-4 mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="/prihlaska"
-               class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+               class="inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                 Přihlásit se
             </a>
             <a href="/startovni-listina"
@@ -261,7 +261,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/prihlaska"
-                   class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                     Přihlásit se
                 </a>
                 <a href="/kontakt"

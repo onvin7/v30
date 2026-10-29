@@ -42,7 +42,7 @@ require __DIR__ . '/partials/page_header.php';
                 </p>
 
                 <a href="https://vodacka30.cz/index.php?menu=5" target="_blank" rel="noopener noreferrer"
-                   class="mt-8 inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="mt-8 inline-flex min-h-[48px] items-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                     Kontakty pořadatele ↗
                 </a>
             </div>

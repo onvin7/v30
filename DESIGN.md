@@ -55,8 +55,9 @@ Použití:
 
 Dotyková plocha má na mobilu aspoň 44 px (`min-h-[44px]`).
 
-- Primární: `inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400`.
+- Primární: `inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500`.
 - Sekundární: `inline-flex items-center rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-900 text-sm font-semibold px-5 py-3 transition-colors`.
+- Primární akce mají výrazný `focus-visible` obrys; na mobilu mají minimálně 48 px výšky.
 
 ### Datové tabulky (výsledky, startovní listina)
 
@@ -68,9 +69,10 @@ Dotyková plocha má na mobilu aspoň 44 px (`min-h-[44px]`).
 
 ### Formuláře
 
-- Inputy: `mt-2 block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm`.
-- Popisky: `block text-sm font-medium leading-6 text-slate-900`.
+- Inputy, selecty a textarey: minimálně 48 px vysoké, `bg-snow`, vnitřní odsazení `px-3.5 py-3`, jemný `ring-slate-300`, při hoveru `ring-slate-400` a při focusu bílé pozadí s `ring-brand-600`. Povinná pole mají u popisku modrou hvězdičku.
+- Popisky: `block text-sm font-semibold leading-6 text-slate-900`.
 - Chyby u polí: `text-red-600 text-sm mt-1`.
+- Formulář má krátký úvod s očekávanou dobou vyplnění a vysvětlením povinných polí; vyhledávání používá stejný vizuální systém.
 
 ### Krizový pruh (Race Day Alert)
 

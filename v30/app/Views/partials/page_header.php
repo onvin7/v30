@@ -20,7 +20,7 @@ $breadcrumb  = $pageHeader['breadcrumb'] ?? null;
 $imageUrl    = isset($pageHeader['image']) ? img_url((string) $pageHeader['image']) : '';
 $imageSrcset = isset($pageHeader['image']) ? img_srcset((string) $pageHeader['image'], [800, 1200, 1600]) : '';
 ?>
-<section class="relative isolate overflow-hidden bg-night text-white">
+<section class="relative isolate overflow-hidden border-b border-white/10 bg-night text-white">
     <?php if ($imageUrl !== ''): ?>
         <img src="<?= e($imageUrl) ?>" alt="" aria-hidden="true" decoding="async"
              <?php if ($imageSrcset !== ''): ?>srcset="<?= e($imageSrcset) ?>" sizes="100vw"<?php endif; ?>

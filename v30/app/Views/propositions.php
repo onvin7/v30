@@ -162,7 +162,7 @@ require __DIR__ . '/partials/page_header.php';
                     přihláška označena jako zaplacená.
                 </p>
                 <a href="/prihlaska"
-                   class="mt-8 inline-flex w-full items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400 sm:w-auto">
+                   class="mt-8 inline-flex min-h-[48px] w-full items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 sm:w-auto">
                     Přihlásit se
                 </a>
             </div>
@@ -373,7 +373,7 @@ require __DIR__ . '/partials/page_header.php';
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/prihlaska"
-                   class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                   class="inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                     Přihlásit se
                 </a>
                 <a href="/kontakt"

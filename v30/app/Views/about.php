@@ -31,11 +31,11 @@ require __DIR__ . '/partials/page_header.php';
 
                 <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <a href="/propozice"
-                       class="inline-flex items-center justify-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                       class="inline-flex min-h-[48px] items-center justify-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                         Propozice a trať
                     </a>
                     <a href="/vysledky"
-                       class="inline-flex items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-snow">
+                       class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-snow">
                         Výsledky 2026
                     </a>
                 </div>

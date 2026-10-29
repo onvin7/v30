@@ -8,8 +8,8 @@ $pageHeader = [
 ];
 require __DIR__ . '/partials/page_header.php';
 
-$inputClass = 'mt-2 block w-full rounded-md border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm';
-$labelClass = 'block text-sm font-medium leading-6 text-slate-900';
+$inputClass = 'mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm';
+$labelClass = 'block text-sm font-semibold leading-6 text-slate-900';
 $errorClass = 'mt-1.5 text-sm text-red-600';
 ?>
 
@@ -46,6 +46,13 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                       novalidate>
                     <?= csrf_field() ?>
 
+                    <div class="mb-8 border-b border-slate-200 pb-6">
+                        <p class="font-display text-lg font-bold tracking-tight text-slate-900">Přihláška jednotlivce</p>
+                        <p class="mt-2 text-sm leading-6 text-slate-600">
+                            Vyplnění zabere přibližně dvě minuty. Pole označená <span class="font-semibold text-brand-700">*</span> jsou povinná.
+                        </p>
+                    </div>
+
                     <!-- Honeypot proti spamu (skrytý) -->
                     <div class="hidden" aria-hidden="true">
                         <label for="website">Web</label>
@@ -56,7 +63,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
 
                         <!-- Kategorie -->
                         <div>
-                            <label for="kategorie" class="<?= $labelClass ?>">Kategorie</label>
+                            <label for="kategorie" class="<?= $labelClass ?>">Kategorie <span class="text-brand-700" aria-hidden="true">*</span></label>
                             <select id="kategorie" name="kategorie" required
                                     class="<?= $inputClass ?>"
                                     <?= isset($errors['kategorie']) ? 'aria-invalid="true" aria-describedby="kategorie-error"' : '' ?>>
@@ -74,7 +81,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
 
                         <!-- Oddíl -->
                         <div>
-                            <label for="oddil" class="<?= $labelClass ?>">Oddíl / tým</label>
+                            <label for="oddil" class="<?= $labelClass ?>">Oddíl / tým <span class="text-brand-700" aria-hidden="true">*</span></label>
                             <input type="text" id="oddil" name="oddil" value="<?= e(old_get('oddil')) ?>" required maxlength="100"
                                    autocomplete="organization" class="<?= $inputClass ?>" placeholder="Např. TJ KVT Pardubice"
                                    <?= isset($errors['oddil']) ? 'aria-invalid="true" aria-describedby="oddil-error"' : '' ?>>
@@ -86,7 +93,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <!-- Jméno a příjmení -->
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
-                                <label for="jmeno" class="<?= $labelClass ?>">Jméno</label>
+                                <label for="jmeno" class="<?= $labelClass ?>">Jméno <span class="text-brand-700" aria-hidden="true">*</span></label>
                                 <input type="text" id="jmeno" name="jmeno" value="<?= e(old_get('jmeno')) ?>" required maxlength="60"
                                        autocomplete="given-name" enterkeyhint="next" class="<?= $inputClass ?>"
                                        <?= isset($errors['jmeno']) ? 'aria-invalid="true" aria-describedby="jmeno-error"' : '' ?>>
@@ -95,7 +102,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                                 <?php endif; ?>
                             </div>
                             <div>
-                                <label for="prijmeni" class="<?= $labelClass ?>">Příjmení</label>
+                                <label for="prijmeni" class="<?= $labelClass ?>">Příjmení <span class="text-brand-700" aria-hidden="true">*</span></label>
                                 <input type="text" id="prijmeni" name="prijmeni" value="<?= e(old_get('prijmeni')) ?>" required maxlength="60"
                                        autocomplete="family-name" enterkeyhint="next" class="<?= $inputClass ?>"
                                        <?= isset($errors['prijmeni']) ? 'aria-invalid="true" aria-describedby="prijmeni-error"' : '' ?>>
@@ -108,7 +115,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                         <!-- Ročník narození a e-mail -->
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
-                                <label for="rocnik_narozeni" class="<?= $labelClass ?>">Ročník narození</label>
+                                <label for="rocnik_narozeni" class="<?= $labelClass ?>">Ročník narození <span class="text-brand-700" aria-hidden="true">*</span></label>
                                 <input type="text" id="rocnik_narozeni" name="rocnik_narozeni" value="<?= e(old_get('rocnik_narozeni')) ?>" required inputmode="numeric" autocomplete="bday-year" enterkeyhint="next" maxlength="4"
                                        class="<?= $inputClass ?>" placeholder="Např. 1985"
                                        <?= isset($errors['rocnik_narozeni']) ? 'aria-invalid="true" aria-describedby="rocnik_narozeni-error"' : '' ?>>
@@ -117,7 +124,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                                 <?php endif; ?>
                             </div>
                             <div>
-                                <label for="email" class="<?= $labelClass ?>">E-mail</label>
+                                <label for="email" class="<?= $labelClass ?>">E-mail <span class="text-brand-700" aria-hidden="true">*</span></label>
                                 <input type="email" id="email" name="email" value="<?= e(old_get('email')) ?>" required
                                        autocomplete="email" inputmode="email" enterkeyhint="next"
                                        class="<?= $inputClass ?>" placeholder="jmeno@email.cz"
@@ -156,7 +163,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
 
                     <div class="mt-8 border-t border-slate-200 pt-6">
                         <button type="submit"
-                                class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+                                class="inline-flex min-h-[48px] items-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                             Odeslat přihlášku
                         </button>
                     </div>

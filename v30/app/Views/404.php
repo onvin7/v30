@@ -16,7 +16,7 @@
 
         <div class="mt-9 flex flex-wrap gap-3">
             <a href="/"
-               class="inline-flex items-center rounded-md bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-400">
+               class="inline-flex min-h-[48px] items-center rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                 Zpět na úvod
             </a>
             <a href="/propozice"
