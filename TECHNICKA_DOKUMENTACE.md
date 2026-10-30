@@ -9,7 +9,7 @@ Jak je web Vodácké 30 postavený, kde co leží a jak se změny dělají. Kont
 - **Bez databáze.** Živá data (přihlášky, později účty oddílů a příspěvky) se ukládají do JSON souborů ve `storage/` přes repozitáře v `app/Models/`. Ukázková data závodu jsou v PHP a `config/zavod.php`.
 - **Tailwind CSS přes CDN** v `<head>` `layout.php` (vlastní paleta v `tailwind.config`), **Alpine.js přes CDN** s pluginem `intersect` pro mobilní menu a scroll-reveal.
 - **Fonty** Inter (tělo) a Archivo (nadpisy) z Google Fonts.
-- **Obrázky jsou součástí repozitáře.** `config/images.php` mapuje klíč → cestu k souboru v `assets/img/` (63 souborů, každý ve více šířkách `{klíč}-{šířka}.jpg`); šablony je vykreslují pomocí `img_url()` a `img_srcset()`. Předlohou jsou veřejná alba pořadatele na Zoneramě, která hotlinking blokují, proto se fotky hostují lokálně. Chybějící obrázek nahradí grafický blok, nikdy se negeneruje náhradní fotka.
+- **Obrázky jsou součástí repozitáře.** `config/images.php` mapuje klíč → lokální asset. Fotografie jsou v `assets/img/` (63 souborů, každý ve více šířkách `{klíč}-{šířka}.jpg`), loga partnerů v `assets/sponzori/` jako SVG nebo ověřené PNG; šablony je vykreslují pomocí `img_url()` a `img_srcset()`. Předlohou fotografií jsou veřejná alba pořadatele na Zoneramě, která hotlinking blokují, proto se fotky hostují lokálně. Chybějící obrázek nahradí grafický blok, nikdy se negeneruje náhradní fotka.
 
 Požadavek na běhové prostředí je jen PHP a zapisovatelná složka `storage/`.
 

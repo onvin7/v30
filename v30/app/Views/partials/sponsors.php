@@ -67,7 +67,7 @@ $hasPartners = !empty($partneri['generalni']) || !empty($partneri['ceny']) || !e
                             <img src="<?= e(img_url($partner['logo'])) ?>"
                                  alt="<?= e($partner['nazev']) ?>"
                                  loading="lazy"
-                                 class="h-10 w-auto object-contain transition-transform group-hover:scale-105">
+                                 class="<?= $partner['logo'] === 'partner-horska-sluzba' ? 'rounded-md bg-night p-2' : '' ?> h-10 w-auto object-contain transition-transform group-hover:scale-105">
                         <?php else: ?>
                             <span class="text-xs font-semibold text-slate-600"><?= e($partner['nazev']) ?></span>
                         <?php endif; ?>

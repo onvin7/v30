@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-  <rect width="200" height="80" fill="#f5f9fc"/>
-  <text x="100" y="45" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0B2A4A">Vella Trutnov</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="96" viewBox="0 0 320 96" role="img">
+  <title>Vella Trutnov</title>
+  <rect width="320" height="96" rx="8" fill="#06152a"/>
+  <path d="M28 24h24l12 36 12-36h24L78 72H50z" fill="#7dd3fc"/>
+  <text x="106" y="49" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#fff">VELLA</text>
+  <text x="108" y="71" font-family="Arial, sans-serif" font-size="13" letter-spacing="2" fill="#7dd3fc">TRUTNOV</text>
 </svg>

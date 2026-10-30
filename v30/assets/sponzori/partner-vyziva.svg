@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-  <rect width="200" height="80" fill="#f5f9fc"/>
-  <text x="100" y="45" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0B2A4A">Výživa každým soustem</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="96" viewBox="0 0 320 96" role="img">
+  <title>V&#253;&#382;iva ka&#382;d&#253;m soustem</title>
+  <rect width="320" height="96" rx="8" fill="#06152a"/>
+  <path d="M48 72c-12-18-10-37 8-48 18 11 20 30 8 48-5-7-10-7-16 0z" fill="#7dd3fc"/>
+  <text x="88" y="47" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#fff">V&#221;&#381;IVA</text>
+  <text x="88" y="68" font-family="Arial, sans-serif" font-size="12" letter-spacing="1.3" fill="#7dd3fc">KA&#381;D&#221;M SOUSTEM</text>
 </svg>
