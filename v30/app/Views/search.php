@@ -9,20 +9,20 @@ require __DIR__ . '/partials/page_header.php';
 ?>
 
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-        <form method="get" action="/zavodnici" class="rounded-md border border-slate-200 bg-white p-6 sm:p-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <form method="get" action="/zavodnici" class="rounded-md border border-slate-200 border-t-2 border-t-brand-600 bg-white p-6 sm:p-8 lg:p-10">
             <div class="mb-8 border-b border-slate-200 pb-6">
-                <p class="font-display text-lg font-bold tracking-tight text-slate-900">Najděte svůj záznam</p>
+                <p class="font-editorial text-3xl font-medium leading-none tracking-tight text-slate-900">Najděte svůj záznam</p>
                 <p class="mt-2 text-sm leading-6 text-slate-600">Hledání funguje i bez diakritiky. Pro zobrazení všech záznamů vyberte ročník.</p>
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:items-end">
                 <div class="sm:col-span-2">
                     <label for="q" class="block text-sm font-semibold leading-6 text-slate-900">Jméno nebo oddíl</label>
-                    <input type="search" id="q" name="q" value="<?= e($query) ?>" minlength="2" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm" placeholder="Např. Novák nebo TJ KVT">
+                    <input type="search" id="q" name="q" value="<?= e($query) ?>" minlength="2" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-4 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm" placeholder="Např. Novák nebo TJ KVT">
                 </div>
                 <div>
                     <label for="rok" class="block text-sm font-semibold leading-6 text-slate-900">Ročník</label>
-                    <select id="rok" name="rok" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
+                    <select id="rok" name="rok" class="mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-4 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm">
                         <option value="">Všechny ročníky</option>
                         <?php foreach ($years as $availableYear): ?>
                             <option value="<?= e($availableYear) ?>" <?= $year === (string) $availableYear ? 'selected' : '' ?>><?= e($availableYear) ?> · ověřeno</option>
@@ -44,7 +44,7 @@ require __DIR__ . '/partials/page_header.php';
                     <table class="w-full min-w-[42rem] text-sm">
                         <caption class="sr-only">Výsledky hledání závodníků</caption>
                         <thead>
-                            <tr class="border-b border-slate-300 text-xs font-medium uppercase tracking-wider text-slate-500">
+                            <tr class="border-b border-slate-300 text-xs font-medium tracking-normal text-slate-500">
                                 <th class="py-3 pr-4 text-left">Ročník</th>
                                 <th class="py-3 pr-4 text-left">Zdroj</th>
                                 <th class="py-3 pr-4 text-left">Závodník</th>
@@ -57,13 +57,13 @@ require __DIR__ . '/partials/page_header.php';
                         <tbody class="divide-y divide-slate-200 border-b border-slate-200">
                             <?php foreach ($rows as $radek): ?>
                                 <tr class="transition-colors hover:bg-snow">
-                                    <td class="py-3.5 pr-4 tabular-nums text-slate-500"><?= e($radek['rok']) ?></td>
-                                    <td class="py-3.5 pr-4 text-slate-500"><?= e($radek['zdroj'] ?? ('Výsledky ' . $radek['rok'])) ?></td>
-                                    <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
-                                    <td class="py-3.5 pr-4 text-slate-500"><?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?></td>
-                                    <td class="py-3.5 pr-4 text-slate-500"><?= e($radek['kategorie']) ?></td>
-                                    <td class="py-3.5 pr-4 text-right tabular-nums text-slate-500"><?= $radek['cislo'] !== '' ? e($radek['cislo']) : '—' ?></td>
-                                    <td class="py-3.5 text-right tabular-nums text-slate-500">
+                                    <td class="py-4 pr-4 tabular-nums text-slate-500"><?= e($radek['rok']) ?></td>
+                                    <td class="py-4 pr-4 text-slate-500"><?= e($radek['zdroj'] ?? ('Výsledky ' . $radek['rok'])) ?></td>
+                                    <td class="py-4 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
+                                    <td class="py-4 pr-4 text-slate-500"><?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?></td>
+                                    <td class="py-4 pr-4 text-slate-500"><?= e($radek['kategorie']) ?></td>
+                                    <td class="py-4 pr-4 text-right tabular-nums text-slate-500"><?= $radek['cislo'] !== '' ? e($radek['cislo']) : '—' ?></td>
+                                    <td class="py-4 text-right tabular-nums text-slate-500">
                                         <?= $radek['poradi'] !== '' ? e($radek['poradi']) . '. ' . e($radek['cas']) : '—' ?>
                                     </td>
                                 </tr>
@@ -75,7 +75,7 @@ require __DIR__ . '/partials/page_header.php';
         <?php endif; ?>
 
         <div class="mt-12 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Co zveřejňujeme</p>
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Co zveřejňujeme</p>
             <p class="mt-3 text-sm leading-6 text-slate-600">Jen ročník závodu, jméno, oddíl, kategorie, startovní číslo a u ověřených výsledků pořadí s časem. Kontaktní údaje, ročník narození, poznámky, platby ani interní ID se nezobrazují.</p>
         </div>
     </div>

@@ -9,8 +9,8 @@ $hasPartners = !empty($partneri['generalni']) || !empty($partneri['ceny']) || !e
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div class="flex flex-col gap-3 border-b border-slate-200 pb-8 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Partneři závodu</p>
-                <h2 class="mt-2 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Díky, že stojí za námi</h2>
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Partneři závodu</p>
+                <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Díky, že stojí za námi</h2>
             </div>
             <p class="max-w-sm text-sm leading-6 text-slate-500">Bez jejich podpory by se Vodácká 30 nemohla konat.</p>
         </div>
@@ -24,9 +24,9 @@ $hasPartners = !empty($partneri['generalni']) || !empty($partneri['ceny']) || !e
                         <img src="<?= e(img_url($partner['logo'])) ?>"
                              alt="<?= e($partner['nazev']) ?>"
                              loading="lazy"
-                             class="h-20 w-auto max-w-full object-contain transition-transform group-hover:scale-105">
+                             class="h-20 w-auto max-w-full object-contain transition-[opacity] group-hover:opacity-80">
                     <?php else: ?>
-                        <span class="text-lg font-bold text-slate-900"><?= e($partner['nazev']) ?></span>
+                        <span class="text-lg font-medium text-slate-900"><?= e($partner['nazev']) ?></span>
                     <?php endif; ?>
                     <?php if (!empty($partner['claim'])): ?>
                         <p class="text-center text-xs font-medium text-slate-500"><?= e($partner['claim']) ?></p>
@@ -46,7 +46,7 @@ $hasPartners = !empty($partneri['generalni']) || !empty($partneri['ceny']) || !e
                         <img src="<?= e(img_url($partner['logo'])) ?>"
                              alt="<?= e($partner['nazev']) ?>"
                              loading="lazy"
-                             class="<?= in_array($partner['logo'], ['partner-horska-sluzba', 'partner-chko'], true) ? 'rounded-md bg-night p-2' : '' ?> h-12 w-auto max-w-full object-contain transition-transform group-hover:scale-105">
+                             class="<?= in_array($partner['logo'], ['partner-horska-sluzba', 'partner-chko'], true) ? 'rounded-md bg-night p-2' : '' ?> h-12 w-auto max-w-full object-contain transition-[opacity] group-hover:opacity-80">
                     <?php else: ?>
                         <span class="text-center text-xs font-semibold text-slate-600"><?= e($partner['nazev']) ?></span>
                     <?php endif; ?>

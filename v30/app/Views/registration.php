@@ -8,15 +8,15 @@ $pageHeader = [
 ];
 require __DIR__ . '/partials/page_header.php';
 
-$inputClass = 'mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-3.5 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm';
+$inputClass = 'mt-2 block min-h-[48px] w-full rounded-md border-0 bg-snow px-4 py-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 transition-[background-color,box-shadow] placeholder:text-slate-400 hover:ring-slate-400 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm';
 $labelClass = 'block text-sm font-semibold leading-6 text-slate-900';
 $errorClass = 'mt-1.5 text-sm text-red-600';
 ?>
 
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="mb-10 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6" role="note">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Důležité k ročníku 2027</p>
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Důležité k ročníku 2027</p>
             <p class="mt-3 text-sm leading-6 text-slate-600">
                 Termín <?= e(zavod()['rocnik']['datum']) ?> je potvrzený. Kategorie, ceny a platební údaje
                 se ještě mohou změnit podle finálních pokynů pořadatele. Přihlášku odešlete bez účtu;
@@ -42,12 +42,12 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                 <?php endif; ?>
 
                 <form method="post" action="/prihlaska"
-                      class="rounded-md border border-slate-200 bg-white p-6 sm:p-8"
+                      class="rounded-md border border-slate-200 bg-white p-6 sm:p-8 lg:p-10"
                       novalidate>
                     <?= csrf_field() ?>
 
                     <div class="mb-8 border-b border-slate-200 pb-6">
-                        <p class="font-display text-lg font-bold tracking-tight text-slate-900">Přihláška jednotlivce</p>
+                        <p class="font-editorial text-3xl font-medium leading-none tracking-tight text-slate-900">Přihláška jednotlivce</p>
                         <p class="mt-2 text-sm leading-6 text-slate-600">
                             Vyplnění zabere přibližně dvě minuty. Pole označená <span class="font-semibold text-brand-700">*</span> jsou povinná.
                         </p>
@@ -174,29 +174,29 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
             <aside class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
                 <div class="lg:sticky lg:top-24 space-y-10">
 
-                    <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Hledáte závodníka?</p>
-                        <p class="mt-3 text-sm leading-6 text-slate-600">
+                    <div class="border-l-2 border-brand-600 bg-night px-5 py-6 text-white sm:px-6">
+                        <p class="text-xs font-semibold tracking-normal text-brand-300">Hledáte závodníka?</p>
+                        <p class="mt-3 text-sm leading-6 text-slate-300">
                             Ověřte si veřejně dostupné údaje ze schválených výsledků a startovních listin
                             bez zakládání účtu.
                         </p>
-                        <a href="/zavodnici" class="mt-4 inline-flex items-center text-sm font-semibold text-brand-700 transition-colors hover:text-brand-500">
+                        <a href="/zavodnici" class="mt-4 inline-flex items-center text-sm font-semibold text-white transition-colors hover:text-ice">
                             Hledat závodníka →
                         </a>
                     </div>
 
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Startovné</p>
+                        <p class="text-xs font-semibold tracking-normal text-brand-700">Startovné</p>
                         <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
-                            <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <div class="flex items-baseline justify-between gap-4 py-4">
                                 <dt class="text-sm text-slate-600">Dětské kategorie</dt>
                                 <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['detske']) ?> Kč</dd>
                             </div>
-                            <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <div class="flex items-baseline justify-between gap-4 py-4">
                                 <dt class="min-w-0 text-sm text-slate-600">Dospělí (včasná platba do <?= e($startovne['uzavierka']) ?>)</dt>
                                 <dd class="shrink-0 text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['vcasna']) ?> Kč</dd>
                             </div>
-                            <div class="flex items-baseline justify-between gap-4 py-3.5">
+                            <div class="flex items-baseline justify-between gap-4 py-4">
                                 <dt class="text-sm text-slate-600">Platba na místě</dt>
                                 <dd class="text-sm font-semibold tabular-nums text-slate-900"><?= e($startovne['na_miste']) ?> Kč</dd>
                             </div>
@@ -208,7 +208,7 @@ $errorClass = 'mt-1.5 text-sm text-red-600';
                     </div>
 
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Nejste si jistí?</p>
+                        <p class="text-xs font-semibold tracking-normal text-brand-700">Nejste si jistí?</p>
                         <div class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
                             <a href="/propozice" class="group flex items-center justify-between gap-4 py-4 text-sm font-semibold text-slate-900 transition-colors hover:text-brand-600">
                                 Propozice a trať

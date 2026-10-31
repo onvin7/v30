@@ -30,12 +30,12 @@ $imageSrcset = isset($pageHeader['image']) ? img_srcset((string) $pageHeader['im
         <?php require __DIR__ . '/contours.php'; ?>
     <?php endif; ?>
 
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
 
         <?php if (is_array($breadcrumb) && $breadcrumb !== []): ?>
             <?php $lastIndex = count($breadcrumb) - 1; ?>
             <nav aria-label="Drobečková navigace" class="mb-7">
-                <ol class="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.18em]">
+                <ol class="flex flex-wrap items-center gap-2 text-sm text-white/60">
                     <?php foreach ($breadcrumb as $index => $crumb): ?>
                         <li class="flex items-center gap-2">
                             <?php if ($index < $lastIndex && !empty($crumb['href'])): ?>
@@ -55,10 +55,10 @@ $imageSrcset = isset($pageHeader['image']) ? img_srcset((string) $pageHeader['im
         <?php endif; ?>
 
         <?php if ($eyebrow !== ''): ?>
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-ice sm:tracking-[0.3em]"><?= e($eyebrow) ?></p>
+            <p class="text-sm font-medium text-ice"><?= e($eyebrow) ?></p>
         <?php endif; ?>
 
-        <h1 class="mt-4 max-w-4xl font-display text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-5xl">
+        <h1 class="mt-4 max-w-4xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             <?= e($headerTitle) ?>
         </h1>
 

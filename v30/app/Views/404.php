@@ -2,11 +2,11 @@
     <?php require __DIR__ . '/partials/contours.php'; ?>
 
     <div class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Chyba 404</p>
+        <p class="text-xs font-semibold tracking-normal text-ice">Chyba 404</p>
 
-        <p class="mt-4 font-display text-6xl font-black leading-none tracking-tight sm:text-8xl">404</p>
+        <p class="mt-4 font-editorial text-7xl font-medium leading-none tracking-tight sm:text-9xl">404</p>
 
-        <h1 class="mt-6 font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-3xl">
+        <h1 class="mt-6 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
             Stránka nenalezena
         </h1>
 

@@ -93,6 +93,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                     fontFamily: {
                         sans:    ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
                         display: ['Archivo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        editorial: ['Newsreader', 'Georgia', 'serif'],
                     },
                 },
             },
@@ -102,7 +103,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
     <!-- Fonty -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
 
     <!-- Fotky (Zonerama) -->
     <link rel="preconnect" href="https://eu.zonerama.com" crossorigin>
@@ -226,7 +227,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                 <!-- Logo -->
                 <a href="/" class="group flex items-center gap-2.5">
                     <span class="h-5 w-1.5 bg-brand-400 transition-colors group-hover:bg-ice" aria-hidden="true"></span>
-                    <span class="font-display text-lg font-extrabold uppercase leading-none tracking-tight">Vodácká&nbsp;30</span>
+                    <span class="font-display text-lg font-semibold leading-none tracking-tight">Vodácká&nbsp;30</span>
                 </a>
 
                 <!-- Navigace (desktop) -->
@@ -330,14 +331,14 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
 
     <!-- Patička -->
     <footer class="bg-night text-white/60">
-        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 
             <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
                 <div>
                     <a href="/" class="flex items-center gap-2.5">
                         <span class="h-5 w-1.5 bg-brand-400" aria-hidden="true"></span>
-                        <span class="font-display text-lg font-extrabold uppercase leading-none tracking-tight text-white">Vodácká&nbsp;30</span>
+                        <span class="font-display text-lg font-semibold leading-none tracking-tight text-white">Vodácká&nbsp;30</span>
                     </a>
                     <p class="mt-4 max-w-xs text-sm leading-6">
                         Běžkařský závod v Orlických horách. Pořádá TJ KVT Pardubice.
@@ -345,7 +346,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                 </div>
 
                 <div>
-                    <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Navigace</p>
+                    <p class="font-display text-sm font-medium text-white/40">Navigace</p>
                     <ul class="mt-3 space-y-1 text-sm">
                         <li><a href="/zavod" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">O závodu</a></li>
                         <li><a href="/galerie" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Galerie</a></li>
@@ -354,7 +355,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                 </div>
 
                 <div>
-                    <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Závod</p>
+                    <p class="font-display text-sm font-medium text-white/40">Závod</p>
                     <ul class="mt-3 space-y-1 text-sm">
                         <li><a href="/propozice" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Propozice a trať</a></li>
                         <li><a href="/prihlaska" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">Přihlášky</a></li>
@@ -365,7 +366,7 @@ $seoStructured  = $seoIndex ? \App\Helpers\Seo::structuredData() : [];
                 </div>
 
                 <div>
-                    <p class="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/40">Pořadatel</p>
+                    <p class="font-display text-sm font-medium text-white/40">Pořadatel</p>
                     <ul class="mt-3 space-y-1 text-sm">
                         <li>
                             <a href="https://kvt.pardubice.cz/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center transition-colors hover:text-white">

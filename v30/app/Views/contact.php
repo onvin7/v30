@@ -11,21 +11,21 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Kontakty -->
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 
-            <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Organizační výbor</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <div class="reveal border-l-2 border-brand-500 pl-6 sm:pl-8 lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Organizační výbor</p>
+                <h2 class="mt-4 font-editorial text-4xl font-medium leading-[0.98] tracking-tight sm:text-5xl">
                     Na koho se obrátit
                 </h2>
 
                 <dl class="mt-10 divide-y divide-slate-200 border-y border-slate-200">
                     <?php foreach ($kontakty as $kontakt): ?>
                         <div class="py-5">
-                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($kontakt['role']) ?></dt>
+                            <dt class="text-xs font-medium tracking-normal text-slate-500"><?= e($kontakt['role']) ?></dt>
                             <dd class="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                                <span class="font-display text-lg font-bold tracking-tight text-slate-900"><?= e($kontakt['jmeno']) ?></span>
+                                <span class="font-display text-lg font-medium tracking-tight text-slate-900"><?= e($kontakt['jmeno']) ?></span>
                                 <?php if (!empty($kontakt['telefon'])): ?>
                                     <a href="tel:<?= e('+420' . preg_replace('/\s+/', '', $kontakt['telefon'])) ?>"
                                        class="text-sm font-medium tabular-nums text-brand-700 transition-colors hover:text-brand-500">
@@ -48,7 +48,7 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Další informace</p>
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Další informace</p>
                 <div class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
                     <a href="/galerie" class="group flex items-center justify-between gap-4 py-4 text-sm font-semibold text-slate-900 transition-colors hover:text-brand-600">
                         Fotogalerie závodu
@@ -75,8 +75,8 @@ require __DIR__ . '/partials/page_header.php';
 
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Zázemí závodu</p>
-            <h2 class="mt-4 max-w-2xl font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-ice">Zázemí závodu</p>
+            <h2 class="mt-4 max-w-2xl font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Chata Bedřichovka
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
@@ -85,15 +85,15 @@ require __DIR__ . '/partials/page_header.php';
             </p>
             <dl class="mt-9 flex flex-wrap gap-x-12 gap-y-5 border-t border-white/10 pt-6 text-sm">
                 <div>
-                    <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Místo</dt>
+                    <dt class="text-xs font-medium tracking-normal text-white/40">Místo</dt>
                     <dd class="mt-1 font-semibold">Bedřichovka, Orlické Záhoří</dd>
                 </div>
                 <div>
-                    <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">E-mail</dt>
+                    <dt class="text-xs font-medium tracking-normal text-white/40">E-mail</dt>
                     <dd class="mt-1 font-semibold"><a href="mailto:info@bedrichovka.cz" class="transition-colors hover:text-ice">info@bedrichovka.cz</a></dd>
                 </div>
                 <div>
-                    <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Telefon</dt>
+                    <dt class="text-xs font-medium tracking-normal text-white/40">Telefon</dt>
                     <dd class="mt-1 font-semibold tabular-nums"><a href="tel:+420775346832" class="transition-colors hover:text-ice">+420 775 346 832</a></dd>
                 </div>
             </dl>

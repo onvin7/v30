@@ -9,33 +9,34 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
         <img src="<?= e(img_url('home-hero')) ?>" alt="" aria-hidden="true" decoding="async" fetchpriority="high"
              <?php if ($heroSrcset !== ''): ?>srcset="<?= e($heroSrcset) ?>" sizes="100vw"<?php endif; ?>
              class="hero-img absolute inset-0 -z-20 h-full w-full object-cover">
-        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/40" aria-hidden="true"></div>
-        <div class="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-night to-transparent" aria-hidden="true"></div>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/30" aria-hidden="true"></div>
     <?php else: ?>
         <?php require __DIR__ . '/partials/contours.php'; ?>
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-deep/60 via-transparent to-night" aria-hidden="true"></div>
     <?php endif; ?>
 
-    <div class="mx-auto max-w-7xl px-4 pb-16 pt-24 sm:px-6 sm:pb-28 sm:pt-36 lg:px-8 lg:pb-36 lg:pt-48">
-        <h1 class="hero-in hero-in-2 font-display text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-8xl">
+    <div class="mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 sm:pb-28 sm:pt-36 lg:px-8 lg:pb-36 lg:pt-40">
+        <div class="max-w-3xl">
+        <p class="hero-in text-sm font-medium text-ice"><?= e($hero['rocnik']) ?> · Orlické hory</p>
+        <h1 class="hero-in hero-in-2 mt-6 max-w-2xl font-editorial text-6xl font-medium leading-[0.92] tracking-tight sm:text-7xl lg:text-8xl">
             <?= e($hero['nazev']) ?>
         </h1>
 
-        <p class="hero-in hero-in-3 mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
+        <p class="hero-in hero-in-3 mt-8 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
             <?= e($hero['podtitul']) ?>
         </p>
 
-        <dl class="hero-in hero-in-3 mt-9 flex flex-wrap gap-x-12 gap-y-5 border-t border-white/10 pt-6 text-sm">
+        <dl class="hero-in hero-in-3 mt-10 flex flex-wrap gap-x-10 gap-y-5 border-t border-white/10 pt-6 text-sm">
             <div>
-                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Ročník</dt>
+                <dt class="text-sm text-white/60">Ročník</dt>
                 <dd class="mt-1 font-semibold tabular-nums"><?= e($hero['rocnik']) ?></dd>
             </div>
             <div>
-                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Termín</dt>
+                <dt class="text-sm text-white/60">Termín</dt>
                 <dd class="mt-1 font-semibold tabular-nums"><?= e($hero['datum']) ?></dd>
             </div>
             <div>
-                <dt class="text-xs font-medium uppercase tracking-[0.2em] text-white/40">Místo</dt>
+                <dt class="text-sm text-white/60">Místo</dt>
                 <dd class="mt-1 font-semibold"><?= e($hero['misto']) ?></dd>
             </div>
         </dl>
@@ -51,9 +52,10 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
                 Přihlásit se
             </a>
             <a href="/startovni-listina"
-               class="inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+               class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
                 Startovní listina
             </a>
+        </div>
         </div>
     </div>
 </section>
@@ -64,8 +66,8 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
         <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
             <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Trať a místo</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <p class="text-sm font-medium text-slate-500">Trať a místo</p>
+                <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                     <?= e($trat['nazev']) ?>
                 </h2>
                 <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
@@ -75,8 +77,8 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
                 <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-slate-200 pt-6">
                     <?php foreach ($trat['fakta'] as $fakt): ?>
                         <div>
-                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($fakt['label']) ?></dt>
-                            <dd class="mt-1 font-display text-lg font-bold tabular-nums text-slate-900"><?= e($fakt['hodnota']) ?></dd>
+                            <dt class="text-sm text-slate-500"><?= e($fakt['label']) ?></dt>
+                            <dd class="mt-1 font-display text-lg font-medium tabular-nums text-slate-900"><?= e($fakt['hodnota']) ?></dd>
                         </div>
                     <?php endforeach; ?>
                 </dl>
@@ -112,13 +114,13 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
 <section class="border-t border-slate-200 bg-white">
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník <?= e($archiv['rok']) ?> v číslech</p>
+            <p class="text-sm font-medium text-slate-500">Ročník <?= e($archiv['rok']) ?> v číslech</p>
             <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
                 <?php foreach ($rocnik as $metrika): ?>
                     <div class="border-t border-slate-200 pt-5">
-                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($metrika['label']) ?></dt>
-                        <dd class="mt-2 font-display text-3xl font-black tabular-nums leading-none text-slate-900 sm:text-4xl">
-                            <?= e($metrika['hodnota']) ?><?php if ($metrika['jednotka'] !== ''): ?> <span class="text-base font-bold text-slate-400"><?= e($metrika['jednotka']) ?></span><?php endif; ?>
+                        <dt class="text-sm text-slate-500"><?= e($metrika['label']) ?></dt>
+                        <dd class="mt-2 font-display text-3xl font-medium tabular-nums leading-none text-slate-900 sm:text-4xl">
+                            <?= e($metrika['hodnota']) ?><?php if ($metrika['jednotka'] !== ''): ?> <span class="text-base font-medium text-slate-400"><?= e($metrika['jednotka']) ?></span><?php endif; ?>
                         </dd>
                     </div>
                 <?php endforeach; ?>
@@ -136,8 +138,8 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 
             <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Den závodu</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <p class="text-sm font-medium text-slate-500">Den závodu</p>
+                <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                     Program závodního dne
                 </h2>
                 <p class="mt-5 max-w-prose text-base leading-7 text-slate-600">
@@ -153,7 +155,7 @@ $heroSrcset = has_img('home-hero') ? img_srcset('home-hero', [960, 1440, 1920]) 
             <ol class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
                 <?php foreach ($program as $index => $bod): ?>
                     <li class="flex gap-4 py-5 sm:gap-6 <?= $index === 0 ? 'pb-5' : 'border-t border-slate-200' ?>">
-                        <span class="w-16 shrink-0 font-display text-lg font-bold tabular-nums text-brand-700"><?= e($bod['cas']) ?></span>
+                        <span class="w-16 shrink-0 font-display text-lg font-medium tabular-nums text-brand-700"><?= e($bod['cas']) ?></span>
                         <span class="min-w-0 pt-0.5 text-base text-slate-700"><?= e($bod['polozka']) ?></span>
                     </li>
                 <?php endforeach; ?>
@@ -173,8 +175,8 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
 
         <div class="reveal max-w-2xl" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Novinky</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-sm font-medium text-slate-500">Novinky</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Co nového
             </h2>
         </div>
@@ -187,13 +189,13 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
                 $zobraz = $stamp
                     ? (int) date('j', $stamp) . '. ' . $mesice[(int) date('n', $stamp)] . ' ' . date('Y', $stamp)
                     : $datum;
-                $perex  = \App\Helpers\Text::truncate((string) ($prispevek['perex'] ?? ''), 160);
+                $perex  = \App\Helpers\Text::truncate((string) ($prispevek['text'] ?? ''), 160);
                 ?>
                 <article class="reveal border-t border-slate-300 pt-6" x-intersect.once="$el.classList.add('is-visible')">
-                    <time datetime="<?= e($datum) ?>" class="font-display text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
+                    <time datetime="<?= e($datum) ?>" class="font-display text-sm font-medium text-slate-500">
                         <?= e($zobraz) ?>
                     </time>
-                    <h3 class="mt-3 font-display text-lg font-bold leading-snug tracking-tight text-slate-900">
+                    <h3 class="mt-3 font-display text-lg font-medium leading-snug tracking-tight text-slate-900">
                         <?= e((string) ($prispevek['nadpis'] ?? '')) ?>
                     </h3>
                     <?php if ($perex !== ''): ?>
@@ -214,8 +216,8 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
 
             <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Výsledky <?= e($archiv['rok']) ?></p>
-                    <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                    <p class="text-sm font-medium text-slate-500">Výsledky <?= e($archiv['rok']) ?></p>
+                    <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                         Nejrychlejší muži PRO
                     </h2>
                 </div>
@@ -229,14 +231,14 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
             <ol class="mt-10 divide-y divide-slate-200 border-y border-slate-200">
                 <?php foreach ($podium as $radek): ?>
                     <li class="flex items-center gap-4 py-5 sm:gap-6">
-                        <span class="w-8 shrink-0 font-display text-xl font-black tabular-nums <?= $radek['poradi'] === 1 ? 'text-brand-600' : 'text-slate-300' ?>">
+                        <span class="w-8 shrink-0 font-display text-xl font-medium tabular-nums <?= $radek['poradi'] === 1 ? 'text-brand-600' : 'text-slate-300' ?>">
                             <?= e($radek['poradi']) ?>
                         </span>
                         <span class="min-w-0 flex-1">
-                            <span class="block font-semibold text-slate-900"><?= e($radek['jmeno']) ?></span>
+                            <span class="block font-medium text-slate-900"><?= e($radek['jmeno']) ?></span>
                             <span class="block text-sm text-slate-500"><?= e($radek['oddil']) ?></span>
                         </span>
-                        <span class="shrink-0 font-display text-lg font-bold tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
+                        <span class="shrink-0 font-display text-lg font-medium tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
                     </li>
                 <?php endforeach; ?>
             </ol>
@@ -252,8 +254,8 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
 
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Přihlášky</p>
-            <h2 class="mt-4 max-w-2xl font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-4xl">
+            <p class="text-sm font-medium text-ice">Přihlášky</p>
+            <h2 class="mt-4 max-w-2xl font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Přihlaste se na další ročník
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
@@ -265,7 +267,7 @@ $mesice = [1 => 'ledna', 'února', 'března', 'dubna', 'května', 'června', 'č
                     Přihlásit se
                 </a>
                 <a href="/kontakt"
-                   class="inline-flex items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
+                   class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10">
                     Kontakt na pořadatele
                 </a>
             </div>

@@ -11,10 +11,10 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Alba podle ročníků -->
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Alba</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Alba</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Fotky z posledních ročníků
             </h2>
         </div>
@@ -22,7 +22,7 @@ require __DIR__ . '/partials/page_header.php';
         <div class="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             <?php foreach ($alba as $album): ?>
                 <?php $nahledSrcset = isset($album['klic']) ? img_srcset((string) $album['klic'], [400, 600, 900]) : ''; ?>
-                <article class="reveal group" x-intersect.once="$el.classList.add('is-visible')">
+                <article class="reveal group border-t border-slate-300 pt-5" x-intersect.once="$el.classList.add('is-visible')">
                     <a href="<?= e($album['odkaz']) ?>" target="_blank" rel="noopener noreferrer" class="block">
 
                         <div class="overflow-hidden rounded-md bg-deep">
@@ -31,7 +31,7 @@ require __DIR__ . '/partials/page_header.php';
                                      alt="Fotografie z ročníku <?= e($album['rok']) ?>"
                                      <?php if ($nahledSrcset !== ''): ?>srcset="<?= e($nahledSrcset) ?>" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"<?php endif; ?>
                                      loading="lazy" decoding="async"
-                                     class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]">
+                                     class="aspect-[3/2] w-full object-cover transition-[opacity] duration-200 group-hover:opacity-80">
                             <?php else: ?>
                                 <div class="relative isolate flex aspect-[3/2] w-full items-end p-5">
                                     <?php require __DIR__ . '/partials/contours.php'; ?>
@@ -40,7 +40,7 @@ require __DIR__ . '/partials/page_header.php';
                             <?php endif; ?>
                         </div>
 
-                        <h3 class="mt-4 font-display text-lg font-extrabold tracking-tight transition-colors group-hover:text-brand-600 sm:text-xl">
+                        <h3 class="mt-4 font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-brand-600 sm:text-xl">
                             <?= e($album['nazev']) ?>
                         </h3>
                         <p class="mt-1 text-sm text-slate-500">
@@ -60,13 +60,13 @@ require __DIR__ . '/partials/page_header.php';
 <!-- Fotografie z ročníku 2026 -->
 <?php if ($fotky !== []): ?>
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
             <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník 2026</p>
-                    <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                    <p class="text-xs font-semibold tracking-normal text-brand-700">Ročník 2026</p>
+                    <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                         Z průběhu závodu
                     </h2>
                 </div>

@@ -29,7 +29,7 @@ require __DIR__ . '/partials/page_header.php';
 <section class="border-b border-slate-200 bg-white">
     <div class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
         <div class="border-l-2 border-slate-400 bg-snow px-5 py-4 sm:px-6">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Archivní výsledky</p>
+            <p class="text-xs font-semibold tracking-normal text-slate-600">Archivní výsledky</p>
             <p class="mt-2 text-sm leading-6 text-slate-600">
                 Zobrazené výsledky patří k <?= e(zavod()['archiv']['cislo']) ?>. ročníku
                 (<?= e(zavod()['archiv']['datum']) ?>). Výsledky <?= e(zavod()['rocnik']['rok']) ?>
@@ -41,7 +41,13 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Výsledkové listiny -->
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div class="mb-12 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Archivní výkon</p>
+            <p class="mt-3 max-w-2xl font-editorial text-3xl font-medium leading-tight text-slate-900 sm:text-4xl">
+                Výsledky, podle kterých se závod pamatuje
+            </p>
+        </div>
 
         <?php if (empty($kategorie)): ?>
             <p class="border-l-2 border-brand-600 bg-snow px-5 py-4 text-sm text-slate-600">
@@ -54,7 +60,7 @@ require __DIR__ . '/partials/page_header.php';
                 <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
                     <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-                        <h2 class="font-display text-xl font-extrabold tracking-tight sm:text-2xl"><?= e($skupina['nazev']) ?></h2>
+                        <h2 class="font-display text-xl font-semibold tracking-tight sm:text-2xl"><?= e($skupina['nazev']) ?></h2>
                         <p class="text-sm text-slate-500">26. ročník &middot; 17. ledna 2026</p>
                     </div>
 
@@ -76,10 +82,10 @@ require __DIR__ . '/partials/page_header.php';
                             <li class="py-4">
                                 <div class="flex items-baseline justify-between gap-4">
                                     <div class="flex min-w-0 items-baseline gap-3">
-                                        <span class="w-6 shrink-0 text-right font-display text-base font-black tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
+                                        <span class="w-6 shrink-0 text-right font-display text-base font-medium tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
                                         <p class="min-w-0 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></p>
                                     </div>
-                                    <span class="shrink-0 font-display text-base font-bold tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
+                                    <span class="shrink-0 font-display text-base font-medium tabular-nums text-slate-900"><?= e($radek['cas']) ?></span>
                                 </div>
                                 <p class="mt-1 pl-9 text-sm text-slate-500">
                                     <?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?>
@@ -95,7 +101,7 @@ require __DIR__ . '/partials/page_header.php';
                         <table class="w-full min-w-[42rem] text-sm">
                             <caption class="sr-only">Výsledky – <?= e($skupina['nazev']) ?>, ročník 2026</caption>
                             <thead>
-                                <tr class="border-b border-slate-300 text-xs font-medium uppercase tracking-wider text-slate-500">
+                                <tr class="border-b border-slate-300 text-xs font-medium tracking-normal text-slate-500">
                                     <th scope="col" class="w-14 py-3 pr-4 text-right">Poř.</th>
                                     <th scope="col" class="w-16 py-3 pr-4 text-right">Start</th>
                                     <th scope="col" class="py-3 pr-4 text-left">Závodník</th>
@@ -107,14 +113,14 @@ require __DIR__ . '/partials/page_header.php';
                             <tbody class="divide-y divide-slate-200 border-b border-slate-200">
                                 <?php foreach ($radky as $radek): ?>
                                     <tr class="transition-colors hover:bg-snow">
-                                        <td class="py-3.5 pr-4 text-right">
-                                            <span class="font-display text-base font-black tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
+                                        <td class="py-4 pr-4 text-right">
+                                            <span class="font-display text-base font-medium tabular-nums <?= $radek['barvaPoradi'] ?>"><?= e($radek['poradi']) ?></span>
                                         </td>
-                                        <td class="py-3.5 pr-4 text-right tabular-nums text-slate-500"><?= $radek['cislo'] !== '' ? e($radek['cislo']) : '—' ?></td>
-                                        <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
-                                        <td class="py-3.5 pr-4 text-slate-500"><?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?></td>
-                                        <td class="py-3.5 pr-4 text-right font-medium tabular-nums text-slate-900"><?= e($radek['cas']) ?></td>
-                                        <td class="py-3.5 text-right tabular-nums text-slate-500"><?= e($radek['ztrata']) ?></td>
+                                        <td class="py-4 pr-4 text-right tabular-nums text-slate-500"><?= $radek['cislo'] !== '' ? e($radek['cislo']) : '—' ?></td>
+                                        <td class="py-4 pr-4 font-semibold text-slate-900"><?= e($radek['jmeno']) ?></td>
+                                        <td class="py-4 pr-4 text-slate-500"><?= $radek['oddil'] !== '' ? e($radek['oddil']) : '—' ?></td>
+                                        <td class="py-4 pr-4 text-right font-medium tabular-nums text-slate-900"><?= e($radek['cas']) ?></td>
+                                        <td class="py-4 text-right tabular-nums text-slate-500"><?= e($radek['ztrata']) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -128,10 +134,10 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Oficiální podklady -->
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal max-w-3xl" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Podklady</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Podklady</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Výsledky 2026
             </h2>
             <p class="mt-5 text-base leading-7 text-slate-600">
@@ -156,10 +162,10 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Archiv ročníků -->
 <section class="border-t border-slate-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Archiv</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Archiv</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Ročníky 2015–2026
             </h2>
             <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600">
@@ -171,12 +177,12 @@ require __DIR__ . '/partials/page_header.php';
                     <li class="border-t border-slate-200 pt-4">
                         <?php if ($rocnik['overeno']): ?>
                             <a href="/vysledky" class="group block">
-                                <span class="font-display text-2xl font-black tabular-nums text-slate-900 transition-colors group-hover:text-brand-600"><?= e($rocnik['rok']) ?></span>
+                                <span class="font-display text-2xl font-medium tabular-nums text-slate-900 transition-colors group-hover:text-brand-600"><?= e($rocnik['rok']) ?></span>
                                 <span class="mt-1 block text-xs text-slate-500"><?= e($rocnik['rocnik']) ?>. ročník &middot; <?= e($rocnik['datum']) ?></span>
                             </a>
                         <?php else: ?>
                             <span class="block" title="Zatím neověřeno">
-                                <span class="font-display text-2xl font-black tabular-nums text-slate-300"><?= e($rocnik['rok']) ?></span>
+                                <span class="font-display text-2xl font-medium tabular-nums text-slate-300"><?= e($rocnik['rok']) ?></span>
                                 <span class="mt-1 block text-xs text-slate-400"><?= e($rocnik['rocnik']) ?>. ročník &middot; <?= e($rocnik['datum']) ?></span>
                                 <span class="sr-only"> – neověřeno</span>
                             </span>

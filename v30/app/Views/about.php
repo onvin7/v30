@@ -11,12 +11,12 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Příběh závodu -->
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
 
-            <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 sm:tracking-[0.3em]">Vodácké mistrovství ČR v běhu na lyžích</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <div class="reveal border-l-2 border-brand-500 pl-6 sm:pl-8 lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Vodácké mistrovství ČR v běhu na lyžích</p>
+                <h2 class="mt-4 font-editorial text-4xl font-medium leading-[0.98] tracking-tight sm:text-5xl">
                     Běžky místo pádla
                 </h2>
                 <div class="mt-6 space-y-5 text-base leading-7 text-slate-600">
@@ -41,7 +41,7 @@ require __DIR__ . '/partials/page_header.php';
                 </div>
             </div>
 
-            <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
+            <div class="reveal lg:col-span-5 lg:pt-12" x-intersect.once="$el.classList.add('is-visible')">
                 <?php if (has_img('home-trail')): ?>
                     <img src="<?= e(img_url('home-trail')) ?>"
                          alt="Závodníci na trati Vodácké 30 v Orlických horách"
@@ -61,18 +61,18 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Ročník 2026 v datech -->
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Ročník 2026</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Ročník 2026</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Základní údaje
             </h2>
 
             <dl class="mt-10 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($fakta as $fakt): ?>
                     <div class="border-t border-slate-300 pt-5">
-                        <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($fakt['label']) ?></dt>
-                        <dd class="mt-2 font-display text-lg font-bold leading-snug tracking-tight text-slate-900"><?= e($fakt['hodnota']) ?></dd>
+                        <dt class="text-xs font-medium tracking-normal text-slate-500"><?= e($fakt['label']) ?></dt>
+                        <dd class="mt-2 font-display text-lg font-medium leading-snug tracking-tight text-slate-900"><?= e($fakt['hodnota']) ?></dd>
                     </div>
                 <?php endforeach; ?>
             </dl>

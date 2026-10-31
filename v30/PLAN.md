@@ -11,6 +11,15 @@ files: [web/index.php, app/Controllers/*.php, app/Views/**, assets/**]
   tech: web/index.php – mapa rout GET: /, /zavod, /propozice, /prihlaska, /prihlaska/potvrzeni, /zavodnici, /startovni-listina, /vysledky, /galerie, /kontakt
 - [x] Vykreslit zimní expediční design {#public-design}
   tech: app/Views/layout.php – Tailwind CDN s paletou brand/night/deep/snow/ice, Alpine.js, scroll-reveal (`.reveal` → `.is-visible`)
+- [x] Vyladit úvodní stránku pomocí společného vizuálního auditu {#public-unslop-home}
+  by: copilot
+  tech: projektová Claude Code skill `.claude/skills/unslop/SKILL.md`; používá se jako audit a postupný polish, ne jako nový framework nebo změna produktového směru
+- [x] Překreslit veřejný web do výraznějšího editorialního layoutu {#public-unslop-editorial}
+  by: copilot
+  tech: `app/Views/home.php` používá skutečnou fotografii jako hlavní moment, editorialní Newsreader headline a klidnou datovou hierarchii; `app/Views/partials/page_header.php` zachovává sdílený fotografický header; obsah, routy a zdrojová data zůstaly beze změny
+- [x] Vyladit každou veřejnou stránku samostatně podle jejího účelu {#public-unslop-page-by-page}
+  by: copilot
+  tech: `about.php` má příběhovou typografii, `propositions.php` časovou osu, `registration.php` formulářovou hierarchii, `start_list.php` datový úvod, `results.php` archivní zvýraznění, `gallery.php` editorialní alba, `contact.php` kontaktní sloupec, `search.php` vyhledávací fokus, potvrzení a chybové stránky vlastní stavové akcenty; routy a obsah zůstaly stejné
 - [x] Odpovědět 404 a 405 na neznámé adresy {#public-errors}
   tech: web/index.php (větev 405 posílá hlavičku `Allow`) + app/Views/404.php, app/Views/405.php
 - [x] Poslat v hlavičce `Allow` jen metody platné pro danou cestu {#public-allow}
@@ -173,6 +182,8 @@ files: [.htaccess, index.php, config/autoloader.php, app/Helpers/Client.php, app
   tech: `SearchController` používá `RateLimit::check()` (30 dotazů za hodinu) a `Log::security()`; přihláška jednotlivce tyto helpery stále nevolá
 
 ## decisions
+- 2026-10-31 – `heydamir/unslop` je v projektu nainstalovaný jako lokální Claude Code skill v `.claude/skills/unslop/`. Použije se stránku po stránce jako vizuální audit a redline, ale každá úprava musí zachovat společný zimní expediční design, Tailwind utility bez nových závislostí a existující obsah/routy.
+
 - 2026-10-29 – Veřejné hledání bude bez účtů a bez hromadné přihlášky. První verze zobrazí jen schválená veřejná pole: ročník závodu, jméno, oddíl, kategorie, startovní číslo a u výsledků pořadí/čas. Neověřené ročníky se ve vyhledávání nepoužijí.
   - **Zdroj historických dat:** aktuální web pořadatele `https://vodacka30.cz/?menu=3` byl načten přes Apify `web-fetch`; uvádí ročníky 2015–2026 a odkazuje na detailní výsledkovou listinu 2026. Archiv aktualit `https://vodacka30.cz/?menu=archiv` potvrzuje, že rok 2021 se nejel.
   - **Důsledek pro import:** seznam ročníků lze převzít jako katalog, ale závodníky lze zveřejnit až po stažení a kontrole výsledků pro konkrétní ročník. Rok 2026 je první ověřený zdroj; starší PDF/listiny se dohledají po jednotlivých odkazech a jejich stav se uloží odděleně od samotných záznamů.

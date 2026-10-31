@@ -11,9 +11,9 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Program a pořadatelé -->
 <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="mb-10 border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6" role="note">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Stav propozic</p>
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Stav propozic</p>
             <p class="mt-3 text-sm leading-6 text-slate-600">
                 Níže uvedený program, kategorie, ceny a mapy vycházejí z posledního odjetého
                 <?= e(zavod()['archiv']['cislo']) ?>. ročníku. Propozice pro <?= e(zavod()['rocnik']['rok']) ?>
@@ -24,8 +24,8 @@ require __DIR__ . '/partials/page_header.php';
 
             <div class="reveal lg:col-span-5" x-intersect.once="$el.classList.add('is-visible')">
                 <div class="border-l-2 border-brand-600 bg-snow px-5 py-5 sm:px-6">
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Informace k ročníku 2026</p>
-                    <h2 class="mt-3 font-display text-lg font-extrabold leading-snug tracking-tight sm:text-xl">
+                    <p class="text-xs font-semibold tracking-normal text-brand-700">Informace k ročníku 2026</p>
+                    <h2 class="mt-3 font-display text-lg font-semibold leading-snug tracking-tight sm:text-xl">
                         Údaje z posledního odjetého ročníku.
                     </h2>
                     <p class="mt-3 text-sm leading-6 text-slate-600">
@@ -36,11 +36,11 @@ require __DIR__ . '/partials/page_header.php';
                     </p>
                 </div>
 
-                <p class="mt-12 text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Pořadatelé</p>
+                <p class="mt-12 text-xs font-semibold tracking-normal text-brand-700">Pořadatelé</p>
                 <dl class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
                     <?php foreach ($poradatele as $osoba): ?>
-                        <div class="flex items-baseline justify-between gap-4 py-3.5">
-                            <dt class="text-xs font-medium uppercase tracking-wide text-slate-500"><?= e($osoba['role']) ?></dt>
+                        <div class="flex items-baseline justify-between gap-4 py-4">
+                            <dt class="text-xs font-medium tracking-normal text-slate-500"><?= e($osoba['role']) ?></dt>
                             <dd class="min-w-0 text-sm font-semibold text-slate-900"><?= e($osoba['jmeno']) ?></dd>
                         </div>
                     <?php endforeach; ?>
@@ -48,15 +48,16 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <div class="reveal lg:col-span-7" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Časový program</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Časový program</p>
+                <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
                     Den závodu
                 </h2>
 
-                <ol class="mt-8">
+                <ol class="relative mt-8 border-l border-slate-300 pl-6">
                     <?php foreach ($program as $index => $bod): ?>
-                        <li class="flex gap-6 py-3.5 <?= $index === 0 ? '' : 'border-t border-slate-200' ?>">
-                            <span class="w-16 shrink-0 font-display text-base font-bold tabular-nums text-brand-700"><?= e($bod['cas']) ?></span>
+                        <li class="relative flex gap-6 py-4 <?= $index === 0 ? '' : 'border-t border-slate-200' ?>">
+                            <span class="absolute -left-[1.65rem] top-5 h-2 w-2 rounded-full bg-brand-600 ring-4 ring-white" aria-hidden="true"></span>
+                            <span class="w-16 shrink-0 font-display text-base font-medium tabular-nums text-brand-700"><?= e($bod['cas']) ?></span>
                             <span class="text-sm text-slate-700 sm:text-base"><?= e($bod['polozka']) ?></span>
                         </li>
                     <?php endforeach; ?>
@@ -69,19 +70,19 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Kategorie a tratě -->
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Rozpis</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Rozpis</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Kategorie a tratě
             </h2>
 
             <ul class="mt-10 divide-y divide-slate-200 border-y border-slate-200 md:hidden">
                 <?php foreach ($kategorie as $kat): ?>
-                    <li class="py-3.5">
+                    <li class="py-4">
                         <span class="block font-semibold text-slate-900"><?= e($kat['nazev']) ?></span>
                         <p class="mt-1 text-sm text-slate-500">
-                            <?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?> &middot; <?= e($kat['cena']) ?>
+                            <?= e($kat['trat']) ?> &middot; <?= e($kat['styl']) ?> &middot; <?= e($kat['cena']) ?> Kč
                             <?php if ($kat['cena_na_miste'] !== $kat['cena']): ?>
                                 (na místě <?= e($kat['cena_na_miste']) ?>)
                             <?php endif; ?>
@@ -94,7 +95,7 @@ require __DIR__ . '/partials/page_header.php';
                 <table class="w-full min-w-[44rem] text-sm">
                     <caption class="sr-only">Kategorie, tratě, styl a startovné</caption>
                     <thead>
-                        <tr class="border-b border-slate-300 text-xs font-medium uppercase tracking-wider text-slate-500">
+                        <tr class="border-b border-slate-300 text-xs font-medium tracking-normal text-slate-500">
                             <th scope="col" class="py-3 pr-4 text-left">Kategorie</th>
                             <th scope="col" class="w-24 py-3 pr-4 text-right">Trať</th>
                             <th scope="col" class="w-28 py-3 pr-4 text-left">Styl</th>
@@ -105,11 +106,11 @@ require __DIR__ . '/partials/page_header.php';
                     <tbody class="divide-y divide-slate-200 border-b border-slate-200">
                         <?php foreach ($kategorie as $kat): ?>
                             <tr class="transition-colors hover:bg-white">
-                                <td class="py-3.5 pr-4 font-semibold text-slate-900"><?= e($kat['nazev']) ?></td>
-                                <td class="py-3.5 pr-4 text-right tabular-nums text-slate-500"><?= e($kat['trat']) ?></td>
-                                <td class="py-3.5 pr-4 text-slate-500"><?= e($kat['styl']) ?></td>
-                                <td class="py-3.5 pr-4 text-right tabular-nums text-slate-900"><?= e($kat['cena']) ?></td>
-                                <td class="py-3.5 text-right tabular-nums text-slate-500"><?= e($kat['cena_na_miste']) ?></td>
+                                <td class="py-4 pr-4 font-semibold text-slate-900"><?= e($kat['nazev']) ?></td>
+                                <td class="py-4 pr-4 text-right tabular-nums text-slate-500"><?= e($kat['trat']) ?></td>
+                                <td class="py-4 pr-4 text-slate-500"><?= e($kat['styl']) ?></td>
+                                <td class="py-4 pr-4 text-right tabular-nums text-slate-900"><?= e($kat['cena']) ?></td>
+                                <td class="py-4 text-right tabular-nums text-slate-500"><?= e($kat['cena_na_miste']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -122,12 +123,12 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Startovné a platba -->
 <section class="border-t border-slate-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
 
             <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Startovné</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Startovné</p>
+                <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
                     Kolik zaplatíte
                 </h2>
                 <ul class="mt-8 list-disc space-y-3 pl-5 text-sm leading-6 text-slate-600 marker:text-brand-600">
@@ -139,7 +140,7 @@ require __DIR__ . '/partials/page_header.php';
                 $partneri = zavod()['partneri']['ceny'] ?? [];
                 if (!empty($partneri)):
                 ?>
-                <p class="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Partneři cen</p>
+                <p class="mt-6 text-xs font-semibold tracking-normal text-slate-400">Partneři cen</p>
                 <div class="mt-3 flex flex-wrap gap-3">
                     <?php foreach ($partneri as $partner): ?>
                         <a href="<?= e($partner['odkaz']) ?>" target="_blank" rel="noopener noreferrer"
@@ -152,8 +153,8 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Přihlášení</p>
-                <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+                <p class="text-xs font-semibold tracking-normal text-brand-700">Přihlášení</p>
+                <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
                     Platba a přihláška
                 </h2>
                 <p class="mt-8 max-w-prose text-sm leading-6 text-slate-600">
@@ -173,11 +174,11 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Trať, bezpečnost, ubytování -->
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8" x-intersect.once="$el.classList.add('is-visible')">
 
             <div class="border-t border-slate-300 pt-5">
-                <h2 class="font-display text-lg font-extrabold tracking-tight">Trať</h2>
+                <h2 class="font-display text-lg font-semibold tracking-tight">Trať</h2>
                 <p class="mt-3 text-sm leading-6 text-slate-600">
                     Hlavní okruh má 30 km a vede po hřebenech Orlických hor. Start a cíl jsou u chaty Bedřichovka
                     v Orlickém Záhoří, kontrolní bod je na Pěticestí u Horské služby.
@@ -199,7 +200,7 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <div class="border-t border-slate-300 pt-5">
-                <h2 class="font-display text-lg font-extrabold tracking-tight">Bezpečnost a časový limit</h2>
+                <h2 class="font-display text-lg font-semibold tracking-tight">Bezpečnost a časový limit</h2>
                 <p class="mt-3 text-sm leading-6 text-slate-600">
                     Závod se jede za běžných zimních podmínek a končí v 17:00. Závodníci startují na vlastní
                     nebezpečí a musí respektovat pokyny pořadatelů a časový limit trati.
@@ -207,7 +208,7 @@ require __DIR__ . '/partials/page_header.php';
             </div>
 
             <div class="border-t border-slate-300 pt-5">
-                <h2 class="font-display text-lg font-extrabold tracking-tight">Ubytování a kontakt</h2>
+                <h2 class="font-display text-lg font-semibold tracking-tight">Ubytování a kontakt</h2>
                 <p class="mt-3 text-sm leading-6 text-slate-600">
                     Zázemí závodu je u chaty Bedřichovka v Orlickém Záhoří. Ubytování lze domluvit na
                     <a href="mailto:info@bedrichovka.cz" class="font-medium text-brand-700 underline decoration-brand-300 underline-offset-2 transition-colors hover:text-brand-500">info@bedrichovka.cz</a>
@@ -235,10 +236,10 @@ require __DIR__ . '/partials/page_header.php';
 
 <!-- Trasy a mapy -->
 <section class="border-t border-slate-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Mapy</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Mapy</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Trasy a mapové podklady
             </h2>
             <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600">
@@ -251,7 +252,7 @@ require __DIR__ . '/partials/page_header.php';
                 <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
 
                     <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-slate-300 pt-5">
-                        <h3 class="font-display text-lg font-extrabold tracking-tight sm:text-xl"><?= e($trasa['nazev']) ?></h3>
+                        <h3 class="font-display text-lg font-semibold tracking-tight sm:text-xl"><?= e($trasa['nazev']) ?></h3>
                         <p class="text-sm tabular-nums text-slate-500"><?= e($trasa['trat']) ?> &middot; <?= e($trasa['styl']) ?></p>
                     </div>
 
@@ -320,10 +321,10 @@ require __DIR__ . '/partials/page_header.php';
 <?php $kontrolniBody = zavod()['kontrolni_body']; ?>
 <?php if (!empty($kontrolniBody)): ?>
 <section class="border-t border-slate-200 bg-snow">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-700">Trať</p>
-            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-brand-700">Trať</p>
+            <h2 class="mt-4 font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Výškový profil
             </h2>
             <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600">
@@ -339,7 +340,7 @@ require __DIR__ . '/partials/page_header.php';
                         <?php foreach ($kontrolniBody as $index => $bod): ?>
                             <li class="relative">
                                 <span class="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2 border-white bg-brand-500"></span>
-                                <p class="font-display text-lg font-bold text-slate-900"><?= e($bod) ?></p>
+                                <p class="font-display text-lg font-medium text-slate-900"><?= e($bod) ?></p>
                                 <?php if ($index === 0): ?>
                                     <p class="mt-1 text-sm text-slate-500">Start závodu</p>
                                 <?php elseif ($index === count($kontrolniBody) - 1): ?>
@@ -363,8 +364,8 @@ require __DIR__ . '/partials/page_header.php';
 
     <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('is-visible')">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Přihlášky</p>
-            <h2 class="mt-4 max-w-2xl font-display text-2xl font-extrabold uppercase leading-tight tracking-tight sm:text-4xl">
+            <p class="text-xs font-semibold tracking-normal text-ice">Přihlášky</p>
+            <h2 class="mt-4 max-w-2xl font-display text-2xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Přihlaste se na <?= e(zavod()['rocnik']['datum']) ?>
             </h2>
             <p class="mt-5 max-w-xl text-base leading-7 text-slate-300">
